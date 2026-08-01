@@ -35,7 +35,7 @@ The site intentionally avoids "space-themed" decoration. The constellation-inspi
 - **Radix UI** primitives (Dialog, Tooltip, Progress, Slot) + **sonner** toasts
 - **lucide-react** icons · **cva + clsx + tailwind-merge** for variants
 - **Real component kit** (Magic UI / Aceternity / React Bits): PixelImage pixel-reveal, BentoGrid, NumberTicker, Highlighter (rough-notation), NoiseTexture, KineticText, AnimatedCircularProgressBar, Spotlight, RevealText
-- **React Bits kit** (client-only): **Hyperspeed** (olive-tuned "Neon Waves" — the homepage backdrop on `/`), **LaserFlow** (olive laser wash), **ColorBends** (color-field bends; stock + olive), **Silk** (flowing silk, brand olive), **Grainient** (olive animated gradient, `ogl`), **Counter** (rolling digits, `motion`), **CountUp** (spring counter, `motion`), **DomeGallery** (drag-rotatable photo sphere, `@use-gesture/react`), **FluidGlass** (3D glass lens/bar/cube, drei + maath + GLB models), **GradualBlur** (layered edge blur overlay) and **MagicBento** (GSAP bento card grid with spotlight/border-glow/tilt — olive `#636B2F` glow, `cards` prop for Stellar content) — WebGL backgrounds on `three` + `postprocessing` (+ `@react-three/fiber`/`drei`/`maath`/`ogl` where needed)
+- **React Bits kit** (client-only): **Hyperspeed** (olive-tuned "Neon Waves" — the homepage backdrop on `/`), **LaserFlow** (olive laser wash), **ColorBends** (color-field bends; stock + olive), **Silk** (flowing silk, brand olive), **Grainient** (olive animated gradient, `ogl`), **Counter** (rolling digits, `motion`), **CountUp** (spring counter, `motion`), **DomeGallery** (drag-rotatable photo sphere, `@use-gesture/react`), **FluidGlass** (3D glass lens/bar/cube, drei + maath + GLB models), **GradualBlur** (layered edge blur overlay), **MagicBento** (GSAP bento card grid with spotlight/border-glow/tilt — olive `#636B2F` glow, `cards` prop for Stellar content), **ShinyText** (animated shine sweep via `motion`), **SplitText** (GSAP letter/word reveal via `@gsap/react` + `gsap/SplitText` — distinct from the Typography SplitText), **StaggeredMenu** (GSAP staggered fullscreen menu — olive underlays, project logo), **Stepper** (spring step wizard via `motion` — olive active/complete states) and **SpotlightCard** (cursor-following card spotlight, olive-tinted) — WebGL backgrounds on `three` + `postprocessing` (+ `@react-three/fiber`/`drei`/`maath`/`ogl` where needed)
 
 ---
 
@@ -86,7 +86,7 @@ src/
 │   ├── ui/                 # Primitives (calendar, date-field, count-up, sheet, dialog, …)
 │   ├── sections/           # Page sections (hero, trust-ribbon, services, pricing, …)
 │   ├── map/                # Leaflet + OpenStreetMap Melbourne map (olive polygon, route, depot beacon)
-│   └── ui/backgrounds/      # React Bits kit — Hyperspeed (homepage backdrop), LaserFlow, ColorBends, Silk, Grainient, Counter, CountUp, DomeGallery, FluidGlass, GradualBlur, MagicBento (stories for all)
+│   └── ui/backgrounds/      # React Bits kit — Hyperspeed (homepage backdrop), LaserFlow, ColorBends, Silk, Grainient, Counter, CountUp, DomeGallery, FluidGlass, GradualBlur, MagicBento, ShinyText, SplitText, StaggeredMenu, Stepper, SpotlightCard (stories for all)
 ├── hooks/                  # use-media-query
 └── lib/
     ├── content.ts          # Single source of truth for ALL copy + data
