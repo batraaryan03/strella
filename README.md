@@ -1,6 +1,6 @@
 # Stellar Removals
 
-**Melbourne's Precision Removalists** — a premium, dark-themed website for a Melbourne-based household & furniture removalist business.
+**Melbourne's Precision Removalists** — a premium, dark-themed website for a Melbourne-based household & furniture removalist business. ...not-[]:
 
 Stellar is a marketing + conversion site with a **borderless editorial design system** (charcoal canvas, anaconda-olive accent), a real interactive **Leaflet Melbourne map**, a **multi-step quote wizard** with instant estimate ranges, full **Storybook** coverage for every component and section, and a documented research trail in `docs/`.
 
