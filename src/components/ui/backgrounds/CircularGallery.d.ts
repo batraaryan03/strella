@@ -19,6 +19,10 @@ export interface CircularGalleryProps {
   fontUrl?: string;
   scrollSpeed?: number;
   scrollEase?: number;
+  /** Continuous auto-drift in scroll-units/sec (0 = off). */
+  autoScroll?: number;
+  /** Card size multiplier (< 1 = smaller cards). */
+  imageScale?: number;
 }
 
 declare const CircularGallery: (props: CircularGalleryProps) => JSX.Element;

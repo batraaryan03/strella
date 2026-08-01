@@ -210,7 +210,8 @@ class Media {
     bend,
     textColor,
     borderRadius = 0,
-    font
+    font,
+    imageScale = 1
   }) {
     this.extra = 0;
     this.geometry = geometry;
@@ -227,6 +228,7 @@ class Media {
     this.textColor = textColor;
     this.borderRadius = borderRadius;
     this.font = font;
+    this.imageScale = imageScale;
     this.createShader();
     this.createMesh();
     this.createTitle();
@@ -373,8 +375,10 @@ class Media {
       }
     }
     this.scale = this.screen.height / 1500;
-    this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
-    this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
+    // imageScale shrinks the cards below the stock react-bits size
+    // (user: "make the images in gallery smaller").
+    this.plane.scale.y = ((this.viewport.height * (900 * this.scale)) / this.screen.height) * this.imageScale;
+    this.plane.scale.x = ((this.viewport.width * (700 * this.scale)) / this.screen.width) * this.imageScale;
     this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
     this.padding = 2;
     this.width = this.plane.scale.x + this.padding;
@@ -393,21 +397,26 @@ class App {
       borderRadius = 0,
       font = 'bold 30px Figtree',
       scrollSpeed = 2,
-      scrollEase = 0.05
+      scrollEase = 0.05,
+      autoScroll = 0,
+      imageScale = 1
     } = {}
   ) {
     document.documentElement.classList.remove('no-js');
     this.container = container;
     this.scrollSpeed = scrollSpeed;
     this.scroll = { ease: scrollEase, current: 0, target: 0, last: 0 };
+    this.autoScroll = autoScroll; // continuous drift in scroll-units/sec
+    this.lastTime = performance.now();
     this.active = false; // only respond to input while the reel is on-screen
+    this.imageScale = imageScale;
     this.onCheckDebounce = debounce(this.onCheck, 200);
     this.createRenderer();
     this.createCamera();
     this.createScene();
     this.onResize();
     this.createGeometry();
-    this.createMedias(items, bend, textColor, borderRadius, font);
+    this.createMedias(items, bend, textColor, borderRadius, font, imageScale);
     this.update();
     this.addEventListeners();
   }
@@ -435,7 +444,7 @@ class App {
       widthSegments: 100
     });
   }
-  createMedias(items, bend = 1, textColor, borderRadius, font) {
+  createMedias(items, bend = 1, textColor, borderRadius, font, imageScale = 1) {
     const defaultItems = [
       { image: `https://picsum.photos/seed/1/800/600?grayscale`, text: 'Bridge' },
       { image: `https://picsum.photos/seed/2/800/600?grayscale`, text: 'Desk Setup' },
@@ -467,7 +476,8 @@ class App {
         bend,
         textColor,
         borderRadius,
-        font
+        font,
+        imageScale
       });
     });
   }
@@ -520,6 +530,9 @@ class App {
   }
 
   onCheck() {
+    // In auto-scroll mode the snap-to-card would fight the continuous
+    // drift — skip it so the reel glides infinitely.
+    if (this.autoScroll > 0) return;
     if (!this.medias || !this.medias[0]) return;
     const width = this.medias[0].width;
     const itemIndex = Math.round(Math.abs(this.scroll.target) / width);
@@ -549,8 +562,17 @@ class App {
     // it's actually visible. uTime doesn't advance, so the wave
     // distortion resumes seamlessly on return.
     if (!this.active) {
+      this.lastTime = performance.now();
       this.raf = window.requestAnimationFrame(this.update.bind(this));
       return;
+    }
+    const now = performance.now();
+    const dt = Math.min((now - this.lastTime) / 1000, 0.1); // clamp big gaps
+    this.lastTime = now;
+    // Pause the drift while the user is dragging so the reel follows
+    // the pointer exactly (no auto-scroll on top of the drag).
+    if (this.autoScroll > 0 && !this.isDown) {
+      this.scroll.target += this.autoScroll * dt;
     }
     this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
     const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
@@ -618,7 +640,9 @@ export default function CircularGallery({
   font = 'bold 30px Figtree',
   fontUrl,
   scrollSpeed = 2,
-  scrollEase = 0.05
+  scrollEase = 0.05,
+  autoScroll = 0,
+  imageScale = 1
 }) {
   const containerRef = useRef(null);
   const observerRef = useRef(null);
@@ -635,7 +659,9 @@ export default function CircularGallery({
         borderRadius,
         font: resolvedFont,
         scrollSpeed,
-        scrollEase
+        scrollEase,
+        autoScroll,
+        imageScale
       });
 
       // In-view gate — the react-bits source binds wheel/drag to window,
@@ -657,7 +683,7 @@ export default function CircularGallery({
       observerRef.current = null;
       if (app) app.destroy();
     };
-  }, [items, bend, textColor, borderRadius, font, fontUrl, scrollSpeed, scrollEase]);
+  }, [items, bend, textColor, borderRadius, font, fontUrl, scrollSpeed, scrollEase, autoScroll, imageScale]);
   return (
     <div
       className="circular-gallery"

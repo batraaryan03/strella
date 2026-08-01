@@ -11,8 +11,9 @@ export default meta;
 type Story = StoryObj<typeof CircularGallery>;
 
 /**
- * React Bits CircularGallery — a curved, scrollable reel of cards
- * (ogl). Without `items` it falls back to its built-in demo set.
+ * React Bits CircularGallery — a curved reel of cards (ogl). Without
+ * `items` it falls back to its built-in demo set. Infinite auto-scroll
+ * via `autoScroll`; smaller cards via `imageScale` (site usage).
  */
 export const Default: Story = {
   render: () => (
@@ -23,6 +24,8 @@ export const Default: Story = {
         borderRadius={0.12}
         scrollSpeed={2.8}
         scrollEase={0.02}
+        autoScroll={1.6}
+        imageScale={0.62}
       />
     </div>
   ),
@@ -46,6 +49,8 @@ export const RealGallery: Story = {
         borderRadius={0.12}
         scrollSpeed={2.8}
         scrollEase={0.02}
+        autoScroll={1.6}
+        imageScale={0.62}
       />
     </div>
   ),

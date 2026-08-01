@@ -302,16 +302,25 @@ export default function ColorBends({
     const container = containerRef.current;
     if (!material || !container) return;
 
+    // Window-level pointer tracking (user: "make the hero ColorBends
+    // respond to mouse parallax — it natively supports it"). Listening
+    // on the container alone fails when the hero layer sits behind
+    // content or under pointer-events-none wrappers; window events are
+    // normalized against the container rect so the bend still warps
+    // relative to the element itself.
     const handlePointerMove = e => {
       const rect = container.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / (rect.width || 1)) * 2 - 1;
-      const y = -(((e.clientY - rect.top) / (rect.height || 1)) * 2 - 1);
+      // Skip hidden/zero-size instances (e.g. `hidden md:block` layers)
+      // so they never push out-of-range pointer values into the shader.
+      if (rect.width === 0 || rect.height === 0) return;
+      const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
       pointerTargetRef.current.set(x, y);
     };
 
-    container.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointermove', handlePointerMove);
     return () => {
-      container.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointermove', handlePointerMove);
     };
   }, []);
 

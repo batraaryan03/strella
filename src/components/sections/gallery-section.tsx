@@ -48,8 +48,8 @@ export default function GallerySection() {
           </h2>
           <p className="mt-5 text-base leading-[1.7] text-ink-2 md:text-lg">
             A selection of recent relocations across Melbourne — trucks,
-            teams, and carefully wrapped furniture. Scroll or drag to
-            glide through the reel.
+            teams, and carefully wrapped furniture. The reel glides on
+            its own — scroll or drag to take control.
           </p>
         </div>
 
@@ -61,6 +61,8 @@ export default function GallerySection() {
             borderRadius={0.12}
             scrollSpeed={2.8}
             scrollEase={0.02}
+            autoScroll={1.6}
+            imageScale={0.62}
           />
         </div>
       </div>
