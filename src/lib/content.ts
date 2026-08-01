@@ -354,18 +354,3 @@ export const FAQS = [
   },
 ] as const;
 
-/* ── Gallery (real Unsplash photography) ───────────────────── */
-export const GALLERY_IMAGES = [
-  u("photo-1698917414969-feade59e3343"), // unloading at the kerb
-  u("photo-1714647211902-bb711d643a17"), // packing boxes in living room
-  u("photo-1600518464441-9154a4dea21b"), // crew beside the truck
-  u("photo-1707407087163-7ab35bca9ffc"), // truck loaded with boxes
-  u("photo-1591267556741-66d584d88e42"), // carrying a box
-  u("photo-1700165644892-3dd6b67b25bc"), // brown packing boxes
-  u("photo-1730154838368-c37b1fdebcf6"), // room filled with boxes
-  u("photo-1757742690834-aa581b9f53b2"), // empty room, floor cleared
-  u("photo-1772724317350-520faccb15e6"), // carrying boxes outside
-  u("photo-1714647211963-fa82bd5b3a7a"), // laying rug on the floor
-  u("photo-1449247666642-264389f5f5b1"), // person holding a box
-  u("photo-1592838064575-70ed626d3a0e"), // truck on the road
-];

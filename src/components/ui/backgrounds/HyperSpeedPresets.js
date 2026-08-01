@@ -222,6 +222,47 @@ export const hyperspeedPresets = {
       sticks: 0xfdfdf0
     }
   },
+  /** Akira olive — user-directed "Akira type" highway. Turbulent
+      distortion (the aggressive Akira feel) with the brand olive
+      palette instead of the stock red/cream: warm olive road
+      markings, olive-green car lights, charcoal road surface. */
+  akira: {
+    onSpeedUp: () => {},
+    onSlowDown: () => {},
+    distortion: 'turbulentDistortion',
+    length: 400,
+    roadWidth: 9,
+    islandWidth: 2,
+    lanesPerRoad: 3,
+    fov: 90,
+    fovSpeedUp: 140,
+    speedUp: 2,
+    carLightsFade: 0.4,
+    totalSideLightSticks: 50,
+    lightPairsPerRoadWay: 50,
+    shoulderLinesWidthPercentage: 0.05,
+    brokenLinesWidthPercentage: 0.1,
+    brokenLinesLengthPercentage: 0.5,
+    lightStickWidth: [0.12, 0.5],
+    lightStickHeight: [1.3, 1.7],
+    movingAwaySpeed: [60, 80],
+    movingCloserSpeed: [-120, -160],
+    carLightsLength: [400 * 0.05, 400 * 0.15],
+    carLightsRadius: [0.05, 0.14],
+    carWidthPercentage: [0.3, 0.5],
+    carShiftX: [-0.2, 0.2],
+    carFloorSeparation: [0.05, 1],
+    colors: {
+      roadColor: 0x0a0b08,
+      islandColor: 0x12140e,
+      background: 0x0a0b08,
+      shoulderLines: 0x636b2f,
+      brokenLines: 0x636b2f,
+      leftCars: [0x97a75a, 0xb3c275, 0x636b2f],
+      rightCars: [0x97a75a, 0x5c6b3a, 0x636b2f],
+      sticks: 0x97a75a
+    }
+  },
   /** Stellar olive — brand-tuned highway. Warm olive road markings,
       olive-green car lights, charcoal road surface. Matches the
       #636B2F / #97a75a / #b3c275 palette. */

@@ -45,11 +45,14 @@
   --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
-  /* ── Radii ────────────────────────────────────────────── */
-  --radius-sm: 0.375rem;
-  --radius-btn: 0.5625rem;
-  --radius-card: 0.875rem;
-  --radius-lg: 1.25rem;
+  /* ── Radii — pill curve on buttons/chips, softer on panels.
+     User walked back the 9999px-on-everything: pills suit buttons
+     and small chips; large cards/forms use a generous but finite
+     curve (2rem / 1.5rem) so they don't turn into capsules. ── */
+  --radius-sm: 9999px;
+  --radius-btn: 9999px;
+  --radius-card: 1.5rem;
+  --radius-lg: 2rem;
 
   /* ── Motion ───────────────────────────────────────────── */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -200,6 +203,23 @@ body::after {
 }
 .leaflet-control-attribution a {
   color: var(--color-ink-2) !important;
+}
+
+/* Circular map (Service Areas) — center the attribution so it isn't
+   clipped by the rounded-full crop; zoom control is disabled in the
+   map component since the suburb chips drive navigation. Scoped under
+   .map-circle so other/future rectangular Leaflet instances keep the
+   default bottom-right attribution. */
+.map-circle .leaflet-bottom.leaflet-right {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  left: 0;
+  right: auto;
+}
+.map-circle .leaflet-bottom.leaflet-right .leaflet-control-attribution {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Tooltips — dark, hairline, readable */

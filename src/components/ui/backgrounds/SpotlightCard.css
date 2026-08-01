@@ -27,3 +27,20 @@
 .card-spotlight:focus-within::before {
   opacity: 0.6;
 }
+
+/* Stellar modifier — reviews grid. Neutralises the stock #111
+   background / #222 border so the site's panel tokens (tonal surface,
+   no border) win. Padding is set EXPLICITLY here (not via Tailwind
+   utilities) because this file is unlayered CSS — in the cascade,
+   unlayered declarations beat Tailwind v4's layered utilities, so a
+   p-7/md:p-8 on the className would be silently overridden by 0. */
+.card-spotlight--review {
+  background: var(--color-surface);
+  border: none;
+  padding: 1.75rem;
+}
+@media (min-width: 768px) {
+  .card-spotlight--review {
+    padding: 2rem;
+  }
+}

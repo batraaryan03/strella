@@ -9,24 +9,24 @@ import { BRAND } from "@/lib/content";
 /**
  * Final CTA — calm, borderless. The olive React Bits Grainient (the
  * user-favourite greenish gradient with rotating colors + noise
- * texture) backs a single strong headline — NO eyebrow label — and
- * two clear professional paths.
+ * texture) backs a single strong headline at FULL strength — NO
+ * opacity — with a quiet edge scrim keeping the copy legible.
  */
 export default function FinalCta() {
   return (
     <section className="relative overflow-hidden py-20 md:py-28">
-      {/* Grainient — olive section background */}
+      {/* Grainient — olive section background, no opacity */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.5]"
+        className="pointer-events-none absolute inset-0"
       >
         <Grainient
-          timeSpeed={0.25}
-          color1="#98a686"
+          timeSpeed={0.22}
+          color1="#3a4020"
           color2="#636B2F"
           color3="#808000"
           grainAmount={0.06}
-          contrast={1.2}
+          contrast={1.3}
           className="size-full"
         />
       </div>

@@ -1,13 +1,39 @@
 "use client";
 
-import * as React from "react";
-import DomeGallery from "@/components/ui/backgrounds/DomeGallery";
-import { GALLERY_IMAGES } from "@/lib/content";
+import CircularGallery from "@/components/ui/backgrounds/CircularGallery";
+
+/** Real move photography from /public/gallery (01.jpg … 30.jpg). */
+const GALLERY_SRC = Array.from({ length: 30 }, (_, i) => {
+  const n = String(i + 1).padStart(2, "0");
+  return `/gallery/${n}.jpg`;
+});
+
+/** Short suburb-style captions under each card. */
+const GALLERY_CAPTIONS = [
+  "Hawthorn", "Richmond", "Southbank", "Carlton", "St Kilda",
+  "Docklands", "Footscray", "Dandenong", "Werribee", "Point Cook",
+  "Craigieburn", "Preston", "Sunshine", "Essendon", "Northcote",
+  "Fitzroy", "Toorak", "Glen Waverley", "Box Hill", "Brunswick",
+  "Prahran", "Collingwood", "Kensington", "Elwood", "Malvern",
+  "Moonee Ponds", "Port Melbourne", "Camberwell", "Balwyn", "Kew",
+];
 
 /**
- * Gallery — the React Bits DomeGallery: a drag-rotatable sphere of
- * real Melbourne move photography. Inline header (no SectionHeader).
- * The dome is interactive: drag to spin, click a tile to enlarge.
+ * Stable module-scope items — a fresh array identity on every render
+ * would make CircularGallery's effect (deps include `items`) destroy
+ * and recreate the entire WebGL app on any parent re-render.
+ */
+const GALLERY_ITEMS = GALLERY_SRC.map((src, i) => ({
+  image: src,
+  text: GALLERY_CAPTIONS[i % GALLERY_CAPTIONS.length],
+}));
+
+/**
+ * Gallery — the React Bits CircularGallery: a curved, auto-scrolling
+ * reel of real Melbourne move photography from /public/gallery
+ * (user-directed: replace the DomeGallery with this one, real images).
+ * Scroll / drag / arrow keys to glide; no pixel-animation, simple and
+ * performant on the homepage.
  */
 export default function GallerySection() {
   return (
@@ -22,29 +48,20 @@ export default function GallerySection() {
           </h2>
           <p className="mt-5 text-base leading-[1.7] text-ink-2 md:text-lg">
             A selection of recent relocations across Melbourne — trucks,
-            teams, and carefully wrapped furniture. Drag to explore.
+            teams, and carefully wrapped furniture. Scroll or drag to
+            glide through the reel.
           </p>
         </div>
 
         <div className="mt-10 h-[520px] md:h-[680px]">
-          <React.Suspense fallback={null}>
-            <DomeGallery
-              images={GALLERY_IMAGES.map((src, i) => ({
-                src,
-                alt: `Melbourne move — photo ${i + 1}`,
-              }))}
-              fit={1}
-              minRadius={600}
-              maxRadius={1200}
-              segments={30}
-              dragDampening={3.6}
-              grayscale={false}
-              openedImageWidth="300px"
-              openedImageHeight="400px"
-              imageBorderRadius="16px"
-              openedImageBorderRadius="16px"
-            />
-          </React.Suspense>
+          <CircularGallery
+            items={GALLERY_ITEMS}
+            bend={3}
+            textColor="#f2f3ed"
+            borderRadius={0.12}
+            scrollSpeed={2.8}
+            scrollEase={0.02}
+          />
         </div>
       </div>
     </section>

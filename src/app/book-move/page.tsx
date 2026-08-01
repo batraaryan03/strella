@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { DateField } from "@/components/ui/date-field";
 import { SuburbPicker } from "./suburb-picker";
+import ColorBends from "@/components/ui/backgrounds/ColorBends";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -63,8 +64,24 @@ export default function BookMovePage() {
 
   return (
     <>
-      <div className="min-h-screen pb-20 pt-[6.5rem]">
-        <div className="mx-auto max-w-3xl px-5 md:px-8">
+      <div className="relative min-h-screen overflow-hidden pb-20 pt-[6.5rem]">
+        {/* ColorBends — subtle olive color-field wash, desktop only to
+            keep mobile light (user: "we haven't used the color bins
+            anywhere" — used here, carefully) */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 hidden md:block">
+          <ColorBends
+            className="size-full"
+            colors={["#97a75a", "#636b2f", "#808000", "#3a4020"]}
+            speed={0.15}
+            transparent
+            intensity={1.4}
+            noise={0.08}
+            bandWidth={6}
+            scale={1.1}
+          />
+        </div>
+
+        <div className="relative mx-auto max-w-3xl px-5 md:px-8">
           {/* Page header — editorial kicker, no gimmick labels */}
           <div className="mb-10 text-center">
             <p className="flex items-center justify-center gap-3 text-[0.8125rem] font-medium text-olive">

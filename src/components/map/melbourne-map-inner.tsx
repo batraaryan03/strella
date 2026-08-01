@@ -133,6 +133,7 @@ export default function MelbourneMapInner({ focus }: { focus?: SuburbPoint | nul
       center={MELBOURNE_CENTER}
       zoom={9}
       scrollWheelZoom={false}
+      zoomControl={false}
       className="dark-map-tiles h-full w-full"
       attributionControl={true}
     >

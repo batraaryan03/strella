@@ -33,11 +33,15 @@ export default function ServiceAreas() {
         </div>
 
         <div className="mt-14 grid gap-8 lg:grid-cols-[1.55fr_1fr] lg:gap-12">
-          {/* ── Real map — tall (fly-to driven by the chips) ── */}
-          <MelbourneMap
-            className="h-[460px] md:h-[640px]"
-            focus={focus}
-          />
+          {/* ── Real map — BIG and shown as a circle (user: "showing
+              it in circle is better"). Overflow hidden + full rounding
+              crops Leaflet into a circular lens. ── */}
+          <div className="map-circle relative aspect-square w-full max-w-[720px] overflow-hidden rounded-full">
+            <MelbourneMap
+              className="absolute inset-0 h-full w-full border-0"
+              focus={focus}
+            />
+          </div>
 
           {/* ── Suburb chips ── */}
           <div className="flex flex-col">

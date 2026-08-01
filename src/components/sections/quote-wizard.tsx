@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { DateField } from "@/components/ui/date-field";
+import Grainient from "@/components/ui/backgrounds/Grainient";
 import { SUBURBS } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -148,9 +149,34 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
   const card = (
     <div
       className={cn(
-        !bare && "panel rounded-[var(--radius-lg)] p-6 md:p-10"
+        !bare &&
+          "relative overflow-hidden panel rounded-[var(--radius-lg)] p-6 md:p-10"
       )}
     >
+      {!bare && (
+        <>
+          {/* Grainient — olive animated wash behind the wizard steps
+              (user-directed: the gradient belongs to the step card
+              itself, not the whole section). */}
+          <div aria-hidden className="pointer-events-none absolute inset-0">
+            <Grainient
+              timeSpeed={0.22}
+              color1="#3a4020"
+              color2="#636B2F"
+              color3="#808000"
+              grainAmount={0.06}
+              contrast={1.3}
+              className="size-full"
+            />
+          </div>
+          {/* Soft edge vignette so the wash melts into the panel */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_85%_at_50%_50%,transparent_60%,rgba(10,11,8,0.7)_100%)]"
+          />
+        </>
+      )}
+      <div className="relative">
       {/* Progress bar (shadcn) */}
       <div className="mb-9">
         <div className="mb-3 flex items-center justify-between text-[0.8125rem]">
@@ -388,6 +414,7 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
           </p>
         )}
       </form>
+      </div>
     </div>
   );
 
@@ -407,9 +434,9 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
   return (
     <section
       id="quote"
-      className="relative scroll-mt-24 border-y border-line bg-surface/40 py-20 md:py-28"
+      className="relative overflow-hidden scroll-mt-24 border-y border-line bg-surface/40 py-20 md:py-28"
     >
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+      <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         {/* ── Right-only: heading + wizard card ── */}
         <div className="mx-auto max-w-3xl">
           <div className="mb-10 text-center">

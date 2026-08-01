@@ -3,12 +3,15 @@
 import * as React from "react";
 import { BadgeCheck } from "lucide-react";
 import { StarRating } from "@/components/ui/star-rating";
+import SpotlightCard from "@/components/ui/backgrounds/SpotlightCard";
 import { REVIEWS } from "@/lib/content";
 
 /**
- * Reviews — more reviews (user-directed: "we want to see more reviews,
- * it should look much more trustworthy"). A summary row establishes the
- * aggregate, then the full set of verified reviews in an editorial grid.
+ * Reviews — trustworthy (user: "fix the reviews and make it simple —
+ * think of a better component"). SpotlightCard gives each review a
+ * subtle cursor-following olive light, so the section feels alive and
+ * credible. Summary row establishes the aggregate, then the full set
+ * of verified reviews in an editorial grid.
  */
 export default function ReviewsSection() {
   return (
@@ -53,34 +56,37 @@ export default function ReviewsSection() {
 
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-5">
           {REVIEWS.map((r) => (
-            <figure
+            <SpotlightCard
               key={r.name}
-              className="panel panel-hover flex flex-col rounded-[var(--radius-card)] p-7 md:p-8"
+              spotlightColor="rgba(151, 167, 90, 0.16)"
+              className="card-spotlight--review panel panel-hover flex flex-col rounded-[var(--radius-card)]"
             >
-              <div className="mb-5 flex items-center justify-between">
-                <StarRating value={5} />
-                <span className="inline-flex items-center gap-1 text-[0.6875rem] text-ink-3">
-                  <BadgeCheck className="h-3.5 w-3.5 text-olive" />
-                  Verified
-                </span>
-              </div>
-
-              <blockquote className="flex-1 text-[0.9375rem] leading-[1.7] text-ink-2">
-                &ldquo;{r.text}&rdquo;
-              </blockquote>
-
-              <figcaption className="mt-6 flex items-center gap-3 border-t border-line pt-5">
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-surface-2 font-mono text-xs text-olive">
-                  {r.name.charAt(0)}
-                </span>
-                <span className="text-sm">
-                  <span className="block font-medium text-ink">{r.name}</span>
-                  <span className="block text-xs text-ink-3">
-                    {r.location}, Melbourne
+              <figure className="flex h-full flex-col">
+                <div className="mb-5 flex items-center justify-between">
+                  <StarRating value={5} />
+                  <span className="inline-flex items-center gap-1 text-[0.6875rem] text-ink-3">
+                    <BadgeCheck className="h-3.5 w-3.5 text-olive" />
+                    Verified
                   </span>
-                </span>
-              </figcaption>
-            </figure>
+                </div>
+
+                <blockquote className="flex-1 text-[0.9375rem] leading-[1.7] text-ink-2">
+                  &ldquo;{r.text}&rdquo;
+                </blockquote>
+
+                <figcaption className="mt-6 flex items-center gap-3 border-t border-line pt-5">
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-surface-2 font-mono text-xs text-olive">
+                    {r.name.charAt(0)}
+                  </span>
+                  <span className="text-sm">
+                    <span className="block font-medium text-ink">{r.name}</span>
+                    <span className="block text-xs text-ink-3">
+                      {r.location}, Melbourne
+                    </span>
+                  </span>
+                </figcaption>
+              </figure>
+            </SpotlightCard>
           ))}
         </div>
 

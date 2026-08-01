@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils";
  * hover), no radius, no shadows, no curves, no corners. Professional.
  *
  * Default (primary): olive #636B2F fill with white text/icon. On hover it
- * flips — text turns olive, the fill becomes a *shaded* black (not flat
- * black: a subtle charcoal gradient with a hairline top light).
+ * flips — text turns olive, the fill becomes *pure black* (user: "it
+ * should be pure black, that way it will be better").
  */
 const buttonVariants = cva(
   [
-    "inline-flex items-center justify-center gap-2 rounded-none",
+    "inline-flex items-center justify-center gap-2 rounded-full", // pill curve — matches the navbar GlassSurface
     "text-[0.875rem] font-semibold tracking-[-0.01em] whitespace-nowrap select-none",
     "transition-[background-color,color] duration-200 ease-out",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive-bright",
@@ -23,27 +23,15 @@ const buttonVariants = cva(
       variant: {
         primary: [
           "bg-olive-btn text-white",
-          "hover:bg-[linear-gradient(180deg,#26291d_0%,#101109_100%)]",
-          "hover:text-olive-bright",
-          "shadow-[inset_0_1px_0_rgba(244,245,240,0.08)]",
+          "hover:bg-[#000] hover:text-olive-bright",
         ],
-        secondary: [
-          "bg-surface-2 text-ink",
-          "hover:bg-raised",
-          "shadow-[inset_0_1px_0_rgba(244,245,240,0.05)]",
-        ],
+        secondary: ["bg-surface-2 text-ink", "hover:bg-raised"],
         ghost: ["bg-transparent text-ink-2", "hover:text-olive-bright"],
         outline: [
           "bg-transparent text-ink",
-          "hover:text-olive-bright",
-          "shadow-[inset_0_0_0_1px_var(--color-line-strong)]",
-          "hover:shadow-[inset_0_0_0_1px_var(--color-olive)]",
+          "hover:bg-white/5 hover:text-olive-bright",
         ],
-        light: [
-          "bg-paper text-ink-dark",
-          "hover:bg-white",
-          "shadow-[inset_0_1px_0_rgba(16,17,9,0.06)]",
-        ],
+        light: ["bg-paper text-ink-dark", "hover:bg-white"],
       },
       size: {
         sm: "h-10 px-4 text-[0.8125rem]",

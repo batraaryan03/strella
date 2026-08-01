@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, Instrument_Serif, Geist_Mono } from "next/font/google";
 import Header from "@/components/sections/header";
-import GlassCursor from "@/components/ui/glass-cursor";
+import SiteSilk from "@/components/site-silk";
 import { NoiseTexture } from "@/components/ui/noise-texture";
 import "./globals.css";
 
@@ -66,10 +66,18 @@ export default function RootLayout({
       className={`${instrumentSans.variable} ${instrumentSerif.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-canvas text-ink">
-        {/* Olive-tinted film grain across the whole canvas (real Magic
-            UI NoiseTexture, brand-tuned, lighter olive per directive).
-            Sits under content. */}
-        <div className="pointer-events-none fixed inset-0 z-0" aria-hidden>
+        {/* ── Silk — the site-wide default background (user-directed).
+            Full opacity by design: the moving snake-skin texture is the
+            canvas of the entire website, sitting behind all content.
+            Pauses when the tab is hidden and caps DPR on mobile so the
+            perpetual WebGL never drains phones (performance priority). ── */}
+        <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
+          <SiteSilk />
+        </div>
+
+        {/* Olive-tinted film grain above the silk (lighter olive per
+            directive), sits under content. */}
+        <div aria-hidden className="pointer-events-none fixed inset-0 z-[1]">
           <NoiseTexture
             className="size-full opacity-[0.05]"
             frequency={0.7}
@@ -78,12 +86,10 @@ export default function RootLayout({
           />
         </div>
 
-        <Header />
-
-        {children}
-
-        {/* FluidGlass lens as the pointer (desktop fine-pointer only) */}
-        {/* <GlassCursor /> */}
+        <div className="relative z-10 flex min-h-full flex-1 flex-col">
+          <Header />
+          {children}
+        </div>
       </body>
     </html>
   );

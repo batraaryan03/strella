@@ -10,17 +10,16 @@ import GallerySection from "@/components/sections/gallery-section";
 import MovingTips from "@/components/sections/moving-tips";
 import FinalCta from "@/components/sections/final-cta";
 import Footer from "@/components/sections/footer";
-import GradualBlur from "@/components/ui/backgrounds/GradualBlur";
 
 /**
  * Home — section order per the user-directed rebuild:
- * Hero (Hyperspeed highway) → Trust ribbon → Quote wizard →
- * Services → Process (MagicBento) → Reviews → Service areas (big map)
- * → Pricing → Gallery (DomeGallery) → FAQ → Final CTA → Footer.
+ * Hero (ColorBends field over Silk) → Trust ribbon → Quote wizard →
+ * Services → Process (simple steps) → Reviews → Service areas (big map)
+ * → Pricing → Gallery (CircularGallery) → FAQ → Final CTA → Footer.
  *
- * WhyChooseUs is removed (user: "completely remove it"). A fixed
- * GradualBlur veil sits at the bottom of the viewport across the
- * whole homepage — always present as you scroll.
+ * WhyChooseUs is removed (user: "completely remove it"). GradualBlur
+ * is removed too — the persistent fixed blur was a performance
+ * liability on mobile, and the site-wide Silk background replaces it.
  */
 export default function Home() {
   return (
@@ -39,23 +38,6 @@ export default function Home() {
         <FinalCta />
       </main>
       <Footer />
-
-      {/* GradualBlur — persistent bottom veil over the entire homepage */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-x-0 bottom-0 z-[30] h-56"
-      >
-        <GradualBlur
-          target="parent"
-          position="bottom"
-          height="10rem"
-          strength={2}
-          divCount={5}
-          curve="bezier"
-          exponential={true}
-          opacity={1}
-        />
-      </div>
     </>
   );
 }

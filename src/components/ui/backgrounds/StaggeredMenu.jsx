@@ -20,8 +20,13 @@ export const StaggeredMenu = ({
   isFixed = false,
   closeOnClickAway = true,
   onMenuOpen,
-  onMenuClose
+  onMenuClose,
+  // Optional controlled API so an external hamburger (the floating
+  // header pill) can own the toggle.
+  open: controlledOpen,
+  onOpenChange
 }) => {
+  const isControlled = controlledOpen !== undefined;
   const [open, setOpen] = useState(false);
   const openRef = useRef(false);
   const panelRef = useRef(null);
@@ -306,6 +311,10 @@ export const StaggeredMenu = ({
 
   const toggleMenu = useCallback(() => {
     const target = !openRef.current;
+    if (isControlled) {
+      onOpenChange?.(target);
+      return;
+    }
     openRef.current = target;
     setOpen(target);
     if (target) {
@@ -318,19 +327,41 @@ export const StaggeredMenu = ({
     animateIcon(target);
     animateColor(target);
     animateText(target);
-  }, [playOpen, playClose, animateIcon, animateColor, animateText, onMenuOpen, onMenuClose]);
+  }, [playOpen, playClose, animateIcon, animateColor, animateText, onMenuOpen, onMenuClose, isControlled, onOpenChange]);
 
-  const closeMenu = useCallback(() => {
-    if (openRef.current) {
-      openRef.current = false;
-      setOpen(false);
+  // Controlled mode — sync external state into the open/close choreography.
+  React.useEffect(() => {
+    if (!isControlled || controlledOpen === undefined) return;
+    if (controlledOpen === openRef.current) return;
+    openRef.current = controlledOpen;
+    setOpen(controlledOpen);
+    if (controlledOpen) {
+      onMenuOpen?.();
+      playOpen();
+    } else {
       onMenuClose?.();
       playClose();
-      animateIcon(false);
-      animateColor(false);
-      animateText(false);
     }
-  }, [playClose, animateIcon, animateColor, animateText, onMenuClose]);
+    animateIcon(controlledOpen);
+    animateColor(controlledOpen);
+    animateText(controlledOpen);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [controlledOpen, isControlled, playOpen, playClose, animateIcon, animateColor, animateText]);
+
+  const closeMenu = useCallback(() => {
+    if (!openRef.current) return;
+    if (isControlled) {
+      onOpenChange?.(false);
+      return;
+    }
+    openRef.current = false;
+    setOpen(false);
+    onMenuClose?.();
+    playClose();
+    animateIcon(false);
+    animateColor(false);
+    animateText(false);
+  }, [playClose, animateIcon, animateColor, animateText, onMenuClose, isControlled, onOpenChange]);
 
   React.useEffect(() => {
     if (!closeOnClickAway || !open) return;
@@ -354,7 +385,7 @@ export const StaggeredMenu = ({
 
   return (
     <div
-      className={(className ? className + ' ' : '') + 'staggered-menu-wrapper' + (isFixed ? ' fixed-wrapper' : '')}
+      className={(className ? className + ' ' : '') + 'staggered-menu-wrapper' + (isFixed ? ' fixed-wrapper' : '') + (isControlled ? ' sm-controlled' : '')}
       style={accentColor ? { ['--sm-accent']: accentColor } : undefined}
       data-position={position}
       data-open={open || undefined}

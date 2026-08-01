@@ -331,6 +331,14 @@
   opacity: var(--sm-num-opacity, 0);
 }
 
+/* Controlled mode — the floating header pill owns the hamburger.
+   Keep the internal toggle mounted (GSAP refs depend on it) but
+   invisible and inert; the external hamburger drives `onOpenChange`. */
+.staggered-menu-wrapper.sm-controlled .sm-toggle {
+  opacity: 0;
+  pointer-events: none;
+}
+
 @media (max-width: 1024px) {
   .staggered-menu-panel {
     width: 100%;

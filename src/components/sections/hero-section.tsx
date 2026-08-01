@@ -6,32 +6,50 @@ import { Button } from "@/components/ui/button";
 import { StarRating } from "@/components/ui/star-rating";
 import { Highlighter } from "@/components/ui/highlighter";
 import ShinyText from "@/components/ui/backgrounds/ShinyText";
-import Hyperspeed from "@/components/ui/backgrounds/Hyperspeed";
-import { hyperspeedPresets } from "@/components/ui/backgrounds/HyperSpeedPresets";
+import ColorBends from "@/components/ui/backgrounds/ColorBends";
 import QuoteWizard from "./quote-wizard";
 import { BRAND } from "@/lib/content";
 
 /**
- * Hero — the highway. Hyperspeed (olive "stellar" preset with brand
- * colors #636B2F / #97a75a / #b3c275) is the FULL background of the
- * hero section — it fills the entire width and height. A subtle
- * gradient overlay keeps text readable. Title (ShinyText, olive) left,
- * compact borderless quote wizard right, professional buttons.
+ * Hero — ColorBends overlay (fresh react-bits reinstall, user-directed
+ * exact props). Layers, bottom → top:
+ *  1. site-wide Silk (root layout, z-0)
+ *  2. ColorBends — full-hero transparent olive color-field wash that
+ *     bends and warps over the silk, on top of it, full screen height
+ * A faint left-edge scrim keeps the text column legible. Title
+ * (ShinyText, olive) left, compact borderless quote wizard right,
+ * professional buttons.
  */
 export default function HeroSection() {
   return (
-    <section id="home" className="relative isolate overflow-hidden pt-[4.25rem] min-h-[90vh] md:min-h-[85vh] flex items-center">
-      {/* ── Hyperspeed — full hero background ── */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-      >
-        <Hyperspeed effectOptions={hyperspeedPresets.stellar} />
+    <section id="home" className="relative isolate overflow-hidden flex min-h-[100svh] items-center pt-[4.5rem]">
+      {/* ── ColorBends — full hero overlay on top of the site-wide
+          Silk. Exact react-bits usage props (user-directed). ── */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <ColorBends
+          className="size-full"
+          rotation={90}
+          speed={0.4}
+          colors={["#636B2F", "#98a68f", "#7cff67"]}
+          transparent
+          autoRotate={0}
+          scale={1.20}
+          frequency={1}
+          warpStrength={1}
+          mouseInfluence={1}
+          parallax={0.5}
+          noise={0.15}
+          iterations={1}
+          intensity={0.9}
+          bandWidth={6}
+        />
       </div>
-      {/* Overlay gradient to keep text readable over the highway */}
+      {/* Very faint scrim — light enough that the ColorBends wash stays
+          visible (user: "I am unable to see it — it might be hidden
+          behind the gradient"). Just enough for text legibility. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-canvas/70 via-canvas/40 to-canvas/70"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-canvas/25 via-transparent to-transparent"
       />
 
       <div className="relative mx-auto grid w-full max-w-7xl items-center gap-12 px-5 py-16 md:py-20 md:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">

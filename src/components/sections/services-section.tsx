@@ -1,15 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { SERVICES } from "@/lib/content";
 
 /**
- * Services — a simple, image-forward grid. Each card leads with a
- * clearly visible photo (no bento overlay, no pixel effect — this
- * section renders on the homepage and must stay lightweight). Bold
- * title, short description, one professional CTA.
+ * Services — a simple, image-forward three-column grid. Each card
+ * leads with a clearly visible photo, bold title and short
+ * description. No CTA button (user: "no need of this book this
+ * service button") — the card itself is the entry point.
  */
 export default function ServicesSection() {
   return (
@@ -51,12 +49,6 @@ export default function ServicesSection() {
                 <p className="mt-3 flex-1 text-[0.9375rem] leading-[1.7] text-ink-2">
                   {s.desc}
                 </p>
-                <a href="/book-move" className="mt-6 inline-flex w-fit">
-                  <Button size="sm" className="group/btn">
-                    Book this service
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform duration-150 group-hover/btn:translate-x-0.5" />
-                  </Button>
-                </a>
               </div>
             </article>
           ))}

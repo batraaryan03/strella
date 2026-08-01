@@ -35,6 +35,9 @@ export interface StaggeredMenuProps {
   closeOnClickAway?: boolean;
   onMenuOpen?: () => void;
   onMenuClose?: () => void;
+  /** Optional controlled API — an external hamburger owns the toggle. */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 declare const StaggeredMenu: (props: StaggeredMenuProps) => JSX.Element;

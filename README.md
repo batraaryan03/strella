@@ -18,9 +18,7 @@ The site intentionally avoids "space-themed" decoration. The constellation-inspi
 | Ink | `#f2f3ed` / `#a6ab9e` / `#757a6c` | Primary / secondary / muted text |
 | Type | Instrument Sans + Instrument Serif + Geist Mono | Sans for UI/body, **serif display for headlines**, mono only for real data (prices, stats, truck codes, indexes) |
 
-**Design law:** borderless tonal zoning · Instrument Sans body with Instrument Serif display accents · no glow · no uppercase-mono micro-label eyebrows · subtle motion (fade, elevation, opacity, inertial smoothing) · `prefers-reduced-motion` respected throughout.
-
-**Smooth scroll:** the whole site runs through GSAP ScrollSmoother (`smooth-scroll.tsx`) — `#smooth-wrapper` > `#smooth-content` in the root layout. Fixed elements (Header, Toaster, FloatingQuote) live **outside** the wrapper, because the content transform breaks `position: fixed` descendants. Reduced-motion users get native scroll with zero GSAP loaded. One restrained `data-speed` parallax on the hero photo only.
+**Design law:** borderless tonal zoning · Instrument Sans body · no glow · no uppercase-mono micro-label eyebrows · subtle motion (fade, elevation, opacity, inertial smoothing) · `prefers-reduced-motion` respected throughout.
 
 ---
 
@@ -30,12 +28,11 @@ The site intentionally avoids "space-themed" decoration. The constellation-inspi
 - **Tailwind CSS v4** (CSS-first config, `@theme inline` tokens, `tw-animate-css`)
 - **Storybook 10** (`@storybook/nextjs-vite`) — every component + section has stories
 - **Leaflet** + **OpenStreetMap** — real map, no API key (fully free, no usage limits); dark-graded via CSS filter on standard tiles
-- **GSAP** (ScrollTrigger + ScrollSmoother) + **framer-motion** — inertial smooth scroll, scroll-linked reveals
 - **react-day-picker** + **date-fns** — dark Calendar / DateField with AU formatting
 - **Radix UI** primitives (Dialog, Tooltip, Progress, Slot) + **sonner** toasts
 - **lucide-react** icons · **cva + clsx + tailwind-merge** for variants
-- **Real component kit** (Magic UI / Aceternity / React Bits): PixelImage pixel-reveal, BentoGrid, NumberTicker, Highlighter (rough-notation), NoiseTexture, KineticText, AnimatedCircularProgressBar, Spotlight, RevealText
-- **React Bits kit** (client-only): **Hyperspeed** (olive-tuned "Neon Waves" — the homepage backdrop on `/`), **LaserFlow** (olive laser wash), **ColorBends** (color-field bends; stock + olive), **Silk** (flowing silk, brand olive), **Grainient** (olive animated gradient, `ogl`), **Counter** (rolling digits, `motion`), **CountUp** (spring counter, `motion`), **DomeGallery** (drag-rotatable photo sphere, `@use-gesture/react`), **FluidGlass** (3D glass lens/bar/cube, drei + maath + GLB models), **GradualBlur** (layered edge blur overlay), **MagicBento** (GSAP bento card grid with spotlight/border-glow/tilt — olive `#636B2F` glow, `cards` prop for Stellar content), **ShinyText** (animated shine sweep via `motion`), **SplitText** (GSAP letter/word reveal via `@gsap/react` + `gsap/SplitText` — distinct from the Typography SplitText), **StaggeredMenu** (GSAP staggered fullscreen menu — olive underlays, project logo), **Stepper** (spring step wizard via `motion` — olive active/complete states) and **SpotlightCard** (cursor-following card spotlight, olive-tinted) — WebGL backgrounds on `three` + `postprocessing` (+ `@react-three/fiber`/`drei`/`maath`/`ogl` where needed)
+- **Real component kit** (Magic UI / Aceternity / React Bits): PixelImage pixel-reveal, NumberTicker, Highlighter (rough-notation), NoiseTexture, AnimatedCircularProgressBar
+- **React Bits kit** (client-only): **ColorBends** (color-field bends — full-hero overlay on `/`, exact stock props), **LaserFlow** (olive laser wash), **Silk** (flowing silk, brand olive — the site-wide background), **Grainient** (olive animated gradient, `ogl`), **CircularGallery** (curved photo reel, `ogl` — the homepage gallery with real `/public/gallery` photography, in-view gated), **FluidGlass** (3D glass lens/bar/cube, drei + maath + GLB models), **GradualBlur** (layered edge blur overlay), **ShinyText** (animated shine sweep via `motion`), **SplitText** (GSAP letter/word reveal via `@gsap/react` + `gsap/SplitText` — distinct from the Typography SplitText), **StaggeredMenu** (GSAP staggered fullscreen menu — olive underlays), **Stepper** (spring step wizard via `motion` — olive active/complete states) and **SpotlightCard** (cursor-following card spotlight, olive-tinted — review cards) — WebGL on `three` + `postprocessing` (+ `@react-three/fiber`/`drei`/`maath`/`ogl` where needed)
 
 ---
 
@@ -76,7 +73,7 @@ Until a sending domain is verified on Resend, the default `onboarding@resend.dev
 ```
 src/
 ├── app/
-│   ├── layout.tsx          # Root layout: fonts, Header + SmoothScroll wrapper (fixed elems outside), Toaster, FloatingQuote
+│   ├── layout.tsx          # Root layout: fonts, Header, Toaster
 │   ├── page.tsx            # Homepage — all sections in CRO order
 │   ├── globals.css         # Design tokens + utilities (.panel, .card-glare, noise, blur-in)
 │   ├── book-move/          # Booking page (DateField, bottom-sheet SuburbPicker)
@@ -86,7 +83,7 @@ src/
 │   ├── ui/                 # Primitives (calendar, date-field, count-up, sheet, dialog, …)
 │   ├── sections/           # Page sections (hero, trust-ribbon, services, pricing, …)
 │   ├── map/                # Leaflet + OpenStreetMap Melbourne map (olive polygon, route, depot beacon)
-│   └── ui/backgrounds/      # React Bits kit — Hyperspeed (homepage backdrop), LaserFlow, ColorBends, Silk, Grainient, Counter, CountUp, DomeGallery, FluidGlass, GradualBlur, MagicBento, ShinyText, SplitText, StaggeredMenu, Stepper, SpotlightCard (stories for all)
+│   └── ui/backgrounds/      # React Bits kit — ColorBends (hero overlay), Silk (site bg), Grainient, CircularGallery, LaserFlow, FluidGlass, GradualBlur, ShinyText, SplitText, StaggeredMenu, Stepper, SpotlightCard (stories for all)
 ├── hooks/                  # use-media-query
 └── lib/
     ├── content.ts          # Single source of truth for ALL copy + data
@@ -101,16 +98,15 @@ docs/                       # Research trail (design system, waves 1–5, user r
 | Section | What it does |
 |---|---|
 | Header / nav | Sticky minimal header, mobile menu |
-| Hero | Editorial split — display typography + real photo + floating quote card + move-record caption |
+| Hero | ColorBends olive overlay over Silk + ShinyText title + compact quote wizard |
 | Trust ribbon | **NumberTicker** animated stats ($20M, 100%, 5,000+, 4.9★) on hairline dividers |
 | Quote wizard | 3 steps (Route → Load → Details) with **ballpark estimate on step 1**; contact last — sits high on the page as the primary conversion widget |
 | Services | Borderless bento cards with real photography + restrained GlareHover |
-| Process | **ScrollStack** — panels pile up on scroll, pure-CSS waypoint rail (RouteBeam removed) |
-| Why choose | Vertical pillars with mono metrics |
-| Reviews | Verified, suburb-attributed Google reviews |
+| Process | Simple 3-step panel row (Request → Fixed quote → We move you) |
+| Reviews | Verified, suburb-attributed Google reviews in **SpotlightCard** tiles |
 | Service areas | **Real Leaflet map** — olive service polygon, animated route, depot beacon, suburb chips |
 | Pricing | Truck tiers + **day-of-week toggle** (weekend same-rate trust statement) |
-| Gallery | **Editorial masonry** + full-viewport lightbox (keyboard + touch) |
+| Gallery | **CircularGallery** curved reel of real `/public/gallery` move photography |
 | Moving tips / FAQ | Large-typography accordion with **blur-in** answer reveals |
 | Final CTA | Cinematic booking call-to-action panel |
 | Footer | Giant wordmark, compliance tier (ABN, $20M liability), floating quote trigger |
@@ -159,7 +155,6 @@ The `docs/` folder records the full research trail behind this design:
 - `2026-08-01-design-system.md` — the borderless token system
 - `2026-08-01-design-research.md` · `2026-08-01-user-research.md` — competitor + user research
 - `2026-08-01-component-research.md` → `-wave2.md` → `-wave3.md` → `-wave4.md` → `-wave5.md` — catalog inventories (Magic UI, Aceternity, React Bits, 21st.dev), case studies (Awwwards, SiteInspire, Framer templates, footer.design), and the moving-industry conversion playbook (Muval, Man With A Van, Cheap Removals).
-- `2026-08-01-gsap-motion-layer.md` — the ScrollSmoother smooth-scroll layer: architecture rule (fixed elements outside the wrapper), reduced-motion posture, and the two-element parallax budget.
 
 ---
 
