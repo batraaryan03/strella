@@ -107,12 +107,7 @@ export default function PricingSection() {
               </div>
 
               <div className="mt-8 flex items-baseline gap-2">
-                <span
-                  className={cn(
-                    "tnum text-[clamp(3rem,6vw,4.5rem)] font-bold leading-none tracking-[-0.04em]",
-                    plan.popular ? "text-olive-bright" : "text-ink"
-                  )}
-                >
+                <span className="tnum text-[clamp(3rem,6vw,4.5rem)] font-bold leading-none tracking-[-0.04em] text-olive-bright">
                   ${plan.price}
                 </span>
                 <span className="text-base text-ink-3">/ hour</span>

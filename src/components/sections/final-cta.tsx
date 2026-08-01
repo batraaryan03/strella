@@ -3,39 +3,16 @@
 import * as React from "react";
 import { Phone, CalendarCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Grainient from "@/components/ui/backgrounds/Grainient";
 import { BRAND } from "@/lib/content";
 
 /**
- * Final CTA — calm, borderless. The olive React Bits Grainient (the
- * user-favourite greenish gradient with rotating colors + noise
- * texture) backs a single strong headline at FULL strength — NO
- * opacity — with a quiet edge scrim keeping the copy legible.
+ * Final CTA — calm, borderless, TRANSPARENT (user-directed: "have no
+ * background, transparent"). No Grainient, no scrim — the site-wide
+ * Silk shows through, and the copy breathes directly on it.
  */
 export default function FinalCta() {
   return (
-    <section className="relative overflow-hidden py-20 md:py-28">
-      {/* Grainient — olive section background, no opacity */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-      >
-        <Grainient
-          timeSpeed={0.22}
-          color1="#3a4020"
-          color2="#636B2F"
-          color3="#808000"
-          grainAmount={0.06}
-          contrast={1.3}
-          className="size-full"
-        />
-      </div>
-      {/* Blend the gradient into the canvas at the edges */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,transparent_35%,rgba(10,11,8,0.85)_100%)]"
-      />
-
+    <section className="relative py-20 md:py-28">
       <div className="relative mx-auto max-w-4xl px-5 text-center md:px-8">
         <h2 className="text-balance text-[clamp(2.75rem,6.5vw,5.25rem)] font-bold leading-[1.0] tracking-[-0.035em] text-ink">
           Ready to move?{" "}

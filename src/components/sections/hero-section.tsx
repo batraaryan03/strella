@@ -36,7 +36,7 @@ export default function HeroSection() {
           scale={1.20}
           frequency={1}
           warpStrength={1}
-          mouseInfluence={1}
+          mouseInfluence={0}
           parallax={0.5}
           noise={0.15}
           iterations={1}
