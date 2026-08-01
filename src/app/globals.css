@@ -1,26 +1,169 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ═══════════════════════════════════════════════════════════════
+   STELLAR — design tokens
+   Charcoal canvas · graphite surfaces · anaconda olive accent
+   Constellation geometry as brand DNA (precision, guidance)
+   ═══════════════════════════════════════════════════════════════ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* ── Surfaces ─────────────────────────────────────────── */
+  --color-canvas: #0b0c0a;            /* page background  */
+  --color-surface: #12140f;           /* cards / panels   */
+  --color-raised: #191c15;            /* elevated         */
+  --color-raised-2: #21251c;          /* hover / overlay  */
+  --color-line: rgba(244, 245, 240, 0.08);
+  --color-line-strong: rgba(244, 245, 240, 0.16);
+
+  /* ── Text ─────────────────────────────────────────────── */
+  --color-ink: #f4f5f0;               /* primary text     */
+  --color-ink-2: #a8aca2;             /* secondary        */  --color-ink-3: #7c8175;             /* muted / meta    */
+  --color-ink-dark: #17190f;          /* text on light    */
+
+  /* ── Accent — anaconda olive ──────────────────────────── */
+  --color-olive: #8a9a52;             /* primary accent   */
+  --color-olive-bright: #aebd75;      /* hover / highlight */
+  --color-olive-deep: #5a693a;        /* dark variant     */
+  --color-olive-tint: rgba(138, 154, 82, 0.1);
+  --color-olive-glow: rgba(138, 154, 82, 0.32);
+
+  /* ── Light surfaces (10% of composition) ──────────────── */
+  --color-paper: #f2f1ea;
+  --color-paper-2: #e9e8df;
+
+  /* ── Type ─────────────────────────────────────────────── */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+
+  /* ── Radii ────────────────────────────────────────────── */
+  --radius-sm: 0.375rem;
+  --radius-btn: 0.5rem;
+  --radius-card: 0.875rem;
+  --radius-lg: 1.25rem;
+
+  /* ── Motion ───────────────────────────────────────────── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base ─────────────────────────────────────────────────── */
+
+html {
+  scroll-behavior: auto; /* GSAP measures positions — keep auto */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-olive);
+  color: var(--color-ink-dark);
+}
+
+/* ── Focus visibility (WCAG) ─────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-olive);
+  outline-offset: 2px;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: #2b2f26;
+  border-radius: 999px;
+  border: 2px solid var(--color-canvas);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3f31;
+}
+
+/* ── Utilities ───────────────────────────────────────────── */
+
+/* Constellation blueprint grid — the brand's underlying geometry */
+.constellation-grid {
+  background-image:
+    linear-gradient(to right, rgba(244, 245, 240, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(244, 245, 240, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Hairline top border that brightens on hover */
+.hairline-top {
+  border-top: 1px solid var(--color-line);
+}
+
+/* Tabular numerals for data readouts */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Hide scrollbar but keep scrolling */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Gallery marquee */
+@keyframes gallery-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes gallery-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.gallery-track-left {
+  animation: gallery-left 90s linear infinite;
+}
+.gallery-track-right {
+  animation: gallery-right 110s linear infinite;
+}
+.gallery-row:hover .gallery-track-left,
+.gallery-row:hover .gallery-track-right {
+  animation-play-state: paused;
+}
+
+/* Subtle ambient pulse for live indicators */
+@keyframes ping-soft {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+.ping-soft::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--color-olive);
+  animation: ping-soft 2.4s var(--ease-out-expo) infinite;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .gallery-track-left,
+  .gallery-track-right {
+    animation: none !important;
+  }
 }
