@@ -2,6 +2,9 @@
  * STELLAR — single source of truth for all site content.
  * Content structure mirrors the Weekend Movers project; copy is
  * rebranded & refined for Stellar Removals.
+ *
+ * Photography: curated + download-tracked via the Unsplash MCP tool.
+ * Every image is a real Unsplash photo (never a dummy/placeholder).
  */
 
 export const BRAND = {
@@ -29,13 +32,99 @@ export const NAV_LINKS = [
   { href: "/contact", label: "Contact", isPage: true },
 ] as const;
 
-/* ── Trust metrics (hero ribbon) ───────────────────────────── */
+/* ── Photography (Unsplash, tracked) ───────────────────────── */
+const u = (id: string, w = 1200) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
+
+export const PHOTOS = {
+  hero: u("photo-1698917414969-feade59e3343", 1600), // crew unloading at the kerb
+  serviceHouse: u("photo-1714647211902-bb711d643a17"), // packing boxes in living room
+  serviceApartment: u("photo-1772724317350-520faccb15e6"), // carrying boxes outside building
+  serviceOffice: u("photo-1591267556741-66d584d88e42"), // man carrying box
+  servicePacking: u("photo-1700165644892-3dd6b67b25bc"), // brown packing boxes
+  serviceAssembly: u("photo-1714647211963-fa82bd5b3a7a"), // laying rug on the floor
+} as const;
+
+export const HERO_CAPTION = {
+  route: "Hawthorn → South Yarra",
+  truck: "STL-08 · Sat 08:00",
+} as const;
+
+/** Photographer credits for every Unsplash photo used (API terms). */
+export const PHOTO_CREDITS = [
+  { name: "Egor Ivlev", url: "https://unsplash.com/@ger46" },
+  { name: "Vitaly Gariev", url: "https://unsplash.com/@silverkblack" },
+  { name: "Handiwork NYC", url: "https://unsplash.com/@handiworknyc" },
+  { name: "Infinity Movers Cape Coral", url: "https://unsplash.com/@infinitymoverscapecoral" },
+  { name: "Jorge Alcala", url: "https://unsplash.com/@jorgeaalcala" },
+  { name: "Luke Heibert", url: "https://unsplash.com/@lukeheibert" },
+  { name: "Dina Badamshina", url: "https://unsplash.com/@dinaamazing" },
+  { name: "Christian Lue", url: "https://unsplash.com/@christianlue" },
+  { name: "Apartment Life", url: "https://unsplash.com/@apartmentlife" },
+  { name: "Bench Accounting", url: "https://unsplash.com/@benchaccounting" },
+  { name: "Sander Yigin", url: "https://unsplash.com/@sanderyigin" },
+] as const;
+
+/* ── Map data (MapLibre · OpenFreeMap dark) ────────────────── */
+export const MELBOURNE_CENTER: [number, number] = [144.9631, -37.8136];
+
+/** Rough service-area hull covering greater Melbourne (lng, lat). */
+export const SERVICE_AREA_POLYGON: [number, number][] = [
+  [144.55, -37.7],
+  [144.65, -37.45],
+  [144.9, -37.38],
+  [145.15, -37.4],
+  [145.35, -37.55],
+  [145.45, -37.75],
+  [145.3, -37.95],
+  [145.05, -38.12],
+  [144.8, -38.1],
+  [144.6, -37.95],
+];
+
+/** Depot → CBD → inner-east sample route (lng, lat). */
+export const ROUTE_PATH: [number, number][] = [
+  [144.945, -37.817], // Docklands depot
+  [144.9631, -37.8136], // CBD
+  [145.0359, -37.8216], // Hawthorn
+];
+
+export interface SuburbPoint {
+  name: string;
+  lat: number;
+  lng: number;
+}
+
+export const SUBURB_POINTS: SuburbPoint[] = [
+  { name: "Craigieburn", lat: -37.599, lng: 144.7237 },
+  { name: "Essendon", lat: -37.7549, lng: 144.9178 },
+  { name: "Brunswick", lat: -37.7662, lng: 144.9633 },
+  { name: "Northcote", lat: -37.8253, lng: 145.0012 },
+  { name: "Fitzroy", lat: -37.7984, lng: 144.9784 },
+  { name: "Carlton", lat: -37.8003, lng: 144.9664 },
+  { name: "Docklands", lat: -37.8187, lng: 144.9458 },
+  { name: "Richmond", lat: -37.8232, lng: 145.0019 },
+  { name: "Hawthorn", lat: -37.8216, lng: 145.0359 },
+  { name: "Toorak", lat: -37.8419, lng: 145.0207 },
+  { name: "Box Hill", lat: -37.8223, lng: 145.1243 },
+  { name: "Glen Waverley", lat: -37.8789, lng: 145.163 },
+  { name: "Footscray", lat: -37.8007, lng: 144.8985 },
+  { name: "Sunshine", lat: -37.787, lng: 144.832 },
+  { name: "Point Cook", lat: -37.9261, lng: 144.7505 },
+  { name: "Werribee", lat: -37.9027, lng: 144.6596 },
+  { name: "Southbank", lat: -37.8236, lng: 144.9655 },
+  { name: "St Kilda", lat: -37.8676, lng: 144.9806 },
+  { name: "Preston", lat: -37.732, lng: 145.0087 },
+  { name: "Dandenong", lat: -37.9873, lng: 145.2148 },
+];
+
+/* ── Trust metrics (verified ribbon) ───────────────────────── */
 export const TRUST_METRICS = [
-  { label: "Google Rating", value: "4.9", suffix: "★", sub: "2,300+ verified reviews" },
-  { label: "Moves Completed", value: "5,000", suffix: "+", sub: "across greater Melbourne" },
-  { label: "Years Moving", value: "12", suffix: "+", sub: "local Melbourne expertise" },
-  { label: "Insurance", value: "$20M", suffix: "", sub: "full transit coverage" },
-  { label: "Availability", value: "7", suffix: " days", sub: "weekends & same-day" },
+  { icon: "shield", label: "Fully insured", value: "$20M", suffix: "", sub: "transit cover on every move" },
+  { icon: "badge", label: "Police-checked crew", value: "100%", suffix: "", sub: "background verified" },
+  { icon: "truck", label: "Moves completed", value: "5,000", suffix: "+", sub: "across greater Melbourne" },
+  { icon: "star", label: "Google rating", value: "4.9", suffix: "★", sub: "2,300+ verified reviews" },
+  { icon: "receipt", label: "Upfront pricing", value: "Fixed", suffix: "", sub: "no hidden fees, ever" },
 ] as const;
 
 /* ── Services ──────────────────────────────────────────────── */
@@ -44,31 +133,31 @@ export const SERVICES = [
     icon: "home",
     title: "Local House Moves",
     desc: "Complete residential moving services across Melbourne. We handle everything from small apartments to large family homes with care and professionalism.",
-    img: "/services/01-local-house-moves.png",
+    img: PHOTOS.serviceHouse,
   },
   {
     icon: "building",
     title: "Apartment Moves",
     desc: "Specialised in apartment and unit relocations. We navigate stairs, elevators, and tight spaces with ease to ensure a smooth move.",
-    img: "/services/02-apartment-moves.png",
+    img: PHOTOS.serviceApartment,
   },
   {
     icon: "briefcase",
     title: "Office Relocations",
     desc: "Professional office moving services that minimise downtime. We handle furniture, equipment, and documents with efficiency and care.",
-    img: "/services/03-office-relocations.png",
+    img: PHOTOS.serviceOffice,
   },
   {
     icon: "package",
     title: "Packing & Unpacking",
     desc: "Full packing services available with quality materials. We pack, move, and unpack your belongings, saving you time and stress.",
-    img: "/services/04-packing-unpacking.png",
+    img: PHOTOS.servicePacking,
   },
   {
     icon: "wrench",
     title: "Furniture Assembly",
     desc: "Expert furniture disassembly and reassembly included. We handle complex furniture pieces to ensure safe transport and proper setup.",
-    img: "/services/05-furniture-assembly.png",
+    img: PHOTOS.serviceAssembly,
   },
 ] as const;
 
@@ -117,33 +206,33 @@ export const PLANS = [
 /* ── Why choose ────────────────────────────────────────────── */
 export const WHY_CHOOSE = [
   {
-    icon: "users",
     title: "Local Melbourne Team",
+    metric: "MEL · 12 yrs",
     desc: "Born and raised in Melbourne, we know the city inside out — every laneway, loading zone, and parking fine avoided.",
   },
   {
-    icon: "dollar",
     title: "Clear Upfront Pricing",
+    metric: "$120/hr",
     desc: "Transparent hourly quotes with no surprise fees, no hidden costs, and no last-minute markups. Ever.",
   },
   {
-    icon: "shield",
     title: "Careful Handling",
+    metric: "$20M cover",
     desc: "Your belongings are protected with $20M transit insurance and professional wrapping on every item that matters.",
   },
   {
-    icon: "calendar",
     title: "Weekend & Same-Day",
+    metric: "7 days",
     desc: "Flexible scheduling including weekends and last-minute moves, because life rarely sticks to business hours.",
   },
   {
-    icon: "heart",
     title: "Friendly Professionals",
+    metric: "Police-checked",
     desc: "Background-checked movers who treat your home like their own — shoe covers on, smiles on.",
   },
   {
-    icon: "map",
     title: "All Metro Coverage",
+    metric: "300+ postcodes",
     desc: "From the CBD to the outer suburbs, we service 300+ postcodes across greater Melbourne.",
   },
 ] as const;
@@ -274,8 +363,18 @@ export const FAQS = [
   },
 ] as const;
 
-/* ── Gallery ───────────────────────────────────────────────── */
-export const GALLERY_IMAGES = Array.from(
-  { length: 30 },
-  (_, i) => `/gallery/${String(i + 1).padStart(2, "0")}.jpg`
-);
+/* ── Gallery (real Unsplash photography) ───────────────────── */
+export const GALLERY_IMAGES = [
+  u("photo-1698917414969-feade59e3343"), // unloading at the kerb
+  u("photo-1714647211902-bb711d643a17"), // packing boxes in living room
+  u("photo-1600518464441-9154a4dea21b"), // crew beside the truck
+  u("photo-1707407087163-7ab35bca9ffc"), // truck loaded with boxes
+  u("photo-1591267556741-66d584d88e42"), // carrying a box
+  u("photo-1700165644892-3dd6b67b25bc"), // brown packing boxes
+  u("photo-1730154838368-c37b1fdebcf6"), // room filled with boxes
+  u("photo-1757742690834-aa581b9f53b2"), // empty room, floor cleared
+  u("photo-1772724317350-520faccb15e6"), // carrying boxes outside
+  u("photo-1714647211963-fa82bd5b3a7a"), // laying rug on the floor
+  u("photo-1449247666642-264389f5f5b1"), // person holding a box
+  u("photo-1592838064575-70ed626d3a0e"), // truck on the road
+];

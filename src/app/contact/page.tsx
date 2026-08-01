@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { ConstellationField } from "@/components/ui/constellation-field";
 import { BRAND } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -78,7 +77,6 @@ export default function ContactPage() {
       <div className="min-h-screen pb-20 pt-[6.5rem]">
         {/* Header */}
         <div className="relative overflow-hidden border-b border-line bg-surface/50">
-          <ConstellationField density={16} seed={21} className="text-ink-3 opacity-25" />
           <div className="relative mx-auto max-w-7xl px-5 py-16 text-center md:px-8 md:py-20">
             <p className="font-mono text-[0.625rem] uppercase tracking-[0.24em] text-olive">
               Get in touch

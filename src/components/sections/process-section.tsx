@@ -57,12 +57,9 @@ export default function ProcessSection() {
       id="process"
       className="relative scroll-mt-24 border-y border-line bg-surface/40 py-20 md:py-28"
     >
-      {/* blueprint grid backdrop */}
-      <div className="constellation-grid pointer-events-none absolute inset-0 opacity-40" />
-
       <div ref={ref} className="relative mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeader
-          index="02"
+          index="03"
           eyebrow="How it works"
           title={
             <>

@@ -21,7 +21,7 @@ export default function PricingSection() {
     >
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeader
-          index="03"
+          index="07"
           eyebrow="Transparent pricing"
           title={
             <>

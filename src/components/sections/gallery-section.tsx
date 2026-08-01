@@ -6,8 +6,9 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { SectionHeader } from "@/components/ui/section-header";
 import { GALLERY_IMAGES } from "@/lib/content";
 
-const row1 = GALLERY_IMAGES.slice(0, 15);
-const row2 = GALLERY_IMAGES.slice(15, 30);
+const half = Math.ceil(GALLERY_IMAGES.length / 2);
+const row1 = GALLERY_IMAGES.slice(0, half);
+const row2 = GALLERY_IMAGES.slice(half);
 
 /**
  * Gallery — editorial asymmetric rows scrolling in opposite
@@ -79,7 +80,7 @@ export default function GallerySection() {
     <section id="gallery" className="relative scroll-mt-24 overflow-hidden py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeader
-          index="07"
+          index="08"
           eyebrow="Gallery"
           title={
             <>

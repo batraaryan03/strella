@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Phone, Mail, Clock, MapPin, CalendarCheck } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
-import { BRAND } from "@/lib/content";
+import { BRAND, PHOTO_CREDITS } from "@/lib/content";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -144,6 +144,27 @@ export default function Footer() {
             <a href="#" className="transition-colors hover:text-ink-2">Terms of Service</a>
           </div>
           <p className="font-mono uppercase tracking-[0.14em]">MEL · AU</p>
+        </div>
+
+        {/* ── Photography credits (Unsplash API terms) ── */}
+        <div className="border-t border-line/60 py-4">
+          <p className="text-center text-[0.6875rem] leading-relaxed text-ink-3">
+            Photography by{" "}
+            {PHOTO_CREDITS.map((c, i) => (
+              <React.Fragment key={c.name}>
+                {i > 0 && <span> · </span>}
+                <a
+                  href={c.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-ink-2"
+                >
+                  {c.name}
+                </a>
+              </React.Fragment>
+            ))}{" "}
+            on Unsplash
+          </p>
         </div>
       </div>
     </footer>

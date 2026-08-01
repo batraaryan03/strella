@@ -24,7 +24,7 @@ export default function MovingTips() {
           {/* Left — sticky intro */}
           <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionHeader
-              index="08"
+              index="09"
               eyebrow="Advice & answers"
               title={
                 <>

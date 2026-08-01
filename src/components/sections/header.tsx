@@ -66,7 +66,7 @@ export default function Header() {
           <a href="/book-move" className="hidden md:block">
             <Button size="sm" className="gap-1.5">
               <CalendarCheck className="h-3.5 w-3.5" />
-              Book a Move
+              Get a Quote
             </Button>
           </a>
           <button
@@ -97,7 +97,7 @@ export default function Header() {
               <a href="/book-move" className="flex-1">
                 <Button className="w-full" size="sm">
                   <CalendarCheck className="h-3.5 w-3.5" />
-                  Book a Move
+                  Get a Quote
                 </Button>
               </a>
               <a href={`tel:${BRAND.phone}`} className="flex-1">

@@ -18,7 +18,7 @@ export default function ReviewsSection() {
     >
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeader
-          index="06"
+          index="05"
           eyebrow="Reviews"
           title={
             <>

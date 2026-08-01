@@ -91,12 +91,23 @@ body {
 
 /* ── Utilities ───────────────────────────────────────────── */
 
-/* Constellation blueprint grid — the brand's underlying geometry */
-.constellation-grid {
-  background-image:
-    linear-gradient(to right, rgba(244, 245, 240, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(244, 245, 240, 0.035) 1px, transparent 1px);
-  background-size: 56px 56px;
+/* Map marker — olive waypoint dot (MapLibre custom element) */
+.map-pin {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--color-olive-bright);
+  border: 2px solid rgba(11, 12, 10, 0.9);
+  box-shadow: 0 0 0 1px rgba(174, 189, 117, 0.45);
+}
+
+/* Quote wizard — calm step transition */
+@keyframes step-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.step-in {
+  animation: step-in 320ms var(--ease-out-expo) both;
 }
 
 /* Hairline top border that brightens on hover */
@@ -139,19 +150,6 @@ body {
   animation-play-state: paused;
 }
 
-/* Subtle ambient pulse for live indicators */
-@keyframes ping-soft {
-  0%   { transform: scale(1);   opacity: 0.7; }
-  100% { transform: scale(2.6); opacity: 0; }
-}
-.ping-soft::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  background: var(--color-olive);
-  animation: ping-soft 2.4s var(--ease-out-expo) infinite;
-}
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
