@@ -32,6 +32,10 @@
   --color-olive-tint: rgba(151, 167, 90, 0.1);
   --color-olive-glow: rgba(151, 167, 90, 0.28);
 
+  /* ── Button — user-directed olive #636B2F + shaded black ── */
+  --color-olive-btn: #636b2f;         /* button olive fill */
+  --color-btn-shaded: #1c1e15;        /* shaded black (hover flip) */
+
   /* ── Light surfaces (10% of composition) ──────────────── */
   --color-paper: #f1f0e8;
   --color-paper-2: #e7e6dc;
@@ -304,18 +308,6 @@ body::after {
   background-size: 64px 64px;
   -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 78%);
   mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 78%);
-}
-
-/* ── Spotlight (Aceternity) — entrance sweep for the olive light ── */
-@keyframes spotlight {
-  0% {
-    opacity: 0;
-    transform: translate(-72%, -62%) scale(0.5);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -40%) scale(1);
-  }
 }
 
 /* Quote wizard — calm step transition */

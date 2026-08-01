@@ -8,16 +8,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { DateField } from "@/components/ui/date-field";
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-  SheetClose,
-} from "@/components/ui/sheet";
 import { SuburbPicker } from "./suburb-picker";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -76,21 +66,19 @@ export default function BookMovePage() {
       <div className="min-h-screen pb-20 pt-[6.5rem]">
         <div className="mx-auto max-w-3xl px-5 md:px-8">
           {/* Page header — editorial kicker, no gimmick labels */}
-          <ScrollReveal asGroup>
-            <div className="mb-10 text-center">
-              <p className="flex items-center justify-center gap-3 text-[0.8125rem] font-medium text-olive">
-                <span className="h-px w-6 bg-olive/60" aria-hidden />
-                Melbourne&apos;s precision removalists
-              </p>
-              <h1 className="mt-4 text-balance text-[clamp(2.5rem,5.5vw,3.5rem)] font-medium tracking-[-0.04em] text-ink">
-                Book your move
-              </h1>
-              <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-2">
-                Let&apos;s get you moving. Fill in the details below and our
-                team will confirm your booking within 60 seconds.
-              </p>
-            </div>
-          </ScrollReveal>
+          <div className="mb-10 text-center">
+            <p className="flex items-center justify-center gap-3 text-[0.8125rem] font-medium text-olive">
+              <span className="h-px w-6 bg-olive/60" aria-hidden />
+              Melbourne&apos;s precision removalists
+            </p>
+            <h1 className="mt-4 text-balance text-[clamp(2.5rem,5.5vw,3.5rem)] font-medium tracking-[-0.04em] text-ink">
+              Book your move
+            </h1>
+            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-2">
+              Let&apos;s get you moving. Fill in the details below and our
+              team will confirm your booking within 60 seconds.
+            </p>
+          </div>
 
           {status === "success" ? (
             <div className="panel rounded-[var(--radius-lg)] bg-olive-tint/30 px-8 py-14 text-center">

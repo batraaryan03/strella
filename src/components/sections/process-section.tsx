@@ -1,65 +1,83 @@
 "use client";
 
 import * as React from "react";
-import { SectionHeader } from "@/components/ui/section-header";
-import { PROCESS_STEPS } from "@/lib/content";
+import MagicBento from "@/components/ui/backgrounds/MagicBento";
+
+/** Process cards — the six Stellar "how it works" moments. */
+const PROCESS_CARDS = [
+  {
+    color: "#10120A",
+    title: "Request your move",
+    description: "Tell us the route and the load in under two minutes.",
+    label: "01 · 2 min",
+  },
+  {
+    color: "#10120A",
+    title: "Receive a fixed quote",
+    description: "Transparent, no-hidden-fees pricing confirmed on the spot.",
+    label: "02 · 60 sec",
+  },
+  {
+    color: "#10120A",
+    title: "Crew arrives on time",
+    description: "Police-checked movers with the truck, shoes off, on schedule.",
+    label: "03 · on time",
+  },
+  {
+    color: "#10120A",
+    title: "Careful packing",
+    description: "Every item wrapped and secured with pro-grade materials.",
+    label: "04 · protected",
+  },
+  {
+    color: "#10120A",
+    title: "We execute the move",
+    description: "Belongings loaded, driven and unloaded exactly as left.",
+    label: "05 · precise",
+  },
+  {
+    color: "#10120A",
+    title: "Unpack & settle in",
+    description: "Optional unpacking and furniture assembly to finish the job.",
+    label: "06 · done",
+  },
+];
 
 /**
- * Process — a guided journey rendered as a ScrollStack. On desktop
- * the three panels are sticky with staggered top offsets, so they
- * pile into a neat stack as the section scrolls. Waypoints are mono
- * numerals — no route-line chrome (RouteBeam was removed).
- * Reduced motion: static, fully drawn.
+ * Process — how it works, rendered as the olive React Bits MagicBento
+ * (spotlight + border glow + tilt + magnetism). Stellar-branded cards.
  */
 export default function ProcessSection() {
   return (
     <section id="process" className="relative scroll-mt-24 py-20 md:py-28">
-      <div className="relative mx-auto max-w-5xl px-5 md:px-8">
-        <SectionHeader
-          index="03"
-          eyebrow="How it works"
-          title="A move, routed step by step"
-          description="Three simple steps to a stress-free move. Your move manager guides every waypoint from first call to final box."
-          align="center"
-          className="mb-16 md:mb-20"
-        />
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive">
+            How it works
+          </p>
+          <h2 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-[-0.03em] text-ink">
+            A move, routed step by step
+          </h2>
+          <p className="mx-auto mt-5 max-w-[52ch] text-base leading-[1.7] text-ink-2 md:text-lg">
+            Six simple moments to a stress-free move — guided by your move
+            manager from first call to final box.
+          </p>
+        </div>
 
-        {/* ScrollStack — panels pile up as the section scrolls */}
-        <div className="flex flex-col gap-5 lg:gap-0">
-          {PROCESS_STEPS.map((step, i) => (
-            <div
-              key={step.num}
-              className="lg:sticky lg:pl-16"
-              style={{ top: `${4 + i * 4}rem` }}
-            >
-              {/* Waypoint rail — hairline + olive node, pure CSS */}
-              <div
-                className="absolute bottom-0 left-[1.375rem] top-0 hidden w-px bg-line lg:block"
-                aria-hidden
-              >
-                <span className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-olive" />
-              </div>
-
-              <div className="panel rounded-[var(--radius-lg)] p-7 md:p-9">
-                <div className="flex items-center gap-4">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-surface-2">
-                    <span className="tnum font-mono text-sm text-olive">
-                      {step.num}
-                    </span>
-                  </span>
-                  <span className="tnum font-mono text-[0.6875rem] text-ink-3">
-                    {step.meta}
-                  </span>
-                </div>
-                <h3 className="mt-5 text-xl font-medium tracking-[-0.01em] text-ink md:text-[1.375rem]">
-                  {step.title}
-                </h3>
-                <p className="mt-3 max-w-[52ch] text-sm leading-[1.7] text-ink-2">
-                  {step.desc}
-                </p>
-              </div>
-            </div>
-          ))}
+        <div className="mt-14">
+          <MagicBento
+            textAutoHide={true}
+            enableStars={false}
+            enableSpotlight={true}
+            enableBorderGlow={true}
+            enableTilt={true}
+            enableMagnetism={true}
+            clickEffect={false}
+            spotlightRadius={300}
+            particleCount={12}
+            glowColor="99, 107, 47"
+            cards={PROCESS_CARDS}
+          />
         </div>
       </div>
     </section>

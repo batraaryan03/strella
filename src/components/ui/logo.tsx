@@ -4,21 +4,49 @@ import { cn } from "@/lib/utils";
 interface LogoProps extends React.HTMLAttributes<HTMLAnchorElement> {
   /** Compact = wordmark only; default = wordmark + olive subline. */
   compact?: boolean;
+  /**
+   * Display scale. `sm` fits a slim header; `md` is the default site
+   * wordmark; `xl` is the oversized brand moment (hero/footer).
+   */
+  size?: "sm" | "md" | "xl";
   href?: string;
 }
 
+const SIZES = {
+  sm: { word: "text-xl md:text-2xl", sub: "text-[0.625rem]" },
+  md: { word: "text-3xl md:text-4xl", sub: "text-[0.6875rem]" },
+  xl: { word: "text-5xl md:text-6xl", sub: "text-[0.8125rem]" },
+} as const;
+
 /**
  * Stellar — pure typographic wordmark in the grotesque voice.
- * No icon, no mark: the name carries the brand.
+ * No icon, no mark: the name carries the brand. Oversized by design.
  */
-export function Logo({ className, compact, href = "/", ...props }: LogoProps) {
+export function Logo({
+  className,
+  compact,
+  size = "md",
+  href = "/",
+  ...props
+}: LogoProps) {
+  const t = SIZES[size];
   const inner = (
     <span className="flex items-baseline gap-2 leading-none">
-      <span className="text-[1.375rem] font-semibold tracking-[-0.03em] text-ink">
+      <span
+        className={cn(
+          "font-semibold tracking-[-0.03em] text-ink",
+          t.word
+        )}
+      >
         Stellar
       </span>
       {!compact && (
-        <span className="font-mono text-[0.625rem] uppercase tracking-[0.24em] text-olive">
+        <span
+          className={cn(
+            "font-mono uppercase tracking-[0.24em] text-olive",
+            t.sub
+          )}
+        >
           Removals
         </span>
       )}

@@ -203,40 +203,6 @@ export const PLANS = [
   },
 ] as const;
 
-/* ── Why choose ────────────────────────────────────────────── */
-export const WHY_CHOOSE = [
-  {
-    title: "Local Melbourne Team",
-    metric: "MEL · 12 yrs",
-    desc: "Born and raised in Melbourne, we know the city inside out — every laneway, loading zone, and parking fine avoided.",
-  },
-  {
-    title: "Clear Upfront Pricing",
-    metric: "$120/hr",
-    desc: "Transparent hourly quotes with no surprise fees, no hidden costs, and no last-minute markups. Ever.",
-  },
-  {
-    title: "Careful Handling",
-    metric: "$20M cover",
-    desc: "Your belongings are protected with $20M transit insurance and professional wrapping on every item that matters.",
-  },
-  {
-    title: "Weekend & Same-Day",
-    metric: "7 days",
-    desc: "Flexible scheduling including weekends and last-minute moves, because life rarely sticks to business hours.",
-  },
-  {
-    title: "Friendly Professionals",
-    metric: "Police-checked",
-    desc: "Background-checked movers who treat your home like their own — shoe covers on, smiles on.",
-  },
-  {
-    title: "All Metro Coverage",
-    metric: "300+ postcodes",
-    desc: "From the CBD to the outer suburbs, we service 300+ postcodes across greater Melbourne.",
-  },
-] as const;
-
 /* ── Process (guided journey) ──────────────────────────────── */
 export const PROCESS_STEPS = [
   {
@@ -308,6 +274,31 @@ export const REVIEWS = [
     name: "Tom H.",
     location: "Preston",
     text: "Professional, punctual, and priced fairly. They even helped us with some last-minute furniture assembly. Highly recommended!",
+  },
+  {
+    name: "Olivia B.",
+    location: "Box Hill",
+    text: "Booked on a Sunday and they still arrived exactly on time. The crew wrapped our sofa like it was priceless. Flawless.",
+  },
+  {
+    name: "Nathan K.",
+    location: "Toorak",
+    text: "Three-bedroom house packed, moved and unpacked in a single day. The price matched the quote to the dollar. Zero surprises.",
+  },
+  {
+    name: "Priya S.",
+    location: "Glen Waverley",
+    text: "The team took genuine care with our piano and artwork. Polished from the first call to the last box. Can't recommend enough.",
+  },
+  {
+    name: "Daniel R.",
+    location: "Essendon",
+    text: "Same-day move, no drama. Fair rate, careful crew, and they even reconnected our washing machine. Above and beyond.",
+  },
+  {
+    name: "Grace T.",
+    location: "Werribee",
+    text: "Moving with a newborn is chaos — Stellar made it calm. Friendly, fast, and nothing was scratched. Worth every dollar.",
   },
 ] as const;
 

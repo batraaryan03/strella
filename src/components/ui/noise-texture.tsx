@@ -17,28 +17,28 @@ export interface NoiseTextureProps extends ComponentProps<"svg"> {
   octaves?: number;
   /**
    * Linear slope on each channel after desaturation; adjusts contrast of the noise.
-   * @default 0.15
+   * @default 0.18
    */
   slope?: number;
   /**
    * Opacity of the filled noise layer (`rect`).
-   * @default 0.6
+   * @default 0.5
    */
   noiseOpacity?: number;
 }
 
 /**
  * NoiseTexture — Magic UI fractal-noise grain. Brand-tuned: the noise is
- * desaturated and re-tinted olive (R≈0.06, G≈0.07, B≈0.05 slopes) so the
- * texture reads as a whisper of anaconda-green rather than neutral grey.
- * Layer content above with `z-10` when needed.
+ * desaturated and re-tinted olive (warm, light green channel weighting)
+ * so the texture reads as a whisper of anaconda-green rather than dark
+ * neutral grey. Layer content above with `z-10` when needed.
  */
 export const NoiseTexture = ({
   className,
   frequency = 0.4,
   octaves = 6,
-  slope = 0.15,
-  noiseOpacity = 0.6,
+  slope = 0.18,
+  noiseOpacity = 0.5,
   ...props
 }: NoiseTextureProps) => {
   const filterId = useId();
@@ -61,11 +61,11 @@ export const NoiseTexture = ({
           stitchTiles="stitch"
         />
         <feColorMatrix type="saturate" values="0" />
-        {/* Olive tint — warm channel-weighted slopes, not neutral grey */}
+        {/* Olive tint — light warm channel weighting, not dark neutral grey */}
         <feComponentTransfer>
-          <feFuncR type="linear" slope={slope * 0.62} />
-          <feFuncG type="linear" slope={slope * 0.72} />
-          <feFuncB type="linear" slope={slope * 0.45} />
+          <feFuncR type="linear" slope={slope * 0.8} />
+          <feFuncG type="linear" slope={slope * 0.92} />
+          <feFuncB type="linear" slope={slope * 0.55} />
         </feComponentTransfer>
       </filter>
       <rect

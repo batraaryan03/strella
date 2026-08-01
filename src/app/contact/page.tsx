@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { BRAND } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -77,19 +76,17 @@ export default function ContactPage() {
         {/* Header — editorial kicker, no gimmick labels */}
         <div className="relative overflow-hidden border-b border-line bg-surface/50">
           <div className="relative mx-auto max-w-7xl px-5 py-16 text-center md:px-8 md:py-20">
-            <ScrollReveal asGroup>
-              <p className="flex items-center justify-center gap-3 text-[0.8125rem] font-medium text-olive">
-                <span className="h-px w-6 bg-olive/60" aria-hidden />
-                Melbourne&apos;s precision removalists
-              </p>
-              <h1 className="mt-4 text-balance text-[clamp(2.5rem,5.5vw,3.5rem)] font-medium tracking-[-0.04em] text-ink">
-                Contact Stellar
-              </h1>
-              <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-2">
-                Ready to move? Have questions? We&apos;re here to help — reach
-                out and we&apos;ll get back to you within 60 seconds.
-              </p>
-            </ScrollReveal>
+            <p className="flex items-center justify-center gap-3 text-[0.8125rem] font-medium text-olive">
+              <span className="h-px w-6 bg-olive/60" aria-hidden />
+              Melbourne&apos;s precision removalists
+            </p>
+            <h1 className="mt-4 text-balance text-[clamp(2.5rem,5.5vw,3.5rem)] font-medium tracking-[-0.04em] text-ink">
+              Contact Stellar
+            </h1>
+            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-2">
+              Ready to move? Have questions? We&apos;re here to help — reach
+              out and we&apos;ll get back to you within 60 seconds.
+            </p>
           </div>
         </div>
 

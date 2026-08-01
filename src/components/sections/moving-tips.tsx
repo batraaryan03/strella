@@ -2,17 +2,17 @@
 
 import * as React from "react";
 import { Accordion } from "@/components/ui/accordion";
-import { SectionHeader } from "@/components/ui/section-header";
 import { MOVING_TIPS, FAQS } from "@/lib/content";
 
 /**
- * Moving Tips + FAQ — large typography accordion, minimal dividers.
- * Left: sticky description. Right: accordion.
+ * Moving Tips + FAQ — a single-column FAQ (user-directed: remove the
+ * left intro, "just put a FAQ section straight in a single one-column
+ * layout"). Olive-tinted accordion, quiet hairline dividers.
  */
 export default function MovingTips() {
   const tips = MOVING_TIPS.map((t, i) => ({
     id: `tip-${i}`,
-    q: `${i + 1}. ${t.q}`,
+    q: t.q,
     a: t.a,
   }));
   const faqs = FAQS.map((f, i) => ({ id: `faq-${i}`, q: f.q, a: f.a }));
@@ -20,27 +20,26 @@ export default function MovingTips() {
   return (
     <section className="relative py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <div className="grid gap-14 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
-          {/* Left — sticky intro */}
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <SectionHeader
-              index="09"
-              eyebrow="Advice & answers"
-              title="Moving tips, straight from the crew"
-              description="Preparation is the key to a successful move. Expert packing advice from our seasoned professionals — plus the questions Melbourne movers ask us most."
-            />
+        <div className="mx-auto max-w-3xl">
+          <div className="mb-12 text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive">
+              Advice &amp; answers
+            </p>
+            <h2 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-[-0.03em] text-ink">
+              Questions, answered
+            </h2>
+            <p className="mx-auto mt-5 max-w-[48ch] text-base leading-[1.7] text-ink-2 md:text-lg">
+              The questions Melbourne movers ask us most — plus practical
+              tips from the crew.
+            </p>
           </div>
 
-          {/* Right — accordion */}
-          <div className="flex flex-col gap-12">
-            <Accordion items={tips} defaultOpen={0} />
-            <div>
-              <h3 className="mb-2 border-b border-line pb-4 text-[0.8125rem] font-medium text-olive">
-                Pricing &amp; logistics
-              </h3>
-              <Accordion items={faqs} defaultOpen={-1} />
-            </div>
-          </div>
+          {/* Single-column accordion */}
+          <Accordion items={faqs} defaultOpen={0} />
+          <h3 className="mb-2 mt-12 border-b border-line pb-4 text-[0.8125rem] font-medium text-olive">
+            From the crew
+          </h3>
+          <Accordion items={tips} defaultOpen={-1} />
         </div>
       </div>
     </section>

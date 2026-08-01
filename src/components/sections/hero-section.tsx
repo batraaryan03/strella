@@ -1,45 +1,62 @@
 "use client";
 
 import * as React from "react";
-import { Phone, ArrowRight } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StarRating } from "@/components/ui/star-rating";
-import { Spotlight } from "@/components/ui/spotlight";
-import { SplitText } from "@/components/ui/split-text";
 import { Highlighter } from "@/components/ui/highlighter";
-import { BRAND, PHOTOS, HERO_CAPTION } from "@/lib/content";
+import ShinyText from "@/components/ui/backgrounds/ShinyText";
+import Hyperspeed from "@/components/ui/backgrounds/Hyperspeed";
+import { hyperspeedPresets } from "@/components/ui/backgrounds/HyperSpeedPresets";
+import QuoteWizard from "./quote-wizard";
+import { BRAND } from "@/lib/content";
 
 /**
- * Hero — asymmetric editorial. Oversized grotesque headline left,
- * real photography right with a move-record caption bar. Subtle
- * olive spotlight + chart-paper backdrop. Borderless, no serif.
+ * Hero — the highway. Hyperspeed (olive "stellar" preset with brand
+ * colors #636B2F / #97a75a / #b3c275) is the FULL background of the
+ * hero section — it fills the entire width and height. A subtle
+ * gradient overlay keeps text readable. Title (ShinyText, olive) left,
+ * compact borderless quote wizard right, professional buttons.
  */
 export default function HeroSection() {
   return (
-    <section id="home" className="relative isolate overflow-hidden pt-[4.25rem]">
-      {/* Chart paper — documented blueprint texture (ILL-03), hero only */}
-      <div className="chart-paper pointer-events-none absolute inset-0" aria-hidden />
+    <section id="home" className="relative isolate overflow-hidden pt-[4.25rem] min-h-[90vh] md:min-h-[85vh] flex items-center">
+      {/* ── Hyperspeed — full hero background ── */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+      >
+        <Hyperspeed effectOptions={hyperspeedPresets.stellar} />
+      </div>
+      {/* Overlay gradient to keep text readable over the highway */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-canvas/70 via-canvas/40 to-canvas/70"
+      />
 
-      {/* Aceternity olive spotlight — entrance sweep, hero only */}
-      <Spotlight className="hidden -top-40 left-0 opacity-0 md:block" />
-
-      <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 pb-16 pt-12 md:px-8 md:pb-24 md:pt-20 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16">
-        {/* ── Left: editorial content ── */}
+      <div className="relative mx-auto grid w-full max-w-7xl items-center gap-12 px-5 py-16 md:py-20 md:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        {/* ── Left: title, description, buttons ── */}
         <div className="flex flex-col items-start">
-          <p className="flex items-center gap-3 text-[0.8125rem] font-medium text-olive">
-            <span className="h-px w-6 bg-olive/60" aria-hidden />
-            Melbourne&apos;s precision removalists
-          </p>
-
-          <h1 className="mt-7 font-serif text-balance text-[clamp(3rem,7vw,5.5rem)] font-normal leading-[1.02] tracking-[-0.02em] text-ink">
-            <SplitText>Your move, guided.</SplitText>
+          <h1 className="text-balance text-[clamp(3rem,7vw,5.75rem)] font-bold leading-[0.98] tracking-[-0.035em] text-ink">
+            <ShinyText
+              text="Stellar Removals"
+              speed={2.5}
+              color="#97a75a"
+              shineColor="#f2f3ed"
+              spread={120}
+              direction="left"
+            />
           </h1>
 
           <p className="mt-7 max-w-[46ch] text-base leading-[1.7] text-ink-2 md:text-lg">
-            Stellar Removals are Melbourne&apos;s precision movers.{" "}
-            <Highlighter isView>Transparent hourly pricing</Highlighter>,{" "}
-            professional crews, and weekend availability — so your belongings
-            arrive exactly as they left.
+            Melbourne&apos;s precision movers.{" "}
+            <Highlighter isView strokeWidth={5} color="#97a75a">
+              <span className="font-semibold text-ink-dark">
+                Transparent hourly pricing
+              </span>
+            </Highlighter>
+            , professional crews, and weekend availability — so your
+            belongings arrive exactly as they left.
           </p>
 
           {/* Trust row */}
@@ -47,8 +64,8 @@ export default function HeroSection() {
             <div className="flex items-center gap-2.5">
               <StarRating value={5} />
               <span className="text-sm text-ink-2">
-                <span className="font-semibold text-ink">4.9</span> from 2,300+
-                Google reviews
+                <span className="font-semibold text-ink">4.9</span> from
+                2,300+ Google reviews
               </span>
             </div>
             <span className="hidden h-4 w-px bg-line sm:block" />
@@ -57,7 +74,7 @@ export default function HeroSection() {
             </span>
           </div>
 
-          {/* CTAs */}
+          {/* CTAs — professional, pure geometry */}
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a href="#quote" className="w-full sm:w-auto">
               <Button size="lg" className="group w-full sm:w-auto">
@@ -74,25 +91,10 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* ── Right: real photography with move-record caption ── */}
-        <figure className="relative" data-speed="0.96">
-          <div className="panel relative overflow-hidden rounded-[var(--radius-lg)]">
-            <img
-              src={PHOTOS.hero}
-              alt="Stellar crew unloading furniture at the kerb"
-              className="photo-grade-hover aspect-[4/4.6] w-full object-cover"
-            />
-            {/* integrated caption bar — a real move record */}
-            <figcaption className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 border-t border-white/10 bg-canvas/70 px-5 py-4 backdrop-blur-md">
-              <span className="text-[0.8125rem] text-ink-2">
-                {HERO_CAPTION.route}
-              </span>
-              <span className="tnum font-mono text-[0.6875rem] text-olive-bright">
-                {HERO_CAPTION.truck}
-              </span>
-            </figcaption>
-          </div>
-        </figure>
+        {/* ── Right: compact borderless quote wizard ── */}
+        <div className="lg:pl-4">
+          <QuoteWizard bare />
+        </div>
       </div>
     </section>
   );

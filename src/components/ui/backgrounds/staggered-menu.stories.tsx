@@ -39,7 +39,6 @@ export const Default: StoryObj = {
         openMenuButtonColor="#f2f3ed"
         changeMenuColorOnOpen={true}
         colors={["#636b2f", "#3f4521"]}
-        logoUrl="/assets/logo.png"
         accentColor="#97a75a"
       />
     </div>
@@ -59,7 +58,6 @@ export const WithSocials: StoryObj = {
         openMenuButtonColor="#f2f3ed"
         changeMenuColorOnOpen={true}
         colors={["#97a75a", "#636b2f"]}
-        logoUrl="/assets/logo.png"
         accentColor="#b3c275"
       />
     </div>

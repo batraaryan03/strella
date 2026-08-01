@@ -3,8 +3,9 @@
 import * as React from "react";
 import { Phone, Mail, Clock, MapPin, CalendarCheck, ShieldCheck } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
-import { StarRating } from "@/components/ui/star-rating";
-import { KineticText } from "@/components/ui/kinetic-text";
+import { Button } from "@/components/ui/button";
+import Silk from "@/components/ui/backgrounds/Silk";
+import LaserFlow from "@/components/ui/backgrounds/LaserFlow";
 import { BRAND, PHOTO_CREDITS } from "@/lib/content";
 
 const quickLinks = [
@@ -36,172 +37,214 @@ const socials = [
   },
 ] as const;
 
+/**
+ * Footer — user-directed rebuild. Simple giant STELLAR wordmark (no
+ * kinetic hover effect), the Silk snake-skin texture as background,
+ * LaserFlow at the very bottom just below STELLAR, cleaner & bigger
+ * typography, and the new professional Button. Borderless tonal zones.
+ */
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-line bg-surface/50">
-      {/* ── Giant brand typography — kinetic weight on hover ── */}
-      <div className="select-none px-2 pt-16 md:pt-20" aria-hidden>
-        <KineticText
-          text="STELLAR"
-          as="p"
-          className="pointer-events-auto justify-center whitespace-nowrap text-center text-[clamp(4rem,17vw,15rem)] font-[300] leading-[0.85] tracking-[-0.04em] text-ink/[0.05] transition-colors duration-500 hover:text-ink/[0.09]"
+    <footer className="relative overflow-hidden border-t border-line bg-canvas">
+      {/* ── Silk — snake-skin background (dark green olive) ── */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.55]">
+        <Silk
+          speed={4.5}
+          scale={1.1}
+          color="#556b2f"
+          noiseIntensity={3.5}
+          rotation={0}
         />
       </div>
+      {/* Keep text readable over the moving silk */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-canvas/85 via-canvas/60 to-canvas/90"
+      />
 
-      <div className="mx-auto max-w-7xl px-5 pb-10 md:px-8">
-        {/* ── Main columns ── */}
-        <div className="grid gap-12 border-b border-line py-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-8">
-          {/* Brand */}
-          <div>
-            <Logo />
-            <p className="mt-5 max-w-[34ch] text-sm leading-[1.7] text-ink-2">
-              Melbourne&apos;s precision removalists. Transparent pricing,
-              professional crews, and weekend availability — guided moves,
-              every time.
-            </p>
-            <div className="mt-6 flex gap-3">
-              {socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink-2 transition-all duration-200 hover:border-olive/50 hover:text-olive-bright"
-                >
-                  <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-                    <path d={s.path} />
-                  </svg>
-                </a>
-              ))}
-            </div>
-          </div>
+      <div className="relative">
+        {/* ── Giant brand typography — SIMPLE, no kinetic hover ── */}
+        <div className="select-none px-2 pt-16 md:pt-20" aria-hidden>
+          <p className="whitespace-nowrap text-center text-[clamp(4rem,17vw,15rem)] font-bold leading-[0.85] tracking-[-0.04em] text-ink/[0.045]">
+            STELLAR
+          </p>
+        </div>
 
-          {/* Quick links */}
-          <div>
-            <h3 className="mb-5 text-[0.8125rem] font-medium text-ink">
-              Navigate
-            </h3>
-            <ul className="space-y-2.5 text-sm">
-              {quickLinks.map((l) => (
-                <li key={l.label}>
+        <div className="mx-auto max-w-7xl px-5 pb-10 md:px-8">
+          {/* ── Main columns — bigger, cleaner typography ── */}
+          <div className="grid gap-12 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-8">
+            {/* Brand */}
+            <div>
+              <Logo />
+              <p className="mt-6 max-w-[34ch] text-lg leading-[1.7] text-ink-2">
+                Melbourne&apos;s precision removalists. Transparent pricing,
+                professional crews, and weekend availability — guided
+                moves, every time.
+              </p>
+              <div className="mt-7 flex gap-3">
+                {socials.map((s) => (
                   <a
-                    href={l.href}
-                    className="text-ink-2 transition-colors duration-150 hover:text-olive-bright"
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="grid h-11 w-11 place-items-center rounded-full border border-line text-ink-2 transition-all duration-200 hover:border-olive/50 hover:text-olive-bright"
                   >
-                    {l.label}
+                    <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path d={s.path} />
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick links */}
+            <div>
+              <h3 className="mb-6 text-[0.9375rem] font-semibold text-ink">
+                Navigate
+              </h3>
+              <ul className="space-y-3 text-base">
+                {quickLinks.map((l) => (
+                  <li key={l.label}>
+                    <a
+                      href={l.href}
+                      className="text-ink-2 transition-colors duration-150 hover:text-olive-bright"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h3 className="mb-6 text-[0.9375rem] font-semibold text-ink">
+                Contact
+              </h3>
+              <ul className="space-y-4 text-base text-ink-2">
+                <li>
+                  <a href={`tel:${BRAND.phone}`} className="flex items-center gap-2.5 font-medium text-ink transition-colors hover:text-olive-bright">
+                    <Phone className="h-4 w-4 text-olive" />
+                    {BRAND.phoneDisplay}
                   </a>
                 </li>
-              ))}
-            </ul>
+                <li>
+                  <a href={`mailto:${BRAND.email}`} className="flex items-center gap-2.5 transition-colors hover:text-olive-bright">
+                    <Mail className="h-4 w-4 text-olive" />
+                    {BRAND.email}
+                  </a>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Clock className="h-4 w-4 text-olive" />
+                  <span>{BRAND.hoursWeekday} · {BRAND.hoursWeekend}</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <MapPin className="h-4 w-4 text-olive" />
+                  {BRAND.location}
+                </li>
+              </ul>
+            </div>
+
+            {/* Book CTA — the new professional button */}
+            <div className="flex flex-col justify-between gap-6">
+              <p className="text-base leading-[1.7] text-ink-2">
+                Moving soon? Lock in your crew and your price today.
+              </p>
+              <a href="/book-move" className="inline-flex w-fit">
+                <Button size="lg">
+                  <CalendarCheck className="h-4 w-4" />
+                  Book your move
+                </Button>
+              </a>
+            </div>
           </div>
 
-          {/* Contact */}
-          <div>
-            <h3 className="mb-5 text-[0.8125rem] font-medium text-ink">
-              Contact
-            </h3>
-            <ul className="space-y-4 text-sm text-ink-2">
-              <li>
-                <a href={`tel:${BRAND.phone}`} className="flex items-center gap-2.5 font-medium text-ink transition-colors hover:text-olive-bright">
-                  <Phone className="h-4 w-4 text-olive" />
-                  {BRAND.phoneDisplay}
-                </a>
-              </li>
-              <li>
-                <a href={`mailto:${BRAND.email}`} className="flex items-center gap-2.5 transition-colors hover:text-olive-bright">
-                  <Mail className="h-4 w-4 text-olive" />
-                  {BRAND.email}
-                </a>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Clock className="h-4 w-4 text-olive" />
-                <span>{BRAND.hoursWeekday} · {BRAND.hoursWeekend}</span>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <MapPin className="h-4 w-4 text-olive" />
-                {BRAND.location}
-              </li>
-            </ul>
-          </div>
-
-          {/* Book CTA */}
-          <div className="flex flex-col justify-between gap-6">
-            <p className="text-sm leading-[1.7] text-ink-2">
-              Moving soon? Lock in your crew and your price today.
+          {/* ── Trust & credentials tier ── */}
+          <div className="grid gap-6 border-t border-line py-8 md:grid-cols-3 md:items-center md:gap-8">
+            <p className="flex items-center gap-2 text-sm text-ink-3">
+              <span className="h-1.5 w-1.5 rounded-full bg-olive" aria-hidden />
+              Crews active across Melbourne now
             </p>
-            <a
-              href="/book-move"
-              className="inline-flex items-center justify-center gap-2 rounded-[var(--radius-btn)] bg-olive px-5 py-3 text-sm font-medium text-ink-dark transition-colors duration-150 hover:bg-olive-bright"
-            >
-              <CalendarCheck className="h-4 w-4" />
-              Book your move
-            </a>
+            <dl className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-sm">
+              <div className="flex items-center gap-2">
+                <dt className="sr-only">Company</dt>
+                <dd className="font-medium text-ink-2">Stellar Removals Pty Ltd</dd>
+              </div>
+              <div className="flex items-center gap-2">
+                <dt className="text-ink-3">ABN</dt>
+                <dd className="tnum font-mono text-ink-2">Pending registration</dd>
+              </div>
+              <div className="flex items-center gap-2">
+                <dt className="sr-only">Insurance</dt>
+                <dd className="flex items-center gap-1.5 text-ink-2">
+                  <ShieldCheck className="h-3.5 w-3.5 text-olive" />
+                  $20M public liability
+                </dd>
+              </div>
+              <div className="flex items-center gap-2">
+                <dt className="sr-only">Crew</dt>
+                <dd className="text-ink-2">Police-checked crew</dd>
+              </div>
+            </dl>
+            <div className="flex items-center justify-center gap-5 md:justify-end">
+              <a href="#" className="text-sm text-ink-3 transition-colors hover:text-ink-2">Privacy Policy</a>
+              <a href="#" className="text-sm text-ink-3 transition-colors hover:text-ink-2">Terms of Service</a>
+            </div>
+          </div>
+
+          {/* ── Copyright ── */}
+          <p className="pb-2 text-center text-sm text-ink-3">
+            © {new Date().getFullYear()} Stellar Removals. All rights reserved.
+          </p>
+
+          {/* ── Photography credits (Unsplash API terms) ── */}
+          <div className="border-t border-line/60 py-4">
+            <p className="text-center text-[0.6875rem] leading-relaxed text-ink-3">
+              Photography by{" "}
+              {PHOTO_CREDITS.map((c, i) => (
+                <React.Fragment key={c.name}>
+                  {i > 0 && <span> · </span>}
+                  <a
+                    href={c.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-ink-2"
+                  >
+                    {c.name}
+                  </a>
+                </React.Fragment>
+              ))}{" "}
+              on Unsplash
+            </p>
           </div>
         </div>
+      </div>
 
-        {/* ── Trust & credentials tier — badge of honour, not fine print ── */}
-        <div className="grid gap-6 border-t border-line py-7 md:grid-cols-3 md:items-center md:gap-8">
-          <p className="flex items-center gap-2 text-xs text-ink-3">
-            <span className="h-1.5 w-1.5 rounded-full bg-olive" aria-hidden />
-            Crews active across Melbourne now
-          </p>
-          <dl className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-xs">
-            <div className="flex items-center gap-2">
-              <dt className="sr-only">Company</dt>
-              <dd className="font-medium text-ink-2">Stellar Removals Pty Ltd</dd>
-            </div>
-            <div className="flex items-center gap-2">
-              <dt className="text-ink-3">ABN</dt>
-              <dd className="tnum font-mono text-ink-2">Pending registration</dd>
-            </div>
-            <div className="flex items-center gap-2">
-              <dt className="sr-only">Insurance</dt>
-              <dd className="flex items-center gap-1.5 text-ink-2">
-                <ShieldCheck className="h-3.5 w-3.5 text-olive" />
-                $20M public liability
-              </dd>
-            </div>
-            <div className="flex items-center gap-2">
-              <dt className="sr-only">Crew</dt>
-              <dd className="text-ink-2">Police-checked crew</dd>
-            </div>
-          </dl>
-          <div className="flex items-center justify-center gap-5 md:justify-end">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-line px-2.5 py-1">
-              <StarRating size="sm" />
-              Google 4.9
-            </span>
-            <a href="#" className="text-xs text-ink-3 transition-colors hover:text-ink-2">Privacy Policy</a>
-            <a href="#" className="text-xs text-ink-3 transition-colors hover:text-ink-2">Terms of Service</a>
-          </div>
-        </div>
-
-        {/* ── Copyright ── */}
-        <p className="pb-2 text-center text-xs text-ink-3">
-          © {new Date().getFullYear()} Stellar Removals. All rights reserved.
-        </p>
-
-        {/* ── Photography credits (Unsplash API terms) ── */}
-        <div className="border-t border-line/60 py-4">
-          <p className="text-center text-[0.6875rem] leading-relaxed text-ink-3">
-            Photography by{" "}
-            {PHOTO_CREDITS.map((c, i) => (
-              <React.Fragment key={c.name}>
-                {i > 0 && <span> · </span>}
-                <a
-                  href={c.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors hover:text-ink-2"
-                >
-                  {c.name}
-                </a>
-              </React.Fragment>
-            ))}{" "}
-            on Unsplash
-          </p>
-        </div>
+      {/* ── LaserFlow — at the very bottom, just below STELLAR ── */}
+      <div
+        aria-hidden
+        className="relative h-40 w-full overflow-hidden md:h-56"
+      >
+        <LaserFlow
+          color="#636B2F"
+          wispDensity={1.5}
+          flowSpeed={0.3}
+          verticalSizing={1.5}
+          horizontalSizing={3}
+          fogIntensity={0.5}
+          fogScale={0.1}
+          wispSpeed={10}
+          wispIntensity={8}
+          flowStrength={0.4}
+          decay={1.8}
+          horizontalBeamOffset={0}
+          verticalBeamOffset={-0.5}
+          className="size-full"
+          style={{}}
+          dpr={Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2)}
+        />
       </div>
     </footer>
   );

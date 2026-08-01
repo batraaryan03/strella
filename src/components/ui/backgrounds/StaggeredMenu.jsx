@@ -13,7 +13,6 @@ export const StaggeredMenu = ({
   displaySocials = true,
   displayItemNumbering = true,
   className,
-  logoUrl = '/assets/logo.png',
   menuButtonColor = '#fff',
   openMenuButtonColor = '#fff',
   accentColor = '#636B2F',
@@ -372,16 +371,6 @@ export const StaggeredMenu = ({
         })()}
       </div>
       <header className="staggered-menu-header" aria-label="Main navigation header">
-        <div className="sm-logo" aria-label="Logo">
-          <img
-            src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
-            alt="Logo"
-            className="sm-logo-img"
-            draggable={false}
-            width={110}
-            height={24}
-          />
-        </div>
         <button
           ref={toggleBtnRef}
           className="sm-toggle"
@@ -413,7 +402,13 @@ export const StaggeredMenu = ({
             {items && items.length ? (
               items.map((it, idx) => (
                 <li className="sm-panel-itemWrap" key={it.label + idx}>
-                  <a className="sm-panel-item" href={it.link} aria-label={it.ariaLabel} data-index={idx + 1}>
+                  <a
+                    className="sm-panel-item"
+                    href={it.link}
+                    aria-label={it.ariaLabel}
+                    data-index={idx + 1}
+                    onClick={() => closeMenu()}
+                  >
                     <span className="sm-panel-itemLabel">{it.label}</span>
                   </a>
                 </li>

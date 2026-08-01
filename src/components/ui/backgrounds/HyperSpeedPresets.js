@@ -221,5 +221,45 @@ export const hyperspeedPresets = {
       rightCars: [0xfdfdf0, 0xf3dea0, 0xe2bb88],
       sticks: 0xfdfdf0
     }
+  },
+  /** Stellar olive — brand-tuned highway. Warm olive road markings,
+      olive-green car lights, charcoal road surface. Matches the
+      #636B2F / #97a75a / #b3c275 palette. */
+  stellar: {
+    onSpeedUp: () => {},
+    onSlowDown: () => {},
+    distortion: 'deepDistortion',
+    length: 400,
+    roadWidth: 20,
+    islandWidth: 3,
+    lanesPerRoad: 4,
+    fov: 90,
+    fovSpeedUp: 130,
+    speedUp: 1.5,
+    carLightsFade: 0.35,
+    totalSideLightSticks: 40,
+    lightPairsPerRoadWay: 40,
+    shoulderLinesWidthPercentage: 0.06,
+    brokenLinesWidthPercentage: 0.12,
+    brokenLinesLengthPercentage: 0.5,
+    lightStickWidth: [0.12, 0.5],
+    lightStickHeight: [1.3, 1.7],
+    movingAwaySpeed: [60, 80],
+    movingCloserSpeed: [-120, -160],
+    carLightsLength: [400 * 0.05, 400 * 0.15],
+    carLightsRadius: [0.05, 0.14],
+    carWidthPercentage: [0.3, 0.5],
+    carShiftX: [-0.2, 0.2],
+    carFloorSeparation: [0.05, 1],
+    colors: {
+      roadColor: 0x0a0b08,
+      islandColor: 0x12140e,
+      background: 0x0a0b08,
+      shoulderLines: 0x636b2f,
+      brokenLines: 0x636b2f,
+      leftCars: [0x97a75a, 0xb3c275, 0x636b2f],
+      rightCars: [0x97a75a, 0x5c6b3a, 0x636b2f],
+      sticks: 0x97a75a
+    }
   }
 };
