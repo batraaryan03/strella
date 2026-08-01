@@ -7,27 +7,17 @@ import { StarRating } from "@/components/ui/star-rating";
 import { REVIEWS } from "@/lib/content";
 
 /**
- * Reviews — large editorial cards with generous whitespace. Fewer
- * reviews at once, authenticity first. Verified Google indicator.
+ * Reviews — large borderless editorial cards with generous
+ * whitespace. Fewer reviews at once, authenticity first.
  */
 export default function ReviewsSection() {
   return (
-    <section
-      id="reviews"
-      className="relative scroll-mt-24 border-y border-line bg-surface/40 py-20 md:py-28"
-    >
+    <section id="reviews" className="relative scroll-mt-24 py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeader
           index="05"
           eyebrow="Reviews"
-          title={
-            <>
-              Trusted by{" "}
-              <span className="font-serif italic text-olive-bright">
-                Melbourne locals
-              </span>
-            </>
-          }
+          title="Trusted by Melbourne locals"
           description="Real reviews from verified Google clients across Melbourne."
           align="center"
           className="mb-14 md:mb-16"
@@ -37,11 +27,11 @@ export default function ReviewsSection() {
           {REVIEWS.map((r) => (
             <figure
               key={r.name}
-              className="group flex flex-col rounded-[var(--radius-card)] border border-line bg-surface p-7 transition-[border-color,background-color,transform] duration-200 hover:-translate-y-0.5 hover:border-olive/35 md:p-8"
+              className="panel panel-hover flex flex-col rounded-[var(--radius-card)] p-7 md:p-8"
             >
               <div className="mb-5 flex items-center justify-between">
                 <StarRating value={5} />
-                <span className="inline-flex items-center gap-1 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-ink-3">
+                <span className="inline-flex items-center gap-1 text-[0.6875rem] text-ink-3">
                   <BadgeCheck className="h-3.5 w-3.5 text-olive" />
                   Verified
                 </span>
@@ -52,12 +42,14 @@ export default function ReviewsSection() {
               </blockquote>
 
               <figcaption className="mt-6 flex items-center gap-3 border-t border-line pt-5">
-                <span className="grid h-9 w-9 place-items-center rounded-full border border-line bg-raised font-mono text-xs text-olive">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-surface-2 font-mono text-xs text-olive">
                   {r.name.charAt(0)}
                 </span>
                 <span className="text-sm">
                   <span className="block font-medium text-ink">{r.name}</span>
-                  <span className="block text-xs text-ink-3">{r.location}, Melbourne</span>
+                  <span className="block text-xs text-ink-3">
+                    {r.location}, Melbourne
+                  </span>
                 </span>
               </figcaption>
             </figure>
@@ -69,9 +61,9 @@ export default function ReviewsSection() {
             href="https://www.google.com/search?q=stellar+removals+melbourne+reviews"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-ink-3 transition-colors hover:text-olive-bright"
+            className="inline-flex items-center gap-2 text-[0.8125rem] text-ink-3 transition-colors hover:text-olive-bright"
           >
-            4.9 ★ average across 2,300+ Google reviews
+            4.9 average across 2,300+ Google reviews
             <span aria-hidden>↗</span>
           </a>
         </div>

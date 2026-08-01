@@ -10,7 +10,7 @@ const buttonVariants = cva(
     "ease-[cubic-bezier(0.16,1,0.3,1)]",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive",
     "disabled:opacity-45 disabled:pointer-events-none",
-    "active:translate-y-px",
+    "active:scale-[0.98]",
   ],
   {
     variants: {
@@ -18,29 +18,23 @@ const buttonVariants = cva(
         primary: [
           "bg-olive text-ink-dark",
           "hover:bg-olive-bright",
-          "shadow-[0_1px_2px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.25)]",
-          "hover:shadow-[0_4px_14px_var(--color-olive-glow),inset_0_1px_0_rgba(255,255,255,0.3)]",
-          "hover:-translate-y-px",
+          "shadow-[0_1px_2px_rgba(0,0,0,0.3)]",
         ],
         secondary: [
-          "bg-raised text-ink border border-line",
-          "hover:bg-raised-2 hover:border-line-strong",
-          "shadow-[0_1px_2px_rgba(0,0,0,0.2)]",
-          "hover:-translate-y-px",
+          "bg-surface-2 text-ink",
+          "hover:bg-raised",
+          "shadow-[inset_0_1px_0_rgba(244,245,240,0.06),0_1px_2px_rgba(0,0,0,0.3)]",
         ],
-        ghost: [
-          "bg-transparent text-ink-2",
-          "hover:bg-white/5 hover:text-ink",
-        ],
+        ghost: ["bg-transparent text-ink-2", "hover:bg-white/5 hover:text-ink"],
         outline: [
-          "bg-transparent text-ink border border-line-strong",
-          "hover:border-olive hover:text-olive-bright hover:bg-olive-tint",
+          "bg-transparent text-ink",
+          "shadow-[inset_0_0_0_1px_var(--color-line-strong)]",
+          "hover:shadow-[inset_0_0_0_1px_var(--color-olive)] hover:text-olive-bright",
         ],
         light: [
           "bg-paper text-ink-dark",
           "hover:bg-white",
-          "shadow-[0_1px_2px_rgba(0,0,0,0.15)]",
-          "hover:-translate-y-px",
+          "shadow-[0_1px_2px_rgba(0,0,0,0.25)]",
         ],
       },
       size: {

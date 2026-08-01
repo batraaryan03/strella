@@ -1,13 +1,24 @@
 "use client";
 
 import * as React from "react";
-import { User, Truck, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
-import Header from "@/components/sections/header";
+import { CheckCircle2, AlertCircle, Loader2, User, Truck } from "lucide-react";
 import Footer from "@/components/sections/footer";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { DateField } from "@/components/ui/date-field";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { SuburbPicker } from "./suburb-picker";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -62,25 +73,27 @@ export default function BookMovePage() {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen pb-20 pt-[6.5rem]">
         <div className="mx-auto max-w-3xl px-5 md:px-8">
-          {/* Page header */}
-          <div className="mb-10 text-center">
-            <p className="font-mono text-[0.625rem] uppercase tracking-[0.24em] text-olive">
-              Booking waypoint
-            </p>
-            <h1 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.25rem)] font-medium tracking-[-0.03em] text-ink">
-              Book your move
-            </h1>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-2">
-              Let&apos;s get you moving. Fill in the details below and our team
-              will confirm your booking within 60 seconds.
-            </p>
-          </div>
+          {/* Page header — editorial kicker, no gimmick labels */}
+          <ScrollReveal asGroup>
+            <div className="mb-10 text-center">
+              <p className="flex items-center justify-center gap-3 text-[0.8125rem] font-medium text-olive">
+                <span className="h-px w-6 bg-olive/60" aria-hidden />
+                Melbourne&apos;s precision removalists
+              </p>
+              <h1 className="mt-4 text-balance text-[clamp(2.5rem,5.5vw,3.5rem)] font-medium tracking-[-0.04em] text-ink">
+                Book your move
+              </h1>
+              <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-2">
+                Let&apos;s get you moving. Fill in the details below and our
+                team will confirm your booking within 60 seconds.
+              </p>
+            </div>
+          </ScrollReveal>
 
           {status === "success" ? (
-            <div className="rounded-[var(--radius-lg)] border border-olive/30 bg-olive-tint/40 px-8 py-14 text-center">
+            <div className="panel rounded-[var(--radius-lg)] bg-olive-tint/30 px-8 py-14 text-center">
               <CheckCircle2 className="mx-auto h-14 w-14 text-olive" />
               <h2 className="mt-5 text-2xl font-medium tracking-[-0.02em] text-ink">
                 Booking request confirmed
@@ -92,7 +105,7 @@ export default function BookMovePage() {
           ) : (
             <form
               onSubmit={handleSubmit}
-              className="overflow-hidden rounded-[var(--radius-lg)] border border-line bg-surface"
+              className="panel overflow-hidden rounded-[var(--radius-lg)]"
             >
               {/* Personal details */}
               <SectionHeading icon={User} title="Personal details" />
@@ -116,15 +129,26 @@ export default function BookMovePage() {
               <div className="grid gap-5 px-6 py-6 sm:grid-cols-2 md:px-8">
                 <div>
                   <Label htmlFor="bm-from">Moving from *</Label>
-                  <Input id="bm-from" required value={form.movingFrom} onChange={(e) => set("movingFrom", e.target.value)} placeholder="123 Old Street, Hawthorn" />
+                  <div className="flex gap-2">
+                    <Input id="bm-from" required value={form.movingFrom} onChange={(e) => set("movingFrom", e.target.value)} placeholder="Suburb or address" />
+                    <SuburbPicker onPick={(s) => set("movingFrom", s)} />
+                  </div>
                 </div>
                 <div>
                   <Label htmlFor="bm-to">Moving to *</Label>
-                  <Input id="bm-to" required value={form.movingTo} onChange={(e) => set("movingTo", e.target.value)} placeholder="456 New Avenue, South Yarra" />
+                  <div className="flex gap-2">
+                    <Input id="bm-to" required value={form.movingTo} onChange={(e) => set("movingTo", e.target.value)} placeholder="Suburb or address" />
+                    <SuburbPicker onPick={(s) => set("movingTo", s)} />
+                  </div>
                 </div>
                 <div>
                   <Label htmlFor="bm-date">Preferred move date *</Label>
-                  <Input id="bm-date" type="date" required value={form.moveDate} onChange={(e) => set("moveDate", e.target.value)} />
+                  <DateField
+                    id="bm-date"
+                    required
+                    value={form.moveDate}
+                    onChange={(v) => set("moveDate", v)}
+                  />
                 </div>
                 <div>
                   <Label htmlFor="bm-size">Move size (bedrooms)</Label>
@@ -137,7 +161,7 @@ export default function BookMovePage() {
                       onChange={(e) => set("moveSize", Number(e.target.value))}
                       className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-raised-2 accent-olive"
                     />
-                    <span className="tnum grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-btn)] border border-line bg-raised font-mono text-sm text-olive">
+                    <span className="tnum grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-btn)] bg-surface-2 font-mono text-sm text-olive">
                       {form.moveSize}
                     </span>
                   </div>
@@ -169,8 +193,17 @@ export default function BookMovePage() {
                 </div>
               </div>
 
+              {/* Trust rail */}
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-line bg-surface-2/40 px-6 py-4 text-xs text-ink-3 md:px-8">
+                <span>No deposit</span>
+                <span>·</span>
+                <span>$20M transit insured</span>
+                <span>·</span>
+                <span>Cancel free up to 24h before</span>
+              </div>
+
               {/* Submit */}
-              <div className="border-t border-line px-6 py-6 md:px-8">
+              <div className="px-6 py-6 md:px-8">
                 <Button type="submit" size="lg" className="w-full" disabled={status === "loading"}>
                   {status === "loading" ? (
                     <>
@@ -207,8 +240,8 @@ function SectionHeading({
   accent?: boolean;
 }) {
   return (
-    <div className={`flex items-center gap-3 border-b border-line px-6 py-4 md:px-8 ${accent ? "bg-olive-tint/30" : "bg-raised/40"}`}>
-      <span className={`grid h-8 w-8 place-items-center rounded-full border ${accent ? "border-olive/40 bg-olive-tint text-olive" : "border-line bg-raised text-ink-2"}`}>
+    <div className={`flex items-center gap-3 border-b border-line px-6 py-4 md:px-8 ${accent ? "bg-olive-tint/20" : "bg-surface-2/30"}`}>
+      <span className={`grid h-8 w-8 place-items-center rounded-full ${accent ? "bg-olive-tint text-olive" : "bg-surface-2 text-ink-2"}`}>
         <Icon className="h-4 w-4" />
       </span>
       <h2 className="text-[0.9375rem] font-medium text-ink">{title}</h2>

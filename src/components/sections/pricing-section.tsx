@@ -8,45 +8,83 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PLANS } from "@/lib/content";
 
+const DAYS = [
+  { id: "weekday", label: "Mon – Fri" },
+  { id: "weekend", label: "Sat – Sun" },
+] as const;
+type DayId = (typeof DAYS)[number]["id"];
+
 /**
- * Pricing — Apple-style product comparison. Each truck is a product.
- * Large clean cards on light surfaces embedded in the dark interface;
- * the middle option receives stronger elevation + olive accents.
+ * Pricing — clean tonal rate cards with a day-of-week toggle.
+ * Stellar's promise is NO weekend surcharge, so the toggle keeps
+ * the rate identical and surfaces it as a trust statement (the
+ * MWAV day-breakdown pattern, flipped into our brand promise).
  */
 export default function PricingSection() {
+  const [day, setDay] = React.useState<DayId>("weekday");
+
   return (
-    <section
-      id="pricing"
-      className="relative scroll-mt-24 py-20 md:py-28"
-    >
+    <section id="pricing" className="relative scroll-mt-24 py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeader
           index="07"
           eyebrow="Transparent pricing"
-          title={
-            <>
-              Per-hour rates,{" "}
-              <span className="font-serif italic text-olive-bright">zero</span>{" "}
-              surprises
-            </>
-          }
+          title="Per-hour rates, zero surprises"
           description="No hidden fees, no call-out costs. Every price includes two professional movers and full equipment. You only pay for the hours we work."
           align="center"
-          className="mb-14 md:mb-16"
+          className="mb-10 md:mb-12"
         />
 
-        <div className="grid items-stretch gap-5 lg:grid-cols-3 lg:gap-6">
-          {PLANS.map((plan) => (
-            <div
-              key={plan.code}
-              className={cn(
-                "relative flex flex-col rounded-[var(--radius-lg)] border p-7 md:p-8",
-                "transition-[border-color,box-shadow,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1",
-                plan.popular
-                  ? "border-olive/50 bg-gradient-to-b from-olive-tint/60 to-surface shadow-[0_0_0_1px_var(--color-olive-glow),0_24px_60px_rgba(0,0,0,0.45)]"
-                  : "border-line bg-surface hover:border-line-strong"
-              )}
-            >
+        {/* Day-of-week toggle — same rate, always (trust statement) */}
+        <div className="mb-12 flex flex-col items-center gap-3">
+          <div
+            role="group"
+            aria-label="Rate by day of week"
+            className="inline-flex items-center gap-1 rounded-full bg-surface-2 p-1"
+          >
+            {DAYS.map((d) => (
+              <button
+                key={d.id}
+                type="button"
+                aria-pressed={day === d.id}
+                onClick={() => setDay(d.id)}
+                className={cn(
+                  "rounded-full px-5 py-2 text-[0.8125rem] font-medium transition-colors duration-200",
+                  day === d.id
+                    ? "bg-olive text-ink-dark"
+                    : "text-ink-2 hover:text-ink"
+                )}
+              >
+                {d.label}
+              </button>
+            ))}
+          </div>
+          <p
+            className={cn(
+              "flex items-center gap-1.5 text-[0.8125rem] transition-colors duration-300",
+              day === "weekend" ? "text-olive-bright" : "text-ink-3"
+            )}
+          >
+            <span className="h-1 w-1 rounded-full bg-olive" aria-hidden />
+            {day === "weekend"
+              ? "Weekend moves at weekday rates — always."
+              : "Rates shown for all days of the week."}
+          </p>
+        </div>
+
+        {/* Barely-there drift (0.98) — the second parallax element on
+            the page (hero photo is the first). ScrollSmoother effects
+            stay understated per the design law. */}
+        <div className="relative" data-speed="0.98">
+          <div className="grid items-stretch gap-5 lg:grid-cols-3 lg:gap-6">
+            {PLANS.map((plan) => (
+              <div
+                key={plan.code}
+                className={cn(
+                  "panel panel-hover relative flex flex-col rounded-[var(--radius-lg)] p-7 md:p-8",
+                  plan.popular && "bg-surface-2"
+                )}
+              >
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <Badge variant="olive">Most popular</Badge>
@@ -63,7 +101,7 @@ export default function PricingSection() {
                     {plan.subtitle}
                   </p>
                 </div>
-                <span className="tnum font-mono text-[0.625rem] uppercase tracking-[0.14em] text-ink-3">
+                <span className="tnum font-mono text-[0.6875rem] text-ink-3">
                   {plan.code}
                 </span>
               </div>
@@ -100,12 +138,12 @@ export default function PricingSection() {
                 >
                   Book {plan.name.replace(" Truck", "")}
                 </Button>
-              </a>
-            </div>
-          ))}
+              </a>              </div>
+            ))}
+          </div>
         </div>
 
-        <p className="mt-8 text-center font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-ink-3">
+        <p className="mt-8 text-center text-[0.8125rem] text-ink-3">
           No deposit · Cancel free up to 24h before · Fully insured
         </p>
       </div>

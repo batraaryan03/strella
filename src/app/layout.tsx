@@ -1,17 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Instrument_Sans, Instrument_Serif, Geist_Mono } from "next/font/google";
+import Header from "@/components/sections/header";
+import SmoothScroll from "@/components/ui/smooth-scroll";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/toaster";
+import { FloatingQuote } from "@/components/ui/floating-quote";
+import { NoiseTexture } from "@/components/ui/noise-texture";
+import HyperspeedHomepage from "@/components/ui/backgrounds/hyperspeed-homepage";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+/* Typography (user-directed upgrade): Instrument Sans for UI/body,
+   Instrument Serif 400 for display headlines (the editorial serif
+   accent), Geist Mono retained for data. */
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const instrumentSerif = Instrument_Serif({
@@ -19,6 +23,12 @@ const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: ["400"],
   style: ["normal", "italic"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const viewport: Viewport = {
@@ -57,10 +67,37 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${instrumentSans.variable} ${instrumentSerif.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-canvas text-ink">
-        {children}
+        {/* React Bits Hyperspeed as the homepage backdrop (olive-tuned
+            "Neon Waves", client-only WebGL). Renders only on `/` — placed
+            BEFORE the grain so the NoiseTexture film grain sits on top.
+            Skipped entirely for reduced-motion users. */}
+        <HyperspeedHomepage />
+
+        {/* Olive-tinted film grain across the whole canvas (real Magic
+            UI NoiseTexture, brand-tuned). Sits under content. */}
+        <div className="pointer-events-none fixed inset-0 z-0" aria-hidden>
+          <NoiseTexture
+            className="size-full opacity-[0.05]"
+            frequency={0.7}
+            octaves={3}
+            noiseOpacity={1}
+          />
+        </div>
+
+        {/* Fixed elements live OUTSIDE the smooth wrapper (Header,
+            Toaster, FloatingQuote) — ScrollSmoother transforms the
+            content, which breaks position:fixed descendants. */}
+        <Header />
+        <SmoothScroll>
+          <TooltipProvider delayDuration={300}>
+            {children}
+          </TooltipProvider>
+        </SmoothScroll>
+        <Toaster />
+        <FloatingQuote />
       </body>
     </html>
   );

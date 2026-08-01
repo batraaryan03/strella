@@ -16,12 +16,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/ui/section-header";
+import { Progress } from "@/components/ui/progress";
+import { DateField } from "@/components/ui/date-field";
+import { toast } from "sonner";
 import { SUBURBS } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
 type Step = 0 | 1 | 2;
 
 const SIZES = ["Studio", "1–2 bed", "3–4 bed", "5+ bed"] as const;
+
+/** Indicative hourly range per move size (Muval-style honesty). */
+const ESTIMATE_RANGE: Record<(typeof SIZES)[number], [number, number]> = {
+  Studio: [180, 260],
+  "1–2 bed": [260, 380],
+  "3–4 bed": [340, 480],
+  "5+ bed": [440, 620],
+};
 
 const STEPS = [
   { num: "01", label: "Route", icon: MapPin },
@@ -32,7 +43,7 @@ const STEPS = [
 /**
  * Quote wizard — the primary conversion widget, multi-step with
  * contact captured LAST (CRO). Step 1 route, step 2 load, step 3
- * details. Calm, generous spacing, phone last.
+ * details. Borderless panel, calm spacing, phone last.
  */
 export default function QuoteWizard() {
   const [step, setStep] = React.useState<Step>(0);
@@ -85,16 +96,22 @@ export default function QuoteWizard() {
       });
       if (!res.ok) throw new Error("Failed");
       setStatus("success");
+      toast.success("Quote request received", {
+        description: `We'll call ${form.phone} within 60 seconds.`,
+      });
     } catch {
       setStatus("error");
+      toast.error("Something went wrong", {
+        description: "Please try again or call us directly.",
+      });
     }
   };
 
   if (status === "success") {
     return (
-      <section id="quote" className="relative scroll-mt-24 border-y border-line bg-surface/40 py-20 md:py-28">
+      <section id="quote" className="relative scroll-mt-24 py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <div className="rounded-[var(--radius-lg)] border border-olive/30 bg-olive-tint/40 px-8 py-16 text-center">
+          <div className="panel rounded-[var(--radius-lg)] bg-olive-tint/30 px-8 py-16 text-center">
             <CheckCircle2 className="mx-auto h-12 w-12 text-olive" />
             <h3 className="mt-5 text-2xl font-medium tracking-[-0.02em] text-ink">
               Your quote request is in
@@ -105,7 +122,7 @@ export default function QuoteWizard() {
               60 seconds with a fixed, no-obligation quote for your move from{" "}
               {form.fromSuburb} to {form.toSuburb}.
             </p>
-            <p className="mt-6 font-mono text-[0.625rem] uppercase tracking-[0.18em] text-ink-3">
+            <p className="mt-6 text-[0.8125rem] text-ink-3">
               No deposit · Cancel free up to 24h before
             </p>
           </div>
@@ -128,9 +145,7 @@ export default function QuoteWizard() {
             title={
               <>
                 Get a fixed quote in{" "}
-                <span className="font-serif italic text-olive-bright">
-                  60 seconds
-                </span>
+                <span className="text-olive-bright">60 seconds</span>
               </>
             }
             description="Tell us the route, the load, and when — we'll confirm your price before you commit to anything."
@@ -151,21 +166,29 @@ export default function QuoteWizard() {
         </div>
 
         {/* ── Right: wizard card ── */}
-        <div className="rounded-[var(--radius-lg)] border border-line bg-surface p-6 md:p-10">
+        <div className="panel rounded-[var(--radius-lg)] p-6 md:p-10">
+          {/* Progress bar (shadcn) */}
+          <div className="mb-9">
+            <div className="mb-3 flex items-center justify-between text-[0.8125rem]">
+              <span className="text-ink-3">Step {step + 1} of 3</span>
+              <span className="text-olive-bright">{STEPS[step].label}</span>
+            </div>
+            <Progress value={((step + 1) / 3) * 100} />
+          </div>
+
           {/* Progress rail */}
           <ol className="mb-9 flex items-center gap-2" aria-label="Quote steps">
             {STEPS.map((s, i) => {
               const Icon = s.icon;
-              const state =
-                i < step ? "done" : i === step ? "active" : "todo";
+              const state = i < step ? "done" : i === step ? "active" : "todo";
               return (
                 <li key={s.num} className="flex flex-1 items-center gap-2">
                   <span
                     className={cn(
-                      "grid h-9 w-9 shrink-0 place-items-center rounded-full border transition-colors duration-200",
-                      state === "done" && "border-olive/50 bg-olive-tint text-olive",
-                      state === "active" && "border-olive bg-olive text-ink-dark",
-                      state === "todo" && "border-line text-ink-3"
+                      "grid h-9 w-9 shrink-0 place-items-center rounded-full transition-colors duration-200",
+                      state === "done" && "bg-olive-tint text-olive",
+                      state === "active" && "bg-olive text-ink-dark",
+                      state === "todo" && "bg-surface-2 text-ink-3"
                     )}
                   >
                     {state === "done" ? (
@@ -176,7 +199,7 @@ export default function QuoteWizard() {
                   </span>
                   <span
                     className={cn(
-                      "hidden text-[0.6875rem] font-medium uppercase tracking-[0.14em] sm:block",
+                      "hidden text-[0.8125rem] font-medium sm:block",
                       state === "todo" ? "text-ink-3" : "text-ink-2"
                     )}
                   >
@@ -234,10 +257,10 @@ export default function QuoteWizard() {
                           type="button"
                           onClick={() => setForm((f) => ({ ...f, size: s }))}
                           className={cn(
-                            "rounded-[var(--radius-btn)] border px-3 py-3 text-sm font-medium transition-colors duration-150",
+                            "rounded-[var(--radius-btn)] px-3 py-3 text-sm font-medium transition-colors duration-150",
                             form.size === s
-                              ? "border-olive bg-olive-tint text-olive-bright"
-                              : "border-line text-ink-2 hover:border-line-strong hover:text-ink"
+                              ? "bg-olive-tint text-olive-bright"
+                              : "bg-surface-2 text-ink-2 hover:bg-raised hover:text-ink"
                           )}
                         >
                           {s}
@@ -247,12 +270,28 @@ export default function QuoteWizard() {
                   </fieldset>
                   <div>
                     <Label htmlFor="qz-date">Preferred move date</Label>
-                    <Input
+                    <DateField
                       id="qz-date"
-                      type="date"
                       value={form.moveDate}
-                      onChange={set("moveDate")}
+                      onChange={(v) => setForm((f) => ({ ...f, moveDate: v }))}
                     />
+                  </div>
+
+                  {/* Ballpark-first — price band BEFORE the contact wall */}
+                  <div className="space-y-2 rounded-[var(--radius-btn)] bg-surface-2 px-4 py-3">
+                    <p className="flex items-baseline justify-between gap-3">
+                      <span className="text-[0.8125rem] text-ink-2">
+                        Indicative estimate
+                      </span>
+                      <span className="tnum font-mono text-[0.9375rem] text-olive-bright">
+                        ${ESTIMATE_RANGE[form.size][0]} – $
+                        {ESTIMATE_RANGE[form.size][1]}
+                      </span>
+                    </p>
+                    <p className="text-xs text-ink-3">
+                      Based on similar {form.size} moves. No contact details
+                      needed yet — your fixed quote is confirmed later.
+                    </p>
                   </div>
                 </div>
               )}
@@ -292,10 +331,25 @@ export default function QuoteWizard() {
                       placeholder="you@example.com"
                     />
                   </div>
-                  <p className="rounded-[var(--radius-btn)] border border-line bg-raised/50 px-4 py-3 font-mono text-[0.625rem] uppercase tracking-[0.16em] text-ink-3">
-                    {form.fromSuburb || "From"} → {form.toSuburb || "To"} ·{" "}
-                    {form.size} · {form.moveDate || "date TBC"}
-                  </p>
+                  <div className="space-y-2 rounded-[var(--radius-btn)] bg-surface-2 px-4 py-3">
+                    <p className="text-[0.8125rem] text-ink-3">
+                      {form.fromSuburb || "From"} → {form.toSuburb || "To"} ·{" "}
+                      {form.size} · {form.moveDate || "date TBC"}
+                    </p>
+                    <p className="flex items-baseline justify-between gap-3">
+                      <span className="text-[0.8125rem] text-ink-2">
+                        Indicative estimate
+                      </span>
+                      <span className="tnum font-mono text-[0.9375rem] text-olive-bright">
+                        ${ESTIMATE_RANGE[form.size][0]} – $
+                        {ESTIMATE_RANGE[form.size][1]}
+                      </span>
+                    </p>
+                    <p className="text-xs text-ink-3">
+                      Based on similar {form.size} moves. Your fixed quote is
+                      confirmed before you commit.
+                    </p>
+                  </div>
                 </div>
               )}
             </div>

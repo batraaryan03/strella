@@ -19,7 +19,7 @@ interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * Large-typography, minimal-divider accordion. Interaction is
+ * Large-typography, hairline-divider accordion. Interaction is
  * lightweight: chevron rotation + smooth height transition.
  */
 export function Accordion({
@@ -53,10 +53,7 @@ export function Accordion({
               onClick={() => toggle(i)}
               aria-expanded={isOpen}
               aria-controls={`${item.id}-panel`}
-              className={cn(
-                "group flex w-full items-center justify-between gap-6 py-5 text-left",
-                "transition-colors duration-150"
-              )}
+              className="group flex w-full items-center justify-between gap-6 py-5 text-left"
             >
               <span
                 className={cn(
@@ -68,10 +65,10 @@ export function Accordion({
               </span>
               <span
                 className={cn(
-                  "grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                  "grid h-8 w-8 shrink-0 place-items-center rounded-full transition-colors duration-300",
                   isOpen
-                    ? "border-olive/40 bg-olive-tint text-olive"
-                    : "border-line text-ink-3 group-hover:border-line-strong group-hover:text-ink-2"
+                    ? "bg-olive-tint text-olive"
+                    : "text-ink-3 group-hover:text-ink-2"
                 )}
               >
                 <ChevronDown
@@ -90,7 +87,14 @@ export function Accordion({
               style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
             >
               <div className="overflow-hidden">
-                <div className="max-w-[62ch] pb-6 pr-10 text-[0.9375rem] leading-[1.7] text-ink-2">
+                {/* Keyed remount retriggers the blur-in on every open */}
+                <div
+                  key={isOpen ? "open" : "closed"}
+                  className={cn(
+                    "max-w-[62ch] pb-6 pr-10 text-[0.9375rem] leading-[1.7] text-ink-2",
+                    isOpen && "blur-in"
+                  )}
+                >
                   {item.a}
                 </div>
               </div>

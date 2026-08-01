@@ -28,8 +28,10 @@ function loadSt() {
 }
 
 /**
- * Fade + translate reveal on scroll, driven by GSAP ScrollTrigger.
- * Transform/opacity only; respects prefers-reduced-motion.
+ * ScrollReveal — section-level fade + translate reveal on scroll, driven
+ * by GSAP ScrollTrigger. Wraps whole sections (page composition).
+ * Headline word-splitting lives in `RevealText` (React Bits). Transform
+ * /opacity only; respects prefers-reduced-motion; fails open.
  */
 export function ScrollReveal({
   children,
@@ -49,9 +51,7 @@ export function ScrollReveal({
     if (!el || disabled) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const targets: Element[] = asGroup
-      ? Array.from(el.children)
-      : [el];
+    const targets: Element[] = asGroup ? Array.from(el.children) : [el];
 
     // Reduced-motion users: keep content visible, no need to load GSAP.
     if (reduce) return;

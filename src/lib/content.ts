@@ -65,7 +65,7 @@ export const PHOTO_CREDITS = [
   { name: "Sander Yigin", url: "https://unsplash.com/@sanderyigin" },
 ] as const;
 
-/* ── Map data (MapLibre · OpenFreeMap dark) ────────────────── */
+/* ── Map data (Leaflet · OpenStreetMap, real coordinates) ──── */
 export const MELBOURNE_CENTER: [number, number] = [144.9631, -37.8136];
 
 /** Rough service-area hull covering greater Melbourne (lng, lat). */
@@ -120,11 +120,11 @@ export const SUBURB_POINTS: SuburbPoint[] = [
 
 /* ── Trust metrics (verified ribbon) ───────────────────────── */
 export const TRUST_METRICS = [
-  { icon: "shield", label: "Fully insured", value: "$20M", suffix: "", sub: "transit cover on every move" },
-  { icon: "badge", label: "Police-checked crew", value: "100%", suffix: "", sub: "background verified" },
-  { icon: "truck", label: "Moves completed", value: "5,000", suffix: "+", sub: "across greater Melbourne" },
-  { icon: "star", label: "Google rating", value: "4.9", suffix: "★", sub: "2,300+ verified reviews" },
-  { icon: "receipt", label: "Upfront pricing", value: "Fixed", suffix: "", sub: "no hidden fees, ever" },
+  { icon: "shield", label: "Fully insured", num: 20, prefix: "$", suffix: "M", decimals: 0, sub: "transit cover on every move" },
+  { icon: "badge", label: "Police-checked crew", num: 100, suffix: "%", decimals: 0, sub: "background verified" },
+  { icon: "truck", label: "Moves completed", num: 5000, suffix: "+", decimals: 0, sub: "across greater Melbourne" },
+  { icon: "star", label: "Google rating", num: 4.9, suffix: "★", decimals: 1, sub: "2,300+ verified reviews" },
+  { icon: "receipt", label: "Upfront pricing", text: "Fixed", sub: "no hidden fees, ever" },
 ] as const;
 
 /* ── Services ──────────────────────────────────────────────── */

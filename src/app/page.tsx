@@ -1,4 +1,3 @@
-import Header from "@/components/sections/header";
 import HeroSection from "@/components/sections/hero-section";
 import TrustRibbon from "@/components/sections/trust-ribbon";
 import QuoteWizard from "@/components/sections/quote-wizard";
@@ -17,7 +16,6 @@ import { ScrollReveal } from "@/components/ui/scroll-reveal";
 export default function Home() {
   return (
     <>
-      <Header />
       <main className="flex-1">
         <HeroSection />
         <TrustRibbon />

@@ -2,54 +2,73 @@
 
 import * as React from "react";
 import { SectionHeader } from "@/components/ui/section-header";
+import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
+import { AnimatedCircularProgressBar } from "@/components/ui/animated-circular-progress-bar";
 import { WHY_CHOOSE } from "@/lib/content";
 
 /**
- * Why Choose — numbered pillars, no icons. Real guarantees with
- * concrete metrics (insurance, postcodes, rate). Restraint is the
- * design; the empty space between pillars does the talking.
+ * Why Choose — the real Magic UI bento grid, no icons. The featured
+ * card carries the guarantee-led headline and an olive satisfaction
+ * gauge; the rest are quiet tonal pillars with mono metrics.
  */
 export default function WhyChooseUs() {
   return (
-    <section className="relative border-y border-line bg-surface/40 py-20 md:py-28">
+    <section className="relative py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeader
           index="04"
           eyebrow="Why Stellar"
-          title={
-            <>
-              Built on{" "}
-              <span className="font-serif italic text-olive-bright">trust</span>,
-              measured in care
-            </>
-          }
+          title="Built on trust, measured in care"
           description="Melbourne's trusted local movers with a commitment to excellence — backed by $20M insurance and a team that treats your home like their own."
           className="mb-16 md:mb-20"
         />
 
-        <div className="grid gap-x-10 gap-y-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-12">
-          {WHY_CHOOSE.map((f, i) => (
-            <div key={f.title} className="relative border-t border-line pt-7">
-              {/* index + metric */}
-              <div className="mb-5 flex items-baseline justify-between">
-                <span className="tnum font-mono text-[0.625rem] uppercase tracking-[0.18em] text-ink-3">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-olive">
-                  {f.metric}
-                </span>
-              </div>
-
-              <h3 className="text-[1.0625rem] font-medium tracking-[-0.01em] text-ink">
-                {f.title}
-              </h3>
-              <p className="mt-2.5 max-w-[40ch] text-sm leading-[1.7] text-ink-2">
-                {f.desc}
-              </p>
-            </div>
-          ))}
-        </div>
+        <BentoGrid className="auto-rows-[minmax(16rem,auto)]">
+          {WHY_CHOOSE.map((f, i) => {
+            const featured = i === 0;
+            return (
+              <BentoCard
+                key={f.title}
+                name={f.title}
+                description={f.desc}
+                href="/book-move"
+                cta={featured ? "Get a free quote" : "Explore pricing"}
+                Icon={MetricIcon(f.metric)}
+                className={featured ? "md:col-span-3" : ""}
+                background={
+                  featured ? (
+                    <div className="relative h-full min-h-44 w-full">
+                      <div className="absolute right-6 top-6">
+                        <AnimatedCircularProgressBar
+                          value={98}
+                          gaugePrimaryColor="#97a75a"
+                          gaugeSecondaryColor="#23271a"
+                          className="size-28 md:size-32"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="h-full min-h-20 w-full" />
+                  )
+                }
+              />
+            );
+          })}
+        </BentoGrid>
       </div>
     </section>
   );
+}
+
+/** Mono metric standing in as the card icon (no icon grid — data only). */
+function MetricIcon(metric: string) {
+  return function Icon({ className }: { className?: string }) {
+    return (
+      <span
+        className={`tnum font-mono text-[0.8125rem] text-olive ${className ?? ""}`}
+      >
+        {metric}
+      </span>
+    );
+  };
 }

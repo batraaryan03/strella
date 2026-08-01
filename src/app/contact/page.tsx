@@ -2,12 +2,12 @@
 
 import * as React from "react";
 import { Phone, Mail, MapPin, Clock, CheckCircle2, AlertCircle, Loader2, Send } from "lucide-react";
-import Header from "@/components/sections/header";
 import Footer from "@/components/sections/footer";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { BRAND } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -73,22 +73,23 @@ export default function ContactPage() {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen pb-20 pt-[6.5rem]">
-        {/* Header */}
+        {/* Header — editorial kicker, no gimmick labels */}
         <div className="relative overflow-hidden border-b border-line bg-surface/50">
           <div className="relative mx-auto max-w-7xl px-5 py-16 text-center md:px-8 md:py-20">
-            <p className="font-mono text-[0.625rem] uppercase tracking-[0.24em] text-olive">
-              Get in touch
-            </p>
-            <h1 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-medium tracking-[-0.03em] text-ink">
-              Contact{" "}
-              <span className="font-serif italic text-olive-bright">Stellar</span>
-            </h1>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-2">
-              Ready to move? Have questions? We&apos;re here to help — reach out
-              and we&apos;ll get back to you within 60 seconds.
-            </p>
+            <ScrollReveal asGroup>
+              <p className="flex items-center justify-center gap-3 text-[0.8125rem] font-medium text-olive">
+                <span className="h-px w-6 bg-olive/60" aria-hidden />
+                Melbourne&apos;s precision removalists
+              </p>
+              <h1 className="mt-4 text-balance text-[clamp(2.5rem,5.5vw,3.5rem)] font-medium tracking-[-0.04em] text-ink">
+                Contact Stellar
+              </h1>
+              <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-2">
+                Ready to move? Have questions? We&apos;re here to help — reach
+                out and we&apos;ll get back to you within 60 seconds.
+              </p>
+            </ScrollReveal>
           </div>
         </div>
 
@@ -99,12 +100,12 @@ export default function ContactPage() {
               <h2 className="text-xl font-medium tracking-[-0.01em] text-ink">
                 Contact information
               </h2>
-              <div className="mt-8 space-y-5">
+              <div className="mt-8 space-y-4">
                 {contactCards.map((c) => {
                   const Icon = c.icon;
                   const inner = (
                     <>
-                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[var(--radius-btn)] border border-line bg-raised text-olive transition-colors duration-150 group-hover:border-olive/40">
+                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[var(--radius-btn)] bg-surface-2 text-olive">
                         <Icon className="h-5 w-5" strokeWidth={1.5} />
                       </span>
                       <span>
@@ -115,7 +116,7 @@ export default function ContactPage() {
                     </>
                   );
                   const cls =
-                    "group flex items-start gap-4 rounded-[var(--radius-card)] border border-line bg-surface p-5 transition-colors duration-150 hover:border-olive/35";
+                    "panel panel-hover group flex items-start gap-4 rounded-[var(--radius-card)] p-5";
                   return "href" in c && c.href ? (
                     <a key={c.label} href={c.href} className={cls}>
                       {inner}
@@ -128,11 +129,19 @@ export default function ContactPage() {
                 })}
               </div>
 
-              <a href="/book-move" className="mt-10 block">
-                <Button size="lg" className="w-full sm:w-auto">
-                  Book your move
-                </Button>
-              </a>
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <a href="/book-move">
+                  <Button size="lg" className="w-full sm:w-auto">
+                    Book your move
+                  </Button>
+                </a>
+                <a href={`tel:${BRAND.phone}`}>
+                  <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                    <Phone className="h-4 w-4" />
+                    {BRAND.phoneDisplay}
+                  </Button>
+                </a>
+              </div>
             </div>
 
             {/* Form */}
@@ -141,7 +150,7 @@ export default function ContactPage() {
                 Send us a message
               </h2>
               {status === "success" ? (
-                <div className="mt-8 rounded-[var(--radius-lg)] border border-olive/30 bg-olive-tint/40 px-8 py-12 text-center">
+                <div className="panel mt-8 rounded-[var(--radius-lg)] bg-olive-tint/30 px-8 py-12 text-center">
                   <CheckCircle2 className="mx-auto h-12 w-12 text-olive" />
                   <h3 className="mt-4 text-xl font-medium text-ink">Message sent</h3>
                   <p className="mt-2 text-sm text-ink-2">
@@ -151,7 +160,7 @@ export default function ContactPage() {
               ) : (
                 <form
                   onSubmit={handleSubmit}
-                  className="mt-8 space-y-5 rounded-[var(--radius-lg)] border border-line bg-surface p-6 md:p-8"
+                  className="panel mt-8 space-y-5 rounded-[var(--radius-lg)] p-6 md:p-8"
                 >
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div>

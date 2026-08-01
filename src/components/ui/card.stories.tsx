@@ -28,19 +28,6 @@ export const Raised: Story = {
   args: { variant: "raised", children: Content },
 };
 
-export const Glass: Story = {
-  parameters: {
-    backgrounds: {
-      default: "image",
-      values: [
-        { name: "canvas", value: "#0b0c0a" },
-        { name: "image", value: "#3d4a2a" },
-      ],
-    },
-  },
-  args: { variant: "glass", children: Content },
-};
-
 export const Light: Story = {
   parameters: { backgrounds: { default: "paper" } },
   args: { variant: "light", children: Content },

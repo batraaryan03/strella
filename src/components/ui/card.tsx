@@ -3,28 +3,26 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
-  "rounded-[var(--radius-card)] border transition-[border-color,background-color,box-shadow,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
+  "rounded-[var(--radius-card)] transition-[background-color,box-shadow,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
   {
     variants: {
       variant: {
-        surface: "border-line bg-surface",
-        raised: "border-line bg-raised",
-        glass: [
-          "border-white/10 bg-white/[0.04]",
-          "backdrop-blur-md",
-          "shadow-[0_16px_40px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.12)]",
+        surface: [
+          "bg-surface",
+          "shadow-[inset_0_1px_0_rgba(244,245,240,0.045),0_1px_2px_rgba(0,0,0,0.35)]",
         ],
-        light: "border-paper-2 bg-paper",
+        raised: [
+          "bg-surface-2",
+          "shadow-[inset_0_1px_0_rgba(244,245,240,0.06),0_1px_2px_rgba(0,0,0,0.35)]",
+        ],
+        light: "bg-paper",
       },
       hover: {
         none: "",
         lift: [
           "hover:-translate-y-1",
-          "hover:border-olive/40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.45)]",
-        ],
-        glow: [
-          "hover:border-olive/50",
-          "hover:shadow-[0_0_0_1px_var(--color-olive-glow),0_20px_50px_rgba(0,0,0,0.45)]",
+          "hover:bg-surface-2",
+          "hover:shadow-[inset_0_1px_0_rgba(244,245,240,0.07),0_20px_44px_-18px_rgba(0,0,0,0.65)]",
         ],
       },
     },

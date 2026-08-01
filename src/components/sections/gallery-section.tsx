@@ -4,15 +4,23 @@ import * as React from "react";
 import { createPortal } from "react-dom";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { SectionHeader } from "@/components/ui/section-header";
+import { PixelImage } from "@/components/ui/pixel-image";
 import { GALLERY_IMAGES } from "@/lib/content";
 
-const half = Math.ceil(GALLERY_IMAGES.length / 2);
-const row1 = GALLERY_IMAGES.slice(0, half);
-const row2 = GALLERY_IMAGES.slice(half);
+/** Art-directed aspect rhythm for the masonry columns. */
+const ASPECTS = [
+  "aspect-[4/5]",
+  "aspect-[3/4]",
+  "aspect-square",
+  "aspect-[4/3]",
+  "aspect-[3/4]",
+  "aspect-[4/5]",
+];
 
 /**
- * Gallery — editorial asymmetric rows scrolling in opposite
- * directions (pause on hover), with a full-viewport dark lightbox.
+ * Gallery — borderless editorial masonry (CSS columns) with varied
+ * aspect ratios for visual rhythm, and a full-viewport dark
+ * lightbox (keyboard + touch navigation).
  */
 export default function GallerySection() {
   const [lightboxIndex, setLightboxIndex] = React.useState<number | null>(null);
@@ -46,56 +54,38 @@ export default function GallerySection() {
     };
   }, [lightboxIndex, close, prev, next]);
 
-  const renderRow = (images: string[], base: number, dir: "left" | "right") => (
-    <div className={`gallery-row ${dir === "left" ? "mb-4" : ""} overflow-hidden`}>
-      <div
-        className={`flex w-max gap-4 ${
-          dir === "left" ? "gallery-track-left" : "gallery-track-right"
-        }`}
-      >
-        {[...images, ...images].map((src, i) => (
-          <button
-            key={`${dir}-${i}`}
-            onClick={() => setLightboxIndex((i % images.length) + base)}
-            className="group relative block h-[200px] w-[280px] shrink-0 cursor-pointer overflow-hidden rounded-[var(--radius-card)] border border-line md:h-[260px] md:w-[380px]"
-            aria-label={`View move photo ${(i % images.length) + base + 1}`}
-          >
-            <img
-              src={src}
-              alt={`Move ${(i % images.length) + base + 1}`}
-              loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-            />
-            <span className="absolute inset-0 bg-gradient-to-t from-canvas/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-            <span className="absolute bottom-3 left-3 font-mono text-[0.625rem] uppercase tracking-[0.16em] text-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              {String((i % images.length) + base + 1).padStart(2, "0")}
-            </span>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-
   return (
-    <section id="gallery" className="relative scroll-mt-24 overflow-hidden py-20 md:py-28">
+    <section id="gallery" className="relative scroll-mt-24 py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeader
           index="08"
           eyebrow="Gallery"
-          title={
-            <>
-              Recent moves,{" "}
-              <span className="font-serif italic text-olive-bright">documented</span>
-            </>
-          }
+          title="Recent moves, documented"
           description="A selection of recent relocations across Melbourne — trucks, teams, and carefully wrapped furniture."
-          className="mb-14 md:mb-20"
+          className="mb-14 md:mb-16"
         />
-      </div>
 
-      <div className="relative">
-        {renderRow(row1, 0, "left")}
-        {renderRow(row2, 15, "right")}
+        {/* ── Editorial masonry ── */}
+        <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
+          {GALLERY_IMAGES.map((src, i) => (
+            <button
+              key={src}
+              onClick={() => setLightboxIndex(i)}
+              className="group relative block w-full overflow-hidden rounded-[var(--radius-card)] break-inside-avoid"
+              aria-label={`View move photo ${i + 1}`}
+            >
+              <PixelImage
+                src={src}
+                alt={`Move ${i + 1}`}
+                className={`w-full ${ASPECTS[i % ASPECTS.length]}`}
+              />
+              <span className="absolute inset-0 bg-gradient-to-t from-canvas/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <span className="absolute bottom-3 left-3 font-mono text-[0.6875rem] text-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* ── Lightbox ── */}

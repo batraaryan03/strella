@@ -1,8 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { Phone, Mail, Clock, MapPin, CalendarCheck } from "lucide-react";
+import { Phone, Mail, Clock, MapPin, CalendarCheck, ShieldCheck } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
+import { StarRating } from "@/components/ui/star-rating";
+import { KineticText } from "@/components/ui/kinetic-text";
 import { BRAND, PHOTO_CREDITS } from "@/lib/content";
 
 const quickLinks = [
@@ -37,11 +39,13 @@ const socials = [
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-line bg-surface/50">
-      {/* ── Giant brand typography ── */}
-      <div className="pointer-events-none select-none px-2 pt-16 md:pt-20" aria-hidden>
-        <p className="whitespace-nowrap text-center text-[clamp(4rem,17vw,15rem)] font-semibold leading-[0.85] tracking-[-0.04em] text-white/[0.035]">
-          STELLAR
-        </p>
+      {/* ── Giant brand typography — kinetic weight on hover ── */}
+      <div className="select-none px-2 pt-16 md:pt-20" aria-hidden>
+        <KineticText
+          text="STELLAR"
+          as="p"
+          className="pointer-events-auto justify-center whitespace-nowrap text-center text-[clamp(4rem,17vw,15rem)] font-[300] leading-[0.85] tracking-[-0.04em] text-ink/[0.05] transition-colors duration-500 hover:text-ink/[0.09]"
+        />
       </div>
 
       <div className="mx-auto max-w-7xl px-5 pb-10 md:px-8">
@@ -75,7 +79,7 @@ export default function Footer() {
 
           {/* Quick links */}
           <div>
-            <h3 className="mb-5 font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-ink-3">
+            <h3 className="mb-5 text-[0.8125rem] font-medium text-ink">
               Navigate
             </h3>
             <ul className="space-y-2.5 text-sm">
@@ -94,7 +98,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="mb-5 font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-ink-3">
+            <h3 className="mb-5 text-[0.8125rem] font-medium text-ink">
               Contact
             </h3>
             <ul className="space-y-4 text-sm text-ink-2">
@@ -136,15 +140,47 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* ── Bottom bar ── */}
-        <div className="flex flex-col items-center justify-between gap-3 py-6 text-xs text-ink-3 md:flex-row">
-          <p>© {new Date().getFullYear()} Stellar Removals. All rights reserved.</p>
-          <div className="flex gap-5">
-            <a href="#" className="transition-colors hover:text-ink-2">Privacy Policy</a>
-            <a href="#" className="transition-colors hover:text-ink-2">Terms of Service</a>
+        {/* ── Trust & credentials tier — badge of honour, not fine print ── */}
+        <div className="grid gap-6 border-t border-line py-7 md:grid-cols-3 md:items-center md:gap-8">
+          <p className="flex items-center gap-2 text-xs text-ink-3">
+            <span className="h-1.5 w-1.5 rounded-full bg-olive" aria-hidden />
+            Crews active across Melbourne now
+          </p>
+          <dl className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-xs">
+            <div className="flex items-center gap-2">
+              <dt className="sr-only">Company</dt>
+              <dd className="font-medium text-ink-2">Stellar Removals Pty Ltd</dd>
+            </div>
+            <div className="flex items-center gap-2">
+              <dt className="text-ink-3">ABN</dt>
+              <dd className="tnum font-mono text-ink-2">Pending registration</dd>
+            </div>
+            <div className="flex items-center gap-2">
+              <dt className="sr-only">Insurance</dt>
+              <dd className="flex items-center gap-1.5 text-ink-2">
+                <ShieldCheck className="h-3.5 w-3.5 text-olive" />
+                $20M public liability
+              </dd>
+            </div>
+            <div className="flex items-center gap-2">
+              <dt className="sr-only">Crew</dt>
+              <dd className="text-ink-2">Police-checked crew</dd>
+            </div>
+          </dl>
+          <div className="flex items-center justify-center gap-5 md:justify-end">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-line px-2.5 py-1">
+              <StarRating size="sm" />
+              Google 4.9
+            </span>
+            <a href="#" className="text-xs text-ink-3 transition-colors hover:text-ink-2">Privacy Policy</a>
+            <a href="#" className="text-xs text-ink-3 transition-colors hover:text-ink-2">Terms of Service</a>
           </div>
-          <p className="font-mono uppercase tracking-[0.14em]">MEL · AU</p>
         </div>
+
+        {/* ── Copyright ── */}
+        <p className="pb-2 text-center text-xs text-ink-3">
+          © {new Date().getFullYear()} Stellar Removals. All rights reserved.
+        </p>
 
         {/* ── Photography credits (Unsplash API terms) ── */}
         <div className="border-t border-line/60 py-4">

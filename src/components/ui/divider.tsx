@@ -5,10 +5,7 @@ interface DividerProps extends React.HTMLAttributes<HTMLDivElement> {
   label?: string;
 }
 
-/**
- * Hairline divider with optional centered mono label —
- * used between pillars and section blocks.
- */
+/** Hairline divider with optional clean label. */
 export function Divider({ className, label, ...props }: DividerProps) {
   return (
     <div
@@ -18,9 +15,7 @@ export function Divider({ className, label, ...props }: DividerProps) {
     >
       <span className="h-px flex-1 bg-line" />
       {label && (
-        <span className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-ink-3">
-          {label}
-        </span>
+        <span className="text-[0.8125rem] font-medium text-ink-3">{label}</span>
       )}
       {label && <span className="h-px flex-1 bg-line" />}
     </div>

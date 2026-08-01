@@ -1,44 +1,49 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 /* ═══════════════════════════════════════════════════════════════
-   STELLAR — design tokens
-   Charcoal canvas · graphite surfaces · anaconda olive accent
-   Constellation geometry as brand DNA (precision, guidance)
+   STELLAR — design tokens (redesigned)
+   Charcoal canvas · graphite tonal surfaces · anaconda olive accent
+   Design law: borderless tonal zoning, one grotesque type system,
+   real weight/size contrast. No card borders, no glow, no serif
+   accents, no uppercase-mono micro-labels.
    ═══════════════════════════════════════════════════════════════ */
 
 @theme inline {
-  /* ── Surfaces ─────────────────────────────────────────── */
-  --color-canvas: #0b0c0a;            /* page background  */
-  --color-surface: #12140f;           /* cards / panels   */
-  --color-raised: #191c15;            /* elevated         */
-  --color-raised-2: #21251c;          /* hover / overlay  */
-  --color-line: rgba(244, 245, 240, 0.08);
-  --color-line-strong: rgba(244, 245, 240, 0.16);
+  /* ── Surfaces (tonal, borderless) ─────────────────────── */
+  --color-canvas: #0a0b08;            /* page background  */
+  --color-surface: #12140e;           /* tonal panels      */
+  --color-surface-2: #171a12;         /* elevated panels   */
+  --color-raised: #1b1e15;            /* interactive/hover */
+  --color-raised-2: #23271a;          /* hover / overlay   */
+  --color-line: rgba(244, 245, 240, 0.07);
+  --color-line-strong: rgba(244, 245, 240, 0.14);
 
   /* ── Text ─────────────────────────────────────────────── */
-  --color-ink: #f4f5f0;               /* primary text     */
-  --color-ink-2: #a8aca2;             /* secondary        */  --color-ink-3: #7c8175;             /* muted / meta    */
-  --color-ink-dark: #17190f;          /* text on light    */
+  --color-ink: #f2f3ed;               /* primary text     */
+  --color-ink-2: #a6ab9e;             /* secondary        */
+  --color-ink-3: #757a6c;             /* muted / meta     */
+  --color-ink-dark: #10110c;          /* text on olive    */
 
-  /* ── Accent — anaconda olive ──────────────────────────── */
-  --color-olive: #8a9a52;             /* primary accent   */
-  --color-olive-bright: #aebd75;      /* hover / highlight */
-  --color-olive-deep: #5a693a;        /* dark variant     */
-  --color-olive-tint: rgba(138, 154, 82, 0.1);
-  --color-olive-glow: rgba(138, 154, 82, 0.32);
+  /* ── Accent — anaconda olive (single accent) ──────────── */
+  --color-olive: #97a75a;             /* primary accent   */
+  --color-olive-bright: #b3c275;      /* hover / highlight */
+  --color-olive-deep: #5c6b3a;        /* dark variant     */
+  --color-olive-tint: rgba(151, 167, 90, 0.1);
+  --color-olive-glow: rgba(151, 167, 90, 0.28);
 
   /* ── Light surfaces (10% of composition) ──────────────── */
-  --color-paper: #f2f1ea;
-  --color-paper-2: #e9e8df;
+  --color-paper: #f1f0e8;
+  --color-paper-2: #e7e6dc;
 
-  /* ── Type ─────────────────────────────────────────────── */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  /* ── Type (Instrument Sans/Serif, user-directed upgrade) ── */
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --font-serif: var(--font-instrument-serif), Georgia, serif;
 
   /* ── Radii ────────────────────────────────────────────── */
   --radius-sm: 0.375rem;
-  --radius-btn: 0.5rem;
+  --radius-btn: 0.5625rem;
   --radius-card: 0.875rem;
   --radius-lg: 1.25rem;
 
@@ -81,38 +86,251 @@ body {
   background: var(--color-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: #2b2f26;
+  background: #282c1e;
   border-radius: 999px;
   border: 2px solid var(--color-canvas);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3a3f31;
+  background: #363b27;
 }
 
 /* ── Utilities ───────────────────────────────────────────── */
 
-/* Map marker — olive waypoint dot (MapLibre custom element) */
+/* Film grain — React Bits `Noise` adapted to pure CSS. A fixed,
+   pointer-transparent SVG turbulence layer at ~3.5% opacity gives
+   the charcoal canvas materiality. Sits above content (45) but
+   below dialogs/sheets (50) and the lightbox (100). */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* Restrained GlareHover — faint olive light that washes down the
+   top edge of a card on hover. Kept under 8% opacity per the
+   restraint rule (no spotlight-overuse). Pair with `group`.
+   .card-glare must be a positioned, pointer-transparent span. */
+.card-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 10; /* paint above the positioned photo, below interactive content */
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms var(--ease-out-expo);
+  background: radial-gradient(
+    120% 90% at 50% -30%,
+    rgba(179, 194, 117, 0.07) 0%,
+    transparent 62%
+  );
+}
+.group:hover .card-glare {
+  opacity: 1;
+}
+
+/* GradualBlur — editorial blur-in for accordion answers */
+@keyframes blur-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+.blur-in {
+  animation: blur-in 420ms var(--ease-out-expo) both;
+}
+
+/* Tonal panel — borderless surface with a hairline top light.
+   Elevation comes from tonal contrast, not outlines. */
+.panel {
+  background: var(--color-surface);
+  box-shadow:
+    inset 0 1px 0 rgba(244, 245, 240, 0.045),
+    0 1px 2px rgba(0, 0, 0, 0.35);
+}
+.panel-hover {
+  transition:
+    background-color 250ms var(--ease-out-expo),
+    box-shadow 250ms var(--ease-out-expo),
+    transform 250ms var(--ease-out-expo);
+}
+.panel-hover:hover {
+  background: var(--color-surface-2);
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(244, 245, 240, 0.07),
+    0 18px 44px -18px rgba(0, 0, 0, 0.65);
+}
+
+/* ── Leaflet map (Leaflet + OpenStreetMap, no API key) ── */
+
+/* Dark-grade the standard OSM tiles so the map matches the charcoal
+   canvas. invert + hue-rotate flips the light map to a dark one;
+   saturate/contrast keep it quiet and on-brand. */
+.dark-map-tiles .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) saturate(0.72) contrast(0.92)
+    brightness(0.92);
+}
+
+.leaflet-container {
+  background: var(--color-surface);
+  font-family: var(--font-sans);
+}
+
+.leaflet-control-attribution {
+  background: rgba(10, 11, 8, 0.72) !important;
+  color: var(--color-ink-3) !important;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem !important;
+  backdrop-filter: blur(4px);
+}
+.leaflet-control-attribution a {
+  color: var(--color-ink-2) !important;
+}
+
+/* Tooltips — dark, hairline, readable */
+.leaflet-tooltip {
+  background: var(--color-raised) !important;
+  border: 1px solid var(--color-line-strong) !important;
+  color: var(--color-ink) !important;
+  border-radius: 6px !important;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) !important;
+}
+.leaflet-tooltip-top:before {
+  border-top-color: var(--color-line-strong) !important;
+}
+
+/* Zoom controls — quiet graphite */
+.leaflet-bar a {
+  background: var(--color-surface-2) !important;
+  color: var(--color-ink-2) !important;
+  border-color: var(--color-line) !important;
+}
+.leaflet-bar a:hover {
+  background: var(--color-raised) !important;
+  color: var(--color-ink) !important;
+}
+
+/* Map marker — olive waypoint dot (Leaflet divIcon) */
 .map-pin {
   width: 10px;
   height: 10px;
   border-radius: 999px;
   background: var(--color-olive-bright);
-  border: 2px solid rgba(11, 12, 10, 0.9);
-  box-shadow: 0 0 0 1px rgba(174, 189, 117, 0.45);
+  border: 2px solid rgba(10, 11, 8, 0.9);
+  box-shadow: 0 0 0 1px rgba(179, 194, 117, 0.4);
+}
+.map-pin-lg {
+  width: 14px;
+  height: 14px;
+  background: var(--color-olive);
+  box-shadow: 0 0 0 1px rgba(151, 167, 90, 0.55);
+}
+
+/* Focused suburb pin — larger olive-bright marker with a soft halo */
+.map-pin-active {
+  width: 16px;
+  height: 16px;
+  background: var(--color-olive-bright);
+  border: 2px solid rgba(10, 11, 8, 0.9);
+  box-shadow: 0 0 0 2px rgba(179, 194, 117, 0.55), 0 0 12px rgba(151, 167, 90, 0.45);
+}
+
+/* Depot beacon — pulsing olive origin marker (Leaflet divIcon) */
+.depot-beacon {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--color-olive);
+  border: 2px solid rgba(10, 11, 8, 0.95);
+  box-shadow: 0 0 0 1px rgba(151, 167, 90, 0.5);
+  position: relative;
+}
+.depot-beacon::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-olive-bright);
+  animation: beacon-pulse 2.4s var(--ease-out-expo) infinite;
+}
+@keyframes beacon-pulse {
+  0%   { transform: scale(0.6); opacity: 0.9; }
+  70%  { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.depot-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--color-olive);
+  box-shadow: 0 0 0 1px rgba(151, 167, 90, 0.5);
+  animation: depot-blink 2.4s var(--ease-out-expo) infinite;
+}
+@keyframes depot-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+
+/* ── Brand photo grade — olive-tinted desaturation (ILL-05) ── */
+.photo-grade {
+  filter: saturate(0.8) contrast(1.03);
+}
+.photo-grade-hover {
+  filter: saturate(0.8) contrast(1.03);
+  transition: filter 400ms ease-out;
+}
+.photo-grade-hover:hover {
+  filter: saturate(1.02) contrast(1.03);
+}
+
+/* ── Chart Paper — hairline blueprint grid (ILL-03) ── */
+.chart-paper {
+  background-image:
+    linear-gradient(to right, rgba(244, 245, 240, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(244, 245, 240, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 78%);
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 78%);
+}
+
+/* ── Spotlight (Aceternity) — entrance sweep for the olive light ── */
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
 }
 
 /* Quote wizard — calm step transition */
 @keyframes step-in {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .step-in {
   animation: step-in 320ms var(--ease-out-expo) both;
 }
 
-/* Hairline top border that brightens on hover */
-.hairline-top {
-  border-top: 1px solid var(--color-line);
+/* Hairline divider */
+.hairline {
+  height: 1px;
+  background: var(--color-line);
 }
 
 /* Tabular numerals for data readouts */
@@ -130,27 +348,6 @@ body {
   scrollbar-width: none;
 }
 
-/* Gallery marquee */
-@keyframes gallery-left {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-@keyframes gallery-right {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
-}
-.gallery-track-left {
-  animation: gallery-left 90s linear infinite;
-}
-.gallery-track-right {
-  animation: gallery-right 110s linear infinite;
-}
-.gallery-row:hover .gallery-track-left,
-.gallery-row:hover .gallery-track-right {
-  animation-play-state: paused;
-}
-
-
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -160,8 +357,7 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .gallery-track-left,
-  .gallery-track-right {
-    animation: none !important;
+  .panel-hover:hover {
+    transform: none;
   }
 }
