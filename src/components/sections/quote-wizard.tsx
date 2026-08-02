@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { DateField } from "@/components/ui/date-field";
+import SpotlightCard from "@/components/ui/backgrounds/SpotlightCard";
 import { SUBURBS } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -166,23 +167,15 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
     );
   }
 
-  const card = (
-    <div
-      className={cn(
-        // Hero form — user-directed: Apple pill curve (same as Button),
-        // pure white, NO shadow, bold type throughout.
-        light && "rounded-full bg-white p-6 md:p-10",
-        !light && !bare &&
-          "glass-card relative overflow-hidden rounded-[var(--radius-lg)] p-6 md:p-10"
-      )}
-    >
+  const cardInner = (
+    <>
       {!light && !bare && (
         <div
           aria-hidden
           className="olive-mesh pointer-events-none absolute inset-0 opacity-40"
         />
       )}
-      <div className={!light && !bare ? "relative" : undefined}>
+      <div className={!light && !bare ? "relative z-20" : undefined}>
         {/* Progress bar (shadcn) */}
       <div className="mb-10">
         <div className="mb-3 flex items-center justify-between text-sm">
@@ -549,6 +542,22 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
         )}
       </form>
       </div>
+    </>
+  );
+
+  // Full quote section — olive spotlight hover (same blend as pricing,
+  // subtler at 20%). Hero pill (light/bare) stays plain white.
+  const card = !light && !bare ? (
+    <SpotlightCard
+      spotlightColor="rgba(151, 167, 90, 0.32)"
+      hoverOpacity={0.2}
+      className="glass-card relative overflow-hidden rounded-[var(--radius-lg)] p-6 md:p-10"
+    >
+      {cardInner}
+    </SpotlightCard>
+  ) : (
+    <div className={light ? "rounded-full bg-white p-6 md:p-10" : undefined}>
+      {cardInner}
     </div>
   );
 

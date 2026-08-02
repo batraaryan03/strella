@@ -1,10 +1,9 @@
+/* SpotlightCard — overlay-only effect. Layout (padding, radius, bg,
+   border) is deliberately NOT set here so the card can keep its own
+   surface treatment (glass-card + olive mesh in pricing). The glow
+   follows the cursor via --mouse-x/--mouse-y set on mousemove. */
 .card-spotlight {
   position: relative;
-  border-radius: 1.5rem;
-  border: 1px solid #2a2e1c;
-  background-color: #10120a;
-  padding: 2rem;
-  overflow: hidden;
   --mouse-x: 50%;
   --mouse-y: 50%;
   --spotlight-color: rgba(99, 107, 47, 0.2);
@@ -13,10 +12,9 @@
 .card-spotlight::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 1; /* above the olive-mesh layer, below the content (z-20) */
   background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 80%);
   opacity: 0;
   transition: opacity 0.5s ease;
@@ -25,5 +23,5 @@
 
 .card-spotlight:hover::before,
 .card-spotlight:focus-within::before {
-  opacity: 0.6;
+  opacity: var(--spotlight-hover-opacity, 0.6);
 }

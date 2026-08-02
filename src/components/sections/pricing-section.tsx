@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Hyperspeed from "@/components/ui/backgrounds/Hyperspeed";
 import { hyperspeedPresets } from "@/components/ui/backgrounds/HyperSpeedPresets";
+import SpotlightCard from "@/components/ui/backgrounds/SpotlightCard";
 import { PLANS } from "@/lib/content";
 
 const DAYS = [
@@ -104,14 +105,15 @@ export default function PricingSection() {
         <div className="relative mt-12">
           <div className="relative grid items-stretch gap-6 lg:grid-cols-3 lg:gap-8">
             {PLANS.map((plan) => (
-              <div
+              <SpotlightCard
                 key={plan.code}
+                spotlightColor="rgba(151, 167, 90, 0.32)"
                 className="glass-card group relative flex flex-col rounded-lg p-8 md:p-10"
               >
                 {/* Olive mesh — this card's own background (static CSS) */}
                 <div
                   aria-hidden
-                  className="olive-mesh pointer-events-none absolute inset-0 overflow-hidden rounded-lg opacity-40"
+                  className="olive-mesh pointer-events-none absolute inset-0 overflow-hidden rounded-lg opacity-20"
                 />
 
                 {/* Frost tint over the gradient + hover lift (glass) */}
@@ -176,7 +178,7 @@ export default function PricingSection() {
                     </Button>
                   </a>
                 </div>
-              </div>
+              </SpotlightCard>
             ))}
           </div>
         </div>

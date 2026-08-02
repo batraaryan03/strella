@@ -18,7 +18,7 @@ export const Default: StoryObj = {
     <div className="flex min-h-64 items-center justify-center p-12">
       <div className="w-full max-w-sm">
         <SpotlightCard
-          className="custom-spotlight-card"
+          className="custom-spotlight-card rounded-2xl border border-line bg-surface p-6"
           spotlightColor="rgba(151, 167, 90, 0.35)"
         >
           <h3 className="text-xl font-semibold text-[#f2f3ed]">Fully insured moves</h3>
