@@ -34,7 +34,7 @@ export default function MovingTips() {
       {/* Readability scrim over the silk */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-canvas via-canvas/70 to-canvas"
+        className="pointer-events-none absolute inset-0 bg-linear-to-b from-canvas via-canvas/70 to-canvas"
       />
 
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">

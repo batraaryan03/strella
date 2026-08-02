@@ -34,14 +34,14 @@ export default function ServiceAreas() {
 
         <div className="mt-14 grid items-stretch gap-10 lg:grid-cols-2 lg:gap-12">
           {/* ── Circular map — deterministic square so it's always a true circle ── */}
-          <div className="relative mx-auto aspect-square w-full max-w-[520px] overflow-hidden rounded-full lg:h-[560px] lg:w-[560px] lg:max-w-none">
-            <MelbourneMap circle className="absolute inset-0" focus={focus} />
+          <div className="relative mx-auto aspect-square w-full max-w-130 overflow-hidden rounded-full lg:h-140 lg:w-140 lg:max-w-none">
+            <MelbourneMap focus={focus} />
           </div>
 
           {/* ── Suburb grid — proper clickable cards (min-height
                  matches the map circle on lg). Every card is clearly a
                  button: hover fill + arrow so it reads as clickable. ── */}
-          <div className="flex flex-col justify-center lg:min-h-[560px]">
+          <div className="flex flex-col justify-center lg:min-h-140">
             <p className="text-base leading-[1.7] text-ink-2">
               We service suburbs right across greater Melbourne — and
               specialise in office relocation with minimal downtime.
@@ -57,10 +57,10 @@ export default function ServiceAreas() {
                     aria-pressed={active}
                     onClick={() => setFocus(active ? null : s)}
                     className={cn(
-                      "group relative flex items-center gap-2.5 rounded-[var(--radius-btn)] border px-3.5 py-3 text-left transition-all duration-150",
+                      "group relative flex items-center gap-2.5 rounded-btn border-0 px-3.5 py-3 text-left transition-all duration-150",
                       active
-                        ? "border-olive bg-olive-tint text-olive-bright"
-                        : "border-line bg-surface-2/40 text-ink-2 hover:border-olive/60 hover:bg-olive-tint hover:text-olive-bright"
+                        ? " bg-olive-tint text-olive-bright"
+                        : " bg-surface-2/40 text-ink-2 hover:border-olive/60 hover:bg-olive-tint hover:text-olive-bright"
                     )}
                   >
                     <span
@@ -87,11 +87,6 @@ export default function ServiceAreas() {
                 );
               })}
             </div>
-            <p className="mt-8 border-t border-line pt-6 text-base font-medium leading-relaxed text-ink">
-              No matter where you&apos;re located in Melbourne, Stellar is
-              ready to deliver safe, efficient and professional moving
-              services.
-            </p>
           </div>
         </div>
       </div>

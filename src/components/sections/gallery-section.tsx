@@ -13,24 +13,23 @@ import { GALLERY_LOCAL } from "@/lib/content";
 export default function GallerySection() {
   return (
     <section id="gallery" className="relative scroll-mt-24 overflow-hidden py-20 md:py-28">
-      <div className="relative mx-auto max-w-7xl px-5 md:px-8">
-        <div className="max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive">
+      <div className="relative mx-auto max-w-7xl px-5 md:px-8 flex justify-center align-center">
+        <div className="max-w-3xl flex-col">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] align-center justify-center flex text-olive">
             Gallery
           </p>
-          <h2 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-[-0.03em] text-ink">
-            Recent moves, documented
+          <h2 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] flex justify-center align-center font-bold leading-[1.02] tracking-[-0.03em] text-ink">
+            Our Recent Moves
           </h2>
-          <p className="mt-5 text-base leading-[1.7] text-ink-2 md:text-lg">
-            A selection of recent relocations across Melbourne — trucks,
-            teams, and carefully wrapped furniture. The dome revolves on
-            its own — drag it anytime to explore.
+          <p className="mt-5 text-base leading-[1.7] flex justify-center align-center text-ink-2 md:text-lg">
+            A selection of recent relocations across Melbourne — <br/>
+            trucks, teams, and carefully wrapped furniture.
           </p>
         </div>
       </div>
 
       {/* ── Full-bleed dome — touches the entire screen width ── */}
-      <div className="relative mt-10 h-[420px] w-full md:h-[680px]">
+      <div className="relative mt-10 h-110 w-full md:h-220">
         <React.Suspense fallback={null}>
           <DomeGallery
             images={GALLERY_LOCAL}
@@ -38,13 +37,13 @@ export default function GallerySection() {
             minRadius={480}
             maxRadius={2000}
             segments={30}
-            dragDampening={3.6}
+            dragDampening={0}
             grayscale={false}
-            openedImageWidth="300px"
-            openedImageHeight="400px"
+            openedImageWidth="400px"
+            openedImageHeight="500px"
             imageBorderRadius="16px"
-            openedImageBorderRadius="16px"
-            autoRotateSpeed={5}
+            openedImageBorderRadius="24px"
+            autoRotateSpeed={1.25}
           />
         </React.Suspense>
       </div>

@@ -19,19 +19,19 @@ export default function ReviewsSection() {
   return (
     <section id="reviews" className="relative scroll-mt-24 overflow-hidden py-14 md:py-20">
       {/* ── Very light Silk — same green as footer, faint ── */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-15">
-        <Silk
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-10">
+        {/* <Silk
           speed={4.5}
           scale={1.1}
           color="#556b2f"
           noiseIntensity={3.5}
           rotation={0}
-        />
+        /> */}
       </div>
       {/* Readability scrim over the faint silk */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-canvas via-canvas/60 to-canvas"
+        className="pointer-events-none absolute inset-0 from-canvas via-canvas/60 to-canvas"
       />
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         {/* Compact header — aggregate + heading on one line */}
@@ -45,9 +45,6 @@ export default function ReviewsSection() {
             </h2>
           </div>
           <div className="flex items-center gap-4 pb-1">
-            <span className="tnum text-5xl font-bold tracking-[-0.04em] text-ink">
-              5.0
-            </span>
             <div>
               <StarRating value={5} size="md" />
               <p className="mt-1 text-sm text-ink-3">
@@ -64,22 +61,11 @@ export default function ReviewsSection() {
           {doubled.map((r, i) => (
             <figure
               key={`${r.name}-${i}`}
-              className="glass-card w-[26rem] shrink-0 rounded-[var(--radius-lg)] bg-white/[0.06] p-8"
+              className="glass-card w-[26rem] shrink-0 rounded-[var(--radius-lg)] bg-white/[0.06] p-4"
             >
               <div className="mb-5 flex items-center justify-between">
                 <StarRating value={5} size="lg" />
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-olive-tint px-3 py-1 text-xs font-medium text-olive-bright">
-                  <MapPin className="h-4 w-4" />
-                  Melbourne local
-                </span>
-              </div>
-              <blockquote className="text-[1.0625rem] leading-[1.75] text-ink">
-                &ldquo;{r.text}&rdquo;
-              </blockquote>
-              <figcaption className="mt-6 flex items-center gap-3.5 border-t border-line pt-5">
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-olive-tint font-mono text-sm font-semibold text-olive-bright">
-                  {r.name.charAt(0)}
-                </span>
+                <figcaption className="mt-2 flex items-center border-line">
                 <span>
                   <span className="block text-[0.9375rem] font-semibold text-ink">
                     {r.name}
@@ -89,15 +75,13 @@ export default function ReviewsSection() {
                   </span>
                 </span>
               </figcaption>
+              </div>
+              <blockquote className="text-[1.0625rem] leading-[1.75] text-ink">
+                &ldquo;{r.text}&rdquo;
+              </blockquote>  
             </figure>
           ))}
         </div>
-      </div>
-
-      <div className="relative mx-auto mt-10 max-w-7xl px-5 md:px-8">
-        <p className="text-center text-[0.9375rem] text-ink-3">
-          Real words from Melbourne locals who moved with us.
-        </p>
       </div>
     </section>
   );

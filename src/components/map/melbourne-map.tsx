@@ -22,7 +22,7 @@ const MelbourneMapInner = dynamic(
       <div className="pointer-events-none absolute inset-0 grid place-items-center bg-surface">
         <span className="flex items-center gap-2 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-ink-3">
           <span className="h-1.5 w-1.5 rounded-full bg-olive" />
-          Loading Melbourne…
+          Loading Melbourne Map
         </span>
       </div>
     ),
@@ -31,14 +31,11 @@ const MelbourneMapInner = dynamic(
 
 export default function MelbourneMap({
   className,
-  focus,
-  circle = false,
+  focus
 }: {
   className?: string;
   /** Suburb to fly to (from the Service Areas chips); null clears the focus. */
   focus?: SuburbPoint | null;
-  /** Render the map as a circle (rounded-full, centered readouts). */
-  circle?: boolean;
 }) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [loaded, setLoaded] = React.useState(false);
@@ -61,9 +58,8 @@ export default function MelbourneMap({
   return (
     <div
       className={cn(
-        "relative overflow-hidden bg-surface",
-        circle ? "rounded-full" : "rounded-[var(--radius-lg)] border border-line",
-        className ?? "h-[380px] md:h-[460px]"
+        "relative overflow-hidden bg-surface rounded-xl",
+        className ?? "absolute inset-0 h-115 md:h-140"
       )}
     >
       <div ref={containerRef} className="absolute inset-0">
@@ -74,38 +70,11 @@ export default function MelbourneMap({
         <div className="pointer-events-none absolute inset-0 grid place-items-center bg-surface">
           <span className="flex items-center gap-2 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-ink-3">
             <span className="h-1.5 w-1.5 rounded-full bg-olive" />
-            Loading Melbourne…
+            Loading Melbourne Map
           </span>
         </div>
       )}
 
-      {/* Header readout — reflects the focused suburb when one is selected */}
-      <div
-        className={cn(
-          "pointer-events-none absolute z-[500] flex items-center gap-2 rounded-md border border-white/10 bg-canvas/70 px-3 py-1.5 backdrop-blur-md",
-          circle ? "left-1/2 top-4 -translate-x-1/2" : "left-4 top-4"
-        )}
-      >
-        <span
-          className={cn("h-1.5 w-1.5 rounded-full", focus ? "bg-olive-bright" : "bg-olive")}
-        />
-        <span className="font-mono text-[0.625rem] uppercase tracking-[0.18em] text-ink-2">
-          {focus ? `${focus.name} — in focus` : "Melbourne Metro"}
-        </span>
-      </div>
-
-      {/* Depot readout */}
-      <div
-        className={cn(
-          "pointer-events-none absolute z-[500] flex items-center gap-2 rounded-md border border-white/10 bg-canvas/70 px-3 py-1.5 backdrop-blur-md",
-          circle ? "bottom-4 left-1/2 -translate-x-1/2" : "bottom-4 left-4"
-        )}
-      >
-        <span className="depot-dot" aria-hidden />
-        <span className="font-mono text-[0.625rem] uppercase tracking-[0.18em] text-ink-2">
-          Depot · Docklands — STL-08 on route
-        </span>
-      </div>
     </div>
   );
 }

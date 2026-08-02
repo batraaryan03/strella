@@ -71,8 +71,7 @@ export default function HeroSection() {
                 Transparent hourly pricing
               </span>
             </Highlighter>
-            , professional crews, and weekend availability — so your
-            belongings arrive exactly as they left.
+            , professional crews, and weekend availability.
           </p>
 
           {/* Trust row */}
@@ -80,14 +79,14 @@ export default function HeroSection() {
             <div className="flex items-center gap-2.5">
               <StarRating value={5} />
               <span className="text-base text-ink-2">
-                Rated <span className="font-semibold text-ink">5★</span> by
+                Rated by
                 Melbourne locals
               </span>
             </div>
-            <span className="hidden h-4 w-px bg-line sm:block" />
-            <span className="text-base text-ink-2">
+            {/* <span className="hidden h-4 w-px bg-line sm:block" /> */}
+            {/* <span className="text-base text-ink-2">
               Weekend &amp; same-day moves
-            </span>
+            </span> */}
           </div>
 
           {/* CTAs — professional, pure geometry, big touch targets */}

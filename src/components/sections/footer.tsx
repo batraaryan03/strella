@@ -48,7 +48,7 @@ export default function Footer() {
     <footer className="relative overflow-hidden bg-canvas">
       {/* ── Silk — snake-skin background (dark green olive), FULL
              strength per user: no opacity dimming, no dark overlay. ── */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-50">
         <Silk
           speed={4.5}
           scale={1.1}
@@ -223,13 +223,13 @@ export default function Footer() {
       {/* ── LaserFlow — at the very bottom, just below STELLAR ── */}
       <div
         aria-hidden
-        className="relative h-40 w-full overflow-hidden md:h-56"
+        className="relative h-40 w-full overflow-hidden md:h-100"
       >
         <LaserFlow
           color="#636B2F"
           wispDensity={1.5}
           flowSpeed={0.3}
-          verticalSizing={1.5}
+          verticalSizing={3.5}
           horizontalSizing={3}
           fogIntensity={0.5}
           fogScale={0.1}

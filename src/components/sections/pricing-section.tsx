@@ -50,17 +50,9 @@ export default function PricingSection() {
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         {/* Inline header */}
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive">
+          <h2 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-bold capitalize leading-[1.02] tracking-[-0.03em] text-ink">
             Transparent pricing
-          </p>
-          <h2 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-[-0.03em] text-ink">
-            Per-hour rates, zero surprises
           </h2>
-          <p className="mx-auto mt-5 max-w-[52ch] text-base leading-[1.7] text-ink-2 md:text-lg">
-            No hidden fees, no call-out costs. Every price includes two
-            professional movers and full equipment. You only pay for the
-            hours we work.
-          </p>
         </div>
 
         {/* Day-of-week toggle — same rate, always (trust statement) */}
@@ -175,12 +167,14 @@ export default function PricingSection() {
                 </div>
               </SpotlightCard>
             ))}
+            
           </div>
         </div>
-
-        <p className="mt-10 text-center text-[0.9375rem] text-ink-2">
-          Weekend &amp; same-day moves · Transparent per-hour pricing
-        </p>
+          <p className="mt-5 text-center text-base leading-[1.7] text-ink-2 md:text-lg">
+            No hidden fees, no call-out costs. Every price includes two
+            professional movers and full equipment. You only pay for the
+            hours we work.
+          </p>
       </div>
     </section>
   );
