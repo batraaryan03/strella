@@ -167,11 +167,27 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* ── STELLAR — simple bold wordmark at the VERY bottom ── */}
+      {/* ── STELLAR — simple bold wordmark ── */}
       <div className="relative z-10 select-none px-2 pb-2" aria-hidden>
         <p className="whitespace-nowrap text-center text-[clamp(4rem,17vw,15rem)] font-black leading-[0.85] tracking-[-0.04em] text-ink-dark/[0.12]">
           STELLAR
         </p>
+      </div>
+
+      {/* ── Truck photo — full-bleed background at the very end ── */}
+      <div className="relative h-64 w-full overflow-hidden md:h-96">
+        <img
+          src="/White_truck_on_road_202608021459.jpeg"
+          alt="Stellar truck on the road"
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover"
+        />
+        {/* Soft white fade at the top — blends the photo into the white footer */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-linear-to-b from-white to-transparent"
+        />
       </div>
     </footer>
   );
