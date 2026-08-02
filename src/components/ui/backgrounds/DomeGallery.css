@@ -41,11 +41,14 @@ main.sphere-main {
   perspective: calc(var(--radius) * 2);
   perspective-origin: 50% 50%;
   contain: layout paint size;
+  /* Non-interactive — only the tiles (and drag on .sphere-main) get events */
+  pointer-events: none;
 }
 
 .sphere {
   transform: translateZ(calc(var(--radius) * -1));
   will-change: transform;
+  pointer-events: none;
 }
 
 .overlay,
@@ -80,6 +83,12 @@ main.sphere-main {
   margin: auto;
   transform-origin: 50% 50%;
   backface-visibility: hidden;
+  /* Hit-testing (user fix): the tile planes are non-interactive so
+     pointer events fall through to .item__image — which is what the
+     click handlers are bound to. Without this, a child translated
+     back in Z (translateZ(-12)) sits BEHIND its .item plane and the
+     plane swallows the click. */
+  pointer-events: none;
   transition: transform 300ms;
   transform: rotateY(calc(var(--rot-y) * (var(--offset-x) + ((var(--item-size-x) - 1) / 2)) + var(--rot-y-delta, 0deg)))
     rotateX(calc(var(--rot-x) * (var(--offset-y) - ((var(--item-size-y) - 1) / 2)) + var(--rot-x-delta, 0deg)))
@@ -101,7 +110,7 @@ main.sphere-main {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   pointer-events: auto;
-  -webkit-transform: translateZ(0);
+  -webkit-transform: translateZ(-12);
   transform: translateZ(-12);
 }
 
