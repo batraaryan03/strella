@@ -3,8 +3,6 @@
 import { Phone, Mail, Clock, MapPin, CalendarCheck, ShieldCheck } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
-import Silk from "@/components/ui/backgrounds/Silk";
-import LaserFlow from "@/components/ui/backgrounds/LaserFlow";
 import { BRAND } from "@/lib/content";
 
 const quickLinks = [
@@ -37,34 +35,22 @@ const socials = [
 ] as const;
 
 /**
- * Footer — user-directed rebuild. Simple giant STELLAR wordmark (no
- * kinetic hover effect), the Silk snake-skin texture as background,
- * LaserFlow at the very bottom just below STELLAR, cleaner & bigger
- * typography, and the new professional Button. Borderless tonal zones.
+ * Footer — user-directed rebuild, now COMPLETELY WHITE with black text.
+ * No Silk background, no LaserFlow, no dividers — a clean white close
+ * to the page. The black→white fade is handled by the transition strip
+ * in app/page.tsx just above this footer.
  */
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-canvas">
-      {/* ── Silk — snake-skin background (dark green olive), FULL
-             strength per user: no opacity dimming, no dark overlay. ── */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-50">
-        <Silk
-          speed={4.5}
-          scale={1.1}
-          color="#556b2f"
-          noiseIntensity={3.5}
-          rotation={0}
-        />
-      </div>
-
+    <footer className="relative overflow-hidden bg-white">
       <div className="relative">
         <div className="mx-auto max-w-7xl px-5 pb-10 md:px-8">
-          {/* ── Main columns — bigger, cleaner typography ── */}
+          {/* ── Main columns ── */}
           <div className="grid gap-12 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-8">
             {/* Brand */}
             <div>
-              <Logo />
-              <p className="mt-6 max-w-[34ch] text-lg leading-[1.7] text-ink-2">
+              <Logo onLight />
+              <p className="mt-6 max-w-[34ch] text-lg leading-[1.7] text-ink-dark/70">
                 Melbourne&apos;s precision removalists. Transparent pricing,
                 professional crews, and weekend availability — guided
                 moves, every time.
@@ -77,7 +63,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={s.label}
-                    className="grid h-11 w-11 place-items-center rounded-full border border-line text-ink-2 transition-all duration-200 hover:border-olive/50 hover:text-olive-bright"
+                    className="grid h-11 w-11 place-items-center rounded-full border border-black/10 text-ink-dark/60 transition-all duration-200 hover:border-olive-deep/50 hover:text-olive-deep"
                   >
                     <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
                       <path d={s.path} />
@@ -89,7 +75,7 @@ export default function Footer() {
 
             {/* Quick links */}
             <div>
-              <h3 className="mb-6 text-[0.9375rem] font-semibold text-ink">
+              <h3 className="mb-6 text-[0.9375rem] font-semibold text-ink-dark">
                 Navigate
               </h3>
               <ul className="space-y-3 text-base">
@@ -97,7 +83,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <a
                       href={l.href}
-                      className="text-ink-2 transition-colors duration-150 hover:text-olive-bright"
+                      className="text-ink-dark/70 transition-colors duration-150 hover:text-olive-deep"
                     >
                       {l.label}
                     </a>
@@ -108,36 +94,36 @@ export default function Footer() {
 
             {/* Contact */}
             <div>
-              <h3 className="mb-6 text-[0.9375rem] font-semibold text-ink">
+              <h3 className="mb-6 text-[0.9375rem] font-semibold text-ink-dark">
                 Contact
               </h3>
-              <ul className="space-y-4 text-base text-ink-2">
+              <ul className="space-y-4 text-base text-ink-dark/70">
                 <li>
-                  <a href={`tel:${BRAND.phone}`} className="flex items-center gap-2.5 font-medium text-ink transition-colors hover:text-olive-bright">
-                    <Phone className="h-4 w-4 text-olive" />
+                  <a href={`tel:${BRAND.phone}`} className="flex items-center gap-2.5 font-medium text-ink-dark transition-colors hover:text-olive-deep">
+                    <Phone className="h-4 w-4 text-olive-deep" />
                     {BRAND.phoneDisplay}
                   </a>
                 </li>
                 <li>
-                  <a href={`mailto:${BRAND.email}`} className="flex items-center gap-2.5 transition-colors hover:text-olive-bright">
-                    <Mail className="h-4 w-4 text-olive" />
+                  <a href={`mailto:${BRAND.email}`} className="flex items-center gap-2.5 transition-colors hover:text-olive-deep">
+                    <Mail className="h-4 w-4 text-olive-deep" />
                     {BRAND.email}
                   </a>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <Clock className="h-4 w-4 text-olive" />
+                  <Clock className="h-4 w-4 text-olive-deep" />
                   <span>{BRAND.hoursWeekday} · {BRAND.hoursWeekend}</span>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <MapPin className="h-4 w-4 text-olive" />
+                  <MapPin className="h-4 w-4 text-olive-deep" />
                   {BRAND.location}
                 </li>
               </ul>
             </div>
 
-            {/* Book CTA — the new professional button */}
+            {/* Book CTA */}
             <div className="flex flex-col justify-between gap-6">
-              <p className="text-base leading-[1.7] text-ink-2">
+              <p className="text-base leading-[1.7] text-ink-dark/70">
                 Moving soon? Lock in your crew and your price today.
               </p>
               <a href="/book-move" className="inline-flex w-fit">
@@ -154,65 +140,38 @@ export default function Footer() {
             <dl className="flex flex-wrap items-center gap-x-7 gap-y-3 text-sm">
               <div className="flex items-center gap-2">
                 <dt className="sr-only">Company</dt>
-                <dd className="font-medium text-ink-2">Stellar Removals Pty Ltd</dd>
+                <dd className="font-medium text-ink-dark">Stellar Removals Pty Ltd</dd>
               </div>
               <div className="flex items-center gap-2">
-                <dt className="text-ink-3">ABN</dt>
-                <dd className="tnum font-mono text-ink-2">12 345 678 901</dd>
+                <dt className="text-ink-dark/50">ABN</dt>
+                <dd className="tnum font-mono text-ink-dark/70">12 345 678 901</dd>
               </div>
               <div className="flex items-center gap-2">
                 <dt className="sr-only">Pricing</dt>
-                <dd className="flex items-center gap-1.5 text-ink-2">
-                  <ShieldCheck className="h-3.5 w-3.5 text-olive" />
+                <dd className="flex items-center gap-1.5 text-ink-dark/70">
+                  <ShieldCheck className="h-3.5 w-3.5 text-olive-deep" />
                   Transparent per-hour pricing
                 </dd>
               </div>
             </dl>
             <div className="flex items-center justify-start gap-5 md:justify-end">
-              <a href="#" className="text-sm text-ink-3 transition-colors hover:text-ink-2">Privacy Policy</a>
-              <a href="#" className="text-sm text-ink-3 transition-colors hover:text-ink-2">Terms of Service</a>
+              <a href="#" className="text-sm text-ink-dark/50 transition-colors hover:text-ink-dark/70">Privacy Policy</a>
+              <a href="#" className="text-sm text-ink-dark/50 transition-colors hover:text-ink-dark/70">Terms of Service</a>
             </div>
           </div>
 
           {/* ── Copyright ── */}
-          <p className="pb-2 text-center text-sm text-ink-3">
+          <p className="pb-2 text-center text-sm text-ink-dark/50">
             © {new Date().getFullYear()} Stellar Removals. All rights reserved.
           </p>
         </div>
       </div>
 
-      {/* ── STELLAR — simple bold wordmark at the VERY bottom (above
-             LaserFlow). User-directed: plain fill at 25% opacity — the
-             outline-stroke treatment felt weird. ── */}
+      {/* ── STELLAR — simple bold wordmark at the VERY bottom ── */}
       <div className="relative z-10 select-none px-2 pb-2" aria-hidden>
-        <p className="whitespace-nowrap text-center text-[clamp(4rem,17vw,15rem)] font-black leading-[0.85] tracking-[-0.04em] text-ink/25">
+        <p className="whitespace-nowrap text-center text-[clamp(4rem,17vw,15rem)] font-black leading-[0.85] tracking-[-0.04em] text-ink-dark/[0.12]">
           STELLAR
         </p>
-      </div>
-
-      {/* ── LaserFlow — at the very bottom, just below STELLAR ── */}
-      <div
-        aria-hidden
-        className="relative h-40 w-full overflow-hidden md:h-100"
-      >
-        <LaserFlow
-          color="#636B2F"
-          wispDensity={1.5}
-          flowSpeed={0.3}
-          verticalSizing={3.5}
-          horizontalSizing={3}
-          fogIntensity={0.5}
-          fogScale={0.1}
-          wispSpeed={10}
-          wispIntensity={8}
-          flowStrength={0.4}
-          decay={1.8}
-          horizontalBeamOffset={0}
-          verticalBeamOffset={-0.5}
-          className="size-full"
-          style={{}}
-          dpr={Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2)}
-        />
       </div>
     </footer>
   );

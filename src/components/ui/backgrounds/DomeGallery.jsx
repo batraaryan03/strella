@@ -145,6 +145,7 @@ export default function DomeGallery({
   const openingRef = useRef(false);
   const openStartedAtRef = useRef(0);
   const lastDragEndAt = useRef(0);
+  const lockedRadiusRef = useRef(null);
 
   const scrollLockedRef = useRef(false);
   const lockScroll = useCallback(() => {
@@ -163,12 +164,13 @@ export default function DomeGallery({
 
   const applyTransform = (xDeg, yDeg) => {
     const el = sphereRef.current;
-    if (el) {
-      el.style.transform = `translateZ(calc(var(--radius) * -1)) rotateX(${xDeg}deg) rotateY(${yDeg}deg)`;
-    }
+    if (!el) return;
+    // Perf (user-directed): use the cached numeric radius instead of
+    // re-evaluating `calc(var(--radius) * -1)` on every auto-revolve
+    // frame — cheaper style write, smoother rotation.
+    const r = lockedRadiusRef.current ?? 520;
+    el.style.transform = `translateZ(${-r}px) rotateX(${xDeg}deg) rotateY(${yDeg}deg)`;
   };
-
-  const lockedRadiusRef = useRef(null);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -677,7 +679,16 @@ export default function DomeGallery({
                   onClick={onTileClick}
                   onPointerUp={onTilePointerUp}
                 >
-                  <img src={it.src} draggable={false} alt={it.alt} />
+                  <img
+                    src={it.src}
+                    draggable={false}
+                    alt={it.alt}
+                    /* Perf note: NO loading=lazy on tiles — lazy + CSS 3D
+                       transforms are unreliable for intersection detection,
+                       causing gray→image pop-in during the auto-revolve.
+                       decoding=async still avoids blocking decode. */
+                    decoding="async"
+                  />
                 </div>
               </div>
             ))}

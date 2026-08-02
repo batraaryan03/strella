@@ -2,10 +2,10 @@
 
 /**
  * Services — clean 3-column card layout (weekend-movers style),
- * blended with the Stellar design system: olive index numerals, olive
- * image ring + hover tint, hairline top-light on cards. User-directed:
- * real photos fully visible, big text, NO icons, generous spacing on
- * mobile & desktop. No 3D truck model.
+ * blended with the Stellar design system. User-directed: real photos
+ * fully visible, big text, NO icons, no index numerals, no hover
+ * border — just a quiet image zoom. Generous spacing on mobile &
+ * desktop. No 3D truck model.
  */
 const services = [
   {
@@ -55,20 +55,16 @@ export default function ServicesSection() {
 
         {/* Cards — 3 col on desktop, stacked on mobile, generous spacing */}
         <div className="mt-14 grid gap-x-8 gap-y-14 md:mt-20 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-16">
-          {services.map((s, i) => (
+          {services.map((s) => (
             <article key={s.title} className="group flex flex-col">
-              <div className="relative overflow-hidden rounded-[var(--radius-card)] ring-1 ring-line transition-all duration-300 group-hover:ring-olive/60">
+              <div className="relative overflow-hidden rounded-[var(--radius-card)]">
                 <img
                   src={s.img}
                   alt={s.title}
                   loading="lazy"
                   decoding="async"
-                  className="aspect-video w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  className="aspect-video w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                 />
-                {/* Olive index numeral — design-system accent */}
-                <span className="absolute left-4 top-4 rounded-full bg-canvas/85 px-3 py-1 font-mono text-xs font-semibold tracking-[0.14em] text-olive-bright backdrop-blur-sm">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
               </div>
               <h3 className="mt-6 text-2xl font-bold leading-tight tracking-[-0.01em] text-ink transition-colors duration-200 group-hover:text-olive-bright md:text-3xl">
                 {s.title}

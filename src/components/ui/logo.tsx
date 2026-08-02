@@ -9,6 +9,8 @@ interface LogoProps extends React.HTMLAttributes<HTMLAnchorElement> {
    * wordmark; `xl` is the oversized brand moment (hero/footer).
    */
   size?: "sm" | "md" | "xl";
+  /** Render on a LIGHT background (white footer): dark ink wordmark. */
+  onLight?: boolean;
   href?: string;
 }
 
@@ -26,6 +28,7 @@ export function Logo({
   className,
   compact,
   size = "md",
+  onLight = false,
   href = "/",
   ...props
 }: LogoProps) {
@@ -34,7 +37,8 @@ export function Logo({
     <span className="flex items-baseline gap-2 leading-none">
       <span
         className={cn(
-          "font-semibold tracking-[-0.03em] text-ink",
+          "font-semibold tracking-[-0.03em]",
+          onLight ? "text-ink-dark" : "text-ink",
           t.word
         )}
       >
@@ -43,7 +47,8 @@ export function Logo({
       {!compact && (
         <span
           className={cn(
-            "font-mono uppercase tracking-[0.24em] text-olive",
+            "font-mono uppercase tracking-[0.24em]",
+            onLight ? "text-olive-deep" : "text-olive",
             t.sub
           )}
         >

@@ -36,12 +36,14 @@ export default function GallerySection() {
             fit={1}
             minRadius={480}
             maxRadius={2000}
-            segments={30}
+            /* Perf + tighter tiles: 24 segments (was 30) = wider tiles,
+               so the gaps between images shrink AND ~20% fewer DOM nodes. */
+            segments={24}
             dragDampening={0}
             grayscale={false}
             openedImageWidth="400px"
             openedImageHeight="500px"
-            imageBorderRadius="16px"
+            imageBorderRadius="12px"
             openedImageBorderRadius="24px"
             autoRotateSpeed={1.25}
           />

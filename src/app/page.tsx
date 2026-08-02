@@ -31,6 +31,11 @@ export default function Home() {
         <QuoteWizard />
         <MovingTips />
       </main>
+      {/* ── Transition — FAQ (dark) → Footer (white): a subtle fade ── */}
+      <div
+        aria-hidden
+        className="h-20 w-full bg-linear-to-b from-canvas to-white md:h-28"
+      />
       <Footer />
     </>
   );

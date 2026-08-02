@@ -62,9 +62,11 @@ main.sphere-main {
 }
 
 .overlay--blur {
-  -webkit-mask-image: radial-gradient(rgba(235, 235, 235, 0) 70%, var(--overlay-blur-color, #120F17) 90%);
-  mask-image: radial-gradient(rgba(235, 235, 235, 0) 70%, var(--overlay-blur-color, #120F17) 90%);
-  backdrop-filter: blur(3px);
+  /* Perf (user-directed): no backdrop-filter on the always-on overlay —
+     it was re-blurring the whole stage on every auto-revolve frame,
+     which caused the lag. The radial mask alone keeps the soft edge. */
+  -webkit-mask-image: radial-gradient(rgba(235, 235, 235, 0) 72%, var(--overlay-blur-color, #120F17) 80%);
+  mask-image: radial-gradient(rgba(235, 235, 235, 0) 72%, var(--overlay-blur-color, #120F17) 80%);
 }
 
 .item {
@@ -87,8 +89,10 @@ main.sphere-main {
 .item__image {
   position: absolute;
   display: block;
-  inset: 10px;
-  border-radius: var(--tile-radius, 12px);
+  /* User-directed: near-zero gap between images — the old 10px inset
+     left black seams between tiles. 3px keeps a whisper of air. */
+  inset: 0px;
+  /* border-radius: 24px; */
   background: transparent;
   overflow: hidden;
   backface-visibility: hidden;
@@ -98,7 +102,7 @@ main.sphere-main {
   touch-action: manipulation;
   pointer-events: auto;
   -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+  transform: translateZ(-12);
 }
 
 .item__image:focus {

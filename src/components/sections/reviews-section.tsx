@@ -18,7 +18,7 @@ import { REVIEWS } from "@/lib/content";
 
 /**
  * Reviews — a single-strip auto-scrolling marquee (weekend-movers
- * style). Very light green Silk background (like the footer, faint),
+ * style). Plain canvas background (Silk removed homepage-wide),
  * glass review cards, olive theme. Infinite left scroll via
  * `animate-reviews-scroll`. Factual aggregate: rated by Melbourne
  * locals — no invented review counts. A small "Add a review" button
@@ -62,22 +62,7 @@ export default function ReviewsSection() {
   };
 
   return (
-    <section id="reviews" className="relative scroll-mt-24 overflow-hidden py-14 md:py-20">
-      {/* ── Very light Silk — same green as footer, faint ── */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-10">
-        {/* <Silk
-          speed={4.5}
-          scale={1.1}
-          color="#556b2f"
-          noiseIntensity={3.5}
-          rotation={0}
-        /> */}
-      </div>
-      {/* Readability scrim over the faint silk */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 from-canvas via-canvas/60 to-canvas"
-      />
+    <section id="reviews" className="relative scroll-mt-24 overflow-hidden bg-canvas py-14 md:py-20">
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         {/* Compact header — aggregate + heading on one line */}
         <div className="flex flex-wrap items-end justify-between gap-6">
