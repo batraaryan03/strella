@@ -174,16 +174,20 @@ export default function Footer() {
         </p>
       </div>
 
-      {/* ── Truck photo — full-bleed background at the very end ── */}
+      {/* ── Truck video — full-bleed auto-looping background at the very end ── */}
       <div className="relative h-64 w-full overflow-hidden md:h-96">
-        <img
-          src="/White_truck_on_road_202608021459.jpeg"
-          alt="Stellar truck on the road"
-          loading="lazy"
-          decoding="async"
+        <video
+          src="/White_truck_driving_on_road_202608021508_04.mp4"
+          poster="/White_truck_on_road_202608021459.jpeg"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden
           className="h-full w-full object-cover"
         />
-        {/* Soft white fade at the top — blends the photo into the white footer */}
+        {/* Soft white fade at the top — blends the video into the white footer */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-linear-to-b from-white to-transparent"
