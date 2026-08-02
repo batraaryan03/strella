@@ -113,7 +113,7 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
     <div
       className={cn(
         light
-          ? "rounded-[var(--radius-lg)] bg-white px-6 py-12 text-center md:px-10"
+          ? "rounded-[var(--radius-lg)] border border-black/10 bg-white px-6 py-12 text-center shadow-[0_24px_60px_-28px_rgba(0,0,0,0.25)] md:px-10"
           : bare
             ? "flex h-full flex-col items-center justify-center px-4 text-center"
             : "panel rounded-[var(--radius-lg)] bg-olive-tint/30 px-8 py-16 text-center"
@@ -153,7 +153,10 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
     return bare ? (
       success
     ) : (
-      <section id="quote" className="relative scroll-mt-24 py-20 md:py-28">
+      <section
+        id="quote"
+        className={cn("relative scroll-mt-24 py-20 md:py-28", light && "bg-white")}
+      >
         <div className="mx-auto max-w-7xl px-5 md:px-8">{success}</div>
       </section>
     );
@@ -501,7 +504,11 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
   ) : (
     <div
       className={
-        light ? "rounded-[var(--radius-lg)] bg-white p-6 md:p-10" : undefined
+        light
+          ? bare
+            ? "rounded-[var(--radius-lg)] bg-white p-6 md:p-10"
+            : "rounded-[var(--radius-lg)] border border-black/10 bg-white p-6 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.25)] md:p-10"
+          : undefined
       }
     >
       {cardInner}
@@ -522,19 +529,42 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
   }
 
   return (
-    <section id="quote" className="relative scroll-mt-24 overflow-hidden py-20 md:py-28">
+    <section
+      id="quote"
+      className={cn(
+        "relative scroll-mt-24 overflow-hidden py-20 md:py-28",
+        light && "bg-white"
+      )}
+    >
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         {/* ── Right-only: heading + wizard card ── */}
         <div className="mx-auto max-w-3xl">
           <div className="mb-10 text-center">
-            <p className="text-base font-semibold uppercase tracking-[0.18em] text-olive">
+            <p
+              className={cn(
+                "text-base font-semibold uppercase tracking-[0.18em]",
+                light ? "text-olive-deep" : "text-olive"
+              )}
+            >
               Contact
             </p>
-            <h2 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-bold tracking-[-0.03em] text-ink">
+            <h2
+              className={cn(
+                "mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-bold tracking-[-0.03em]",
+                light ? "text-ink-dark" : "text-ink"
+              )}
+            >
               Get a fixed quote in{" "}
-              <span className="text-olive-bright">60 seconds</span>
+              <span className={light ? "text-olive-deep" : "text-olive-bright"}>
+                60 seconds
+              </span>
             </h2>
-            <p className="mx-auto mt-5 max-w-[48ch] text-lg leading-[1.7] text-ink-2">
+            <p
+              className={cn(
+                "mx-auto mt-5 max-w-[48ch] text-lg leading-[1.7]",
+                light ? "text-ink-dark/70" : "text-ink-2"
+              )}
+            >
               Tell us the route, the load, and when — we&apos;ll confirm
               your price before you commit to anything. Professional
               crews and full equipment on every move.

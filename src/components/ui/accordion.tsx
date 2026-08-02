@@ -16,6 +16,9 @@ interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
   defaultOpen?: number;
   /** Allow multiple open items. */
   multiple?: boolean;
+  /** Render on a LIGHT background (white FAQ): dark ink text + hairline
+      black dividers. */
+  light?: boolean;
 }
 
 /**
@@ -26,6 +29,7 @@ export function Accordion({
   items,
   defaultOpen = 0,
   multiple = false,
+  light = false,
   className,
   ...props
 }: AccordionProps) {
@@ -43,7 +47,10 @@ export function Accordion({
   };
 
   return (
-    <div className={cn("divide-y divide-line", className)} {...props}>
+    <div
+      className={cn("divide-y", light ? "divide-black/10" : "divide-line", className)}
+      {...props}
+    >
       {items.map((item, i) => {
         const isOpen = open.includes(i);
         return (
@@ -58,7 +65,13 @@ export function Accordion({
               <span
                 className={cn(
                   "text-base md:text-lg font-medium tracking-[-0.01em] transition-colors duration-150",
-                  isOpen ? "text-ink" : "text-ink-2 group-hover:text-ink"
+                  light
+                    ? isOpen
+                      ? "text-ink-dark"
+                      : "text-ink-dark/70 group-hover:text-ink-dark"
+                    : isOpen
+                      ? "text-ink"
+                      : "text-ink-2 group-hover:text-ink"
                 )}
               >
                 {item.q}
@@ -66,9 +79,13 @@ export function Accordion({
               <span
                 className={cn(
                   "grid h-8 w-8 shrink-0 place-items-center rounded-full transition-colors duration-300",
-                  isOpen
-                    ? "bg-olive-tint text-olive"
-                    : "text-ink-3 group-hover:text-ink-2"
+                  light
+                    ? isOpen
+                      ? "bg-olive/15 text-olive-deep"
+                      : "text-ink-dark/40 group-hover:text-ink-dark/70"
+                    : isOpen
+                      ? "bg-olive-tint text-olive"
+                      : "text-ink-3 group-hover:text-ink-2"
                 )}
               >
                 <ChevronDown
@@ -91,7 +108,8 @@ export function Accordion({
                 <div
                   key={isOpen ? "open" : "closed"}
                   className={cn(
-                    "max-w-[62ch] pb-6 pr-10 text-[0.9375rem] leading-[1.7] text-ink-2",
+                    "max-w-[62ch] pb-6 pr-10 text-[0.9375rem] leading-[1.7]",
+                    light ? "text-ink-dark/70" : "text-ink-2",
                     isOpen && "blur-in"
                   )}
                 >

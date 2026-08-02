@@ -18,8 +18,8 @@ import { REVIEWS } from "@/lib/content";
 
 /**
  * Reviews — a single-strip auto-scrolling marquee (weekend-movers
- * style). Plain canvas background (Silk removed homepage-wide),
- * glass review cards, olive theme. Infinite left scroll via
+ * style). WHITE section (user-directed black/white mix): dark text on
+ * white, light glass review cards. Infinite left scroll via
  * `animate-reviews-scroll`. Factual aggregate: rated by Melbourne
  * locals — no invented review counts. A small "Add a review" button
  * next to the aggregate opens a dialog (name + job ID + review) that
@@ -62,22 +62,22 @@ export default function ReviewsSection() {
   };
 
   return (
-    <section id="reviews" className="relative scroll-mt-24 overflow-hidden bg-canvas py-14 md:py-20">
+    <section id="reviews" className="relative scroll-mt-24 overflow-hidden bg-white py-14 md:py-20">
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         {/* Compact header — aggregate + heading on one line */}
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive-deep">
               Reviews
             </p>
-            <h2 className="mt-3 text-balance text-[clamp(2.25rem,4.5vw,3.25rem)] font-bold leading-[1.02] tracking-[-0.03em] text-ink">
+            <h2 className="mt-3 text-balance text-[clamp(2.25rem,4.5vw,3.25rem)] font-bold leading-[1.02] tracking-[-0.03em] text-ink-dark">
               Trusted by Melbourne locals
             </h2>
           </div>
           <div className="flex items-center gap-4 pb-1">
             <div>
               <StarRating value={5} size="md" />
-              <p className="mt-1 text-sm text-ink-3">
+              <p className="mt-1 text-sm text-ink-dark/50">
                 Rated by Melbourne locals
               </p>
             </div>
@@ -102,23 +102,23 @@ export default function ReviewsSection() {
           {doubled.map((r, i) => (
             <figure
               key={`${r.name}-${i}`}
-              className="glass-card w-[26rem] shrink-0 rounded-[var(--radius-lg)] bg-white/[0.06] p-4"
+              className="w-[26rem] shrink-0 rounded-[var(--radius-lg)] border border-black/10 bg-white/70 p-4 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.2)] backdrop-blur-md"
             >
               <div className="mb-5 flex items-center justify-between">
                 <StarRating value={5} size="lg" />
-                <figcaption className="mt-2 flex items-center gap-3 border-line">
+                <figcaption className="mt-2 flex items-center gap-3">
                 <span>
-                  <span className="block text-[0.9375rem] font-semibold text-ink">
+                  <span className="block text-[0.9375rem] font-semibold text-ink-dark">
                     {r.name}
                   </span>
-                  <span className="mt-0.5 flex items-center gap-1 text-sm text-ink-3">
-                    <MapPin className="h-3.5 w-3.5 text-olive" />
+                  <span className="mt-0.5 flex items-center gap-1 text-sm text-ink-dark/50">
+                    <MapPin className="h-3.5 w-3.5 text-olive-deep" />
                     {r.location}, Melbourne
                   </span>
                 </span>
               </figcaption>
               </div>
-              <blockquote className="text-[1.0625rem] leading-[1.75] text-ink">
+              <blockquote className="text-[1.0625rem] leading-[1.75] text-ink-dark">
                 &ldquo;{r.text}&rdquo;
               </blockquote>
             </figure>

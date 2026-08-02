@@ -5,11 +5,10 @@ import { Accordion } from "@/components/ui/accordion";
 import { MOVING_TIPS, FAQS } from "@/lib/content";
 
 /**
- * FAQ — sits just above the footer. Plain canvas background (user
- * removed Silk from the homepage entirely), with the accordions held
- * in a translucent glass panel (design-system glassmorphism).
- * Single-column accordion (user-directed), olive accents, quiet
- * hairline dividers.
+ * FAQ — sits just above the (white) footer. WHITE section per the
+ * user-directed black/white mix — flows straight into the white
+ * footer (no gradient needed). Accordions held in a light glass
+ * panel, dark ink text, olive-deep accents.
  */
 export default function MovingTips() {
   const tips = MOVING_TIPS.map((t, i) => ({
@@ -20,29 +19,29 @@ export default function MovingTips() {
   const faqs = FAQS.map((f, i) => ({ id: `faq-${i}`, q: f.q, a: f.a }));
 
   return (
-    <section id="faq" className="relative scroll-mt-24 overflow-hidden bg-canvas py-20 md:py-28">
+    <section id="faq" className="relative scroll-mt-24 overflow-hidden bg-white py-20 md:py-28">
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         <div className="mx-auto max-w-3xl">
           <div className="mb-12 text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive-deep">
               FAQ
             </p>
-            <h2 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-[-0.03em] text-ink">
+            <h2 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-[-0.03em] text-ink-dark">
               Frequently Asked Questions
             </h2>
-            <p className="mx-auto mt-5 max-w-[48ch] text-base leading-[1.7] text-ink-2 md:text-lg">
+            <p className="mx-auto mt-5 max-w-[48ch] text-base leading-[1.7] text-ink-dark/70 md:text-lg">
               Everything Melbourne movers ask us most — answered honestly,
               with no fine print.
             </p>
           </div>
 
-          {/* Translucent glass panel — single-column accordions */}
-          <div className="glass-card rounded-[var(--radius-lg)] px-6 py-4 md:px-10">
-            <Accordion items={faqs} defaultOpen={0} />
-            <h3 className="mb-2 mt-10 border-b border-line pb-4 text-[0.8125rem] font-medium text-olive">
+          {/* Light glass panel — single-column accordions */}
+          <div className="rounded-[var(--radius-lg)] border border-black/10 bg-white/80 p-6 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.15)] backdrop-blur-md md:px-10">
+            <Accordion items={faqs} defaultOpen={0} light />
+            <h3 className="mb-2 mt-10 border-b border-black/10 pb-4 text-[0.8125rem] font-medium text-olive-deep">
               From the crew
             </h3>
-            <Accordion items={tips} defaultOpen={-1} />
+            <Accordion items={tips} defaultOpen={-1} light />
           </div>
         </div>
       </div>
