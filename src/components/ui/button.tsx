@@ -24,8 +24,11 @@ const buttonVariants = cva(
       variant: {
         primary: [
           "bg-olive-btn text-white",
-          "hover:bg-[linear-gradient(180deg,#26291d_0%,#101109_100%)]",
+          // User-directed: hover no longer flips to a black shade —
+          // transparent with an olive ring + olive text instead.
+          "hover:bg-transparent",
           "hover:text-olive-bright",
+          "hover:shadow-[inset_0_0_0_1px_var(--color-olive)]",
           "shadow-[inset_0_1px_0_rgba(244,245,240,0.08)]",
         ],
         secondary: [

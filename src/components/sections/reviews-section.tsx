@@ -1,22 +1,39 @@
 "use client";
 
 import * as React from "react";
-import { BadgeCheck } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { StarRating } from "@/components/ui/star-rating";
+import Silk from "@/components/ui/backgrounds/Silk";
 import { REVIEWS } from "@/lib/content";
 
 /**
  * Reviews — a single-strip auto-scrolling marquee (weekend-movers
- * style), no background image, olive theme, less height. Infinite
- * left scroll via `animate-reviews-scroll`; cards are borderless
- * tonal panels with olive stars. Compact aggregate on the left.
+ * style). Very light green Silk background (like the footer, faint),
+ * glass review cards, olive theme. Infinite left scroll via
+ * `animate-reviews-scroll`. Factual aggregate: rated by Melbourne
+ * locals — no invented review counts.
  */
 export default function ReviewsSection() {
   const doubled = [...REVIEWS, ...REVIEWS];
 
   return (
-    <section id="reviews" className="relative scroll-mt-24 py-14 md:py-20">
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+    <section id="reviews" className="relative scroll-mt-24 overflow-hidden py-14 md:py-20">
+      {/* ── Very light Silk — same green as footer, faint ── */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-15">
+        <Silk
+          speed={4.5}
+          scale={1.1}
+          color="#556b2f"
+          noiseIntensity={3.5}
+          rotation={0}
+        />
+      </div>
+      {/* Readability scrim over the faint silk */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-canvas via-canvas/60 to-canvas"
+      />
+      <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         {/* Compact header — aggregate + heading on one line */}
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-xl">
@@ -29,12 +46,12 @@ export default function ReviewsSection() {
           </div>
           <div className="flex items-center gap-4 pb-1">
             <span className="tnum text-5xl font-bold tracking-[-0.04em] text-ink">
-              4.9
+              5.0
             </span>
             <div>
-              <StarRating value={4.9} size="md" />
+              <StarRating value={5} size="md" />
               <p className="mt-1 text-sm text-ink-3">
-                2,300+ Google reviews
+                Rated by Melbourne locals
               </p>
             </div>
           </div>
@@ -42,7 +59,7 @@ export default function ReviewsSection() {
       </div>
 
       {/* ── Single strip — infinite marquee, glass review cards ── */}
-      <div className="marquee-mask mt-10 overflow-hidden">
+      <div className="relative marquee-mask mt-10 overflow-hidden">
         <div className="flex w-max gap-6 animate-reviews-scroll">
           {doubled.map((r, i) => (
             <figure
@@ -52,8 +69,8 @@ export default function ReviewsSection() {
               <div className="mb-5 flex items-center justify-between">
                 <StarRating value={5} size="lg" />
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-olive-tint px-3 py-1 text-xs font-medium text-olive-bright">
-                  <BadgeCheck className="h-4 w-4" />
-                  Verified
+                  <MapPin className="h-4 w-4" />
+                  Melbourne local
                 </span>
               </div>
               <blockquote className="text-[1.0625rem] leading-[1.75] text-ink">
@@ -77,18 +94,10 @@ export default function ReviewsSection() {
         </div>
       </div>
 
-      <div className="mx-auto mt-10 max-w-7xl px-5 md:px-8">
-        <div className="flex justify-center">
-          <a
-            href="https://www.google.com/search?q=stellar+removals+melbourne+reviews"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-[0.9375rem] font-medium text-ink-2 transition-colors hover:text-olive-bright"
-          >
-            Read all 2,300+ reviews on Google
-            <span aria-hidden>↗</span>
-          </a>
-        </div>
+      <div className="relative mx-auto mt-10 max-w-7xl px-5 md:px-8">
+        <p className="text-center text-[0.9375rem] text-ink-3">
+          Real words from Melbourne locals who moved with us.
+        </p>
       </div>
     </section>
   );

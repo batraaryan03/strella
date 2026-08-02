@@ -152,7 +152,7 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
         from {form.fromSuburb} to {form.toSuburb}.
       </p>
       <p className={cn("mt-7 text-sm", light ? "text-ink-dark/50" : "text-ink-3")}>
-        No deposit · Cancel free up to 24h before
+        We&apos;ll confirm your fixed quote before you commit.
       </p>
     </div>
   );
@@ -593,8 +593,8 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
             </h2>
             <p className="mx-auto mt-5 max-w-[48ch] text-lg leading-[1.7] text-ink-2">
               Tell us the route, the load, and when — we&apos;ll confirm
-              your price before you commit to anything. No deposit, no
-              call-out fees, $20M transit insurance on every move.
+              your price before you commit to anything. Professional
+              crews and full equipment on every move.
             </p>
           </div>
           {card}

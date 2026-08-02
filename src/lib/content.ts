@@ -120,11 +120,11 @@ export const SUBURB_POINTS: SuburbPoint[] = [
 
 /* ── Trust metrics (verified ribbon) ───────────────────────── */
 export const TRUST_METRICS = [
-  { icon: "shield", label: "Fully insured", num: 20, prefix: "$", suffix: "M", decimals: 0, sub: "transit cover on every move" },
-  { icon: "badge", label: "Police-checked crew", num: 100, suffix: "%", decimals: 0, sub: "background verified" },
+  { icon: "shield", label: "Transit insured", num: 20, prefix: "$", suffix: "M", decimals: 0, sub: "cover on every move" },
+  { icon: "badge", label: "Local crew", num: 100, suffix: "%", decimals: 0, sub: "professional movers" },
   { icon: "truck", label: "Moves completed", num: 5000, suffix: "+", decimals: 0, sub: "across greater Melbourne" },
-  { icon: "star", label: "Google rating", num: 4.9, suffix: "★", decimals: 1, sub: "2,300+ verified reviews" },
-  { icon: "receipt", label: "Upfront pricing", text: "Fixed", sub: "no hidden fees, ever" },
+  { icon: "star", label: "Rated by locals", num: 5, suffix: "★", decimals: 0, sub: "Melbourne customers" },
+  { icon: "receipt", label: "Upfront pricing", text: "Fixed", sub: "per-hour rates" },
 ] as const;
 
 /* ── Services ──────────────────────────────────────────────── */
@@ -339,7 +339,7 @@ export const FAQS = [
   },
   {
     q: "Are you insured?",
-    a: "Yes. Every Stellar move is covered by $20M public liability and full transit insurance. Ask your move manager for a certificate of currency at any time.",
+    a: "Yes. Every Stellar move is covered by public liability and transit insurance. Ask your move manager for a certificate of currency at any time.",
   },
   {
     q: "How far in advance should I book?",

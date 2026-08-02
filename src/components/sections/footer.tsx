@@ -154,7 +154,7 @@ export default function Footer() {
           <div className="grid gap-6 py-8 md:grid-cols-3 md:items-center md:gap-8">
             <p className="flex items-center gap-2 text-sm text-ink-3">
               <span className="h-1.5 w-1.5 rounded-full bg-olive" aria-hidden />
-              Crews active across Melbourne now
+              Weekend &amp; same-day moves across Melbourne
             </p>
             <dl className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-sm">
               <div className="flex items-center gap-2">
@@ -166,15 +166,15 @@ export default function Footer() {
                 <dd className="tnum font-mono text-ink-2">Pending registration</dd>
               </div>
               <div className="flex items-center gap-2">
-                <dt className="sr-only">Insurance</dt>
+                <dt className="sr-only">Pricing</dt>
                 <dd className="flex items-center gap-1.5 text-ink-2">
                   <ShieldCheck className="h-3.5 w-3.5 text-olive" />
-                  $20M public liability
+                  Transparent per-hour pricing
                 </dd>
               </div>
               <div className="flex items-center gap-2">
                 <dt className="sr-only">Crew</dt>
-                <dd className="text-ink-2">Police-checked crew</dd>
+                <dd className="text-ink-2">Professional 2-person crews</dd>
               </div>
             </dl>
             <div className="flex items-center justify-center gap-5 md:justify-end">

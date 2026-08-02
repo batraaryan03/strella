@@ -80,13 +80,13 @@ export default function HeroSection() {
             <div className="flex items-center gap-2.5">
               <StarRating value={5} />
               <span className="text-base text-ink-2">
-                <span className="font-semibold text-ink">4.9</span> from
-                2,300+ Google reviews
+                Rated <span className="font-semibold text-ink">5★</span> by
+                Melbourne locals
               </span>
             </div>
             <span className="hidden h-4 w-px bg-line sm:block" />
             <span className="text-base text-ink-2">
-              Police-checked crew · $20M insurance
+              Weekend &amp; same-day moves
             </span>
           </div>
 

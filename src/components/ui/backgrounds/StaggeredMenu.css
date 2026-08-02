@@ -7,12 +7,39 @@
 }
 
 /* Right-aligned toggle — used by the site header so the "Menu"
-   button sits at the top-right of the bar, clear of the logo. */
+   button sits at the top-right of the bar, clear of the logo.
+   `top: 0.75rem` aligns it with the glass bar (header pt-3) so the
+   toggle is vertically centered within the bar, not at the very top. */
 .staggered-menu-wrapper.sm-nav-right .staggered-menu-header {
   justify-content: flex-end;
+  top: 0.75rem;
   height: 4.25rem;
   align-items: center;
   padding: 0 1.25rem;
+}
+
+/* Bigger, bolder toggle + plus — a clear mobile tap target */
+.staggered-menu-wrapper.sm-nav-right .sm-toggle {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  gap: 0.5rem;
+}
+.staggered-menu-wrapper.sm-nav-right .sm-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+.staggered-menu-wrapper.sm-nav-right .sm-icon-line {
+  height: 2.5px;
+  border-radius: 3px;
+}
+
+/* md tablets still get the menu (lg:hidden) — match the header's md:pt-4 */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .staggered-menu-wrapper.sm-nav-right .staggered-menu-header {
+    top: 1rem;
+  }
 }
 
 .staggered-menu-wrapper.fixed-wrapper {

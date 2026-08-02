@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://stellarremovals.com.au"),
   title: "Stellar Removals — Melbourne's Precision Removalists",
   description:
-    "Melbourne local movers and removalists. Transparent hourly pricing, same-day & weekend availability, fully insured. Rated 5★ by Melbourne locals. Get a free quote in 60 seconds.",
+    "Melbourne local movers and removalists. Transparent hourly pricing, same-day & weekend availability. Rated by Melbourne locals. Get a free quote in 60 seconds.",
   keywords:
     "Melbourne movers, local movers Melbourne, removalists Melbourne, weekend movers, same-day movers, furniture movers Melbourne, house moving Melbourne, office relocation Melbourne",
   openGraph: {

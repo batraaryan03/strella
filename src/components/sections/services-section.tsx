@@ -1,9 +1,11 @@
 "use client";
 
 /**
- * Services — clean 3-column card layout (weekend-movers style, olive
- * themed). User-directed: real photos fully visible, big text, NO
- * icons, generous spacing on mobile & desktop. No 3D truck model.
+ * Services — clean 3-column card layout (weekend-movers style),
+ * blended with the Stellar design system: olive index numerals, olive
+ * image ring + hover tint, hairline top-light on cards. User-directed:
+ * real photos fully visible, big text, NO icons, generous spacing on
+ * mobile & desktop. No 3D truck model.
  */
 const services = [
   {
@@ -46,15 +48,16 @@ export default function ServicesSection() {
             Our Moving Services
           </h2>
           <p className="mt-5 text-base leading-[1.7] text-ink-2 md:text-lg">
-            Comprehensive moving solutions tailored to your needs in Melbourne.
+            Moving house or office in Melbourne? We&apos;ve got the crew,
+            the truck, and the care to make it easy.
           </p>
         </div>
 
         {/* Cards — 3 col on desktop, stacked on mobile, generous spacing */}
         <div className="mt-14 grid gap-x-8 gap-y-14 md:mt-20 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-16">
-          {services.map((s) => (
+          {services.map((s, i) => (
             <article key={s.title} className="group flex flex-col">
-              <div className="overflow-hidden rounded-[var(--radius-card)]">
+              <div className="relative overflow-hidden rounded-[var(--radius-card)] ring-1 ring-line transition-all duration-300 group-hover:ring-olive/60">
                 <img
                   src={s.img}
                   alt={s.title}
@@ -62,8 +65,12 @@ export default function ServicesSection() {
                   decoding="async"
                   className="aspect-video w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                 />
+                {/* Olive index numeral — design-system accent */}
+                <span className="absolute left-4 top-4 rounded-full bg-canvas/85 px-3 py-1 font-mono text-xs font-semibold tracking-[0.14em] text-olive-bright backdrop-blur-sm">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
               </div>
-              <h3 className="mt-6 text-2xl font-bold leading-tight tracking-[-0.01em] text-ink md:text-3xl">
+              <h3 className="mt-6 text-2xl font-bold leading-tight tracking-[-0.01em] text-ink transition-colors duration-200 group-hover:text-olive-bright md:text-3xl">
                 {s.title}
               </h3>
               <p className="mt-4 text-base leading-[1.7] text-ink-2 md:text-lg">

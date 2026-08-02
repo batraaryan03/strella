@@ -179,7 +179,7 @@ export default function PricingSection() {
         </div>
 
         <p className="mt-10 text-center text-[0.9375rem] text-ink-2">
-          No deposit · Cancel free up to 24h before · Fully insured
+          Weekend &amp; same-day moves · Transparent per-hour pricing
         </p>
       </div>
     </section>

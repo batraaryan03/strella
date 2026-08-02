@@ -183,11 +183,11 @@ export default function BookMovePage() {
 
               {/* Trust rail */}
               <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-line bg-surface-2/40 px-6 py-4 text-xs text-ink-3 md:px-8">
-                <span>No deposit</span>
+                <span>Weekend &amp; same-day moves</span>
                 <span>·</span>
-                <span>$20M transit insured</span>
+                <span>Transparent per-hour pricing</span>
                 <span>·</span>
-                <span>Cancel free up to 24h before</span>
+                <span>Professional 2-person crews</span>
               </div>
 
               {/* Submit */}

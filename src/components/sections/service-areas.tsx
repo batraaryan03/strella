@@ -38,13 +38,16 @@ export default function ServiceAreas() {
             <MelbourneMap circle className="absolute inset-0" focus={focus} />
           </div>
 
-          {/* ── Suburb chips — min-height matches the map circle on lg ── */}
+          {/* ── Suburb grid — proper clickable cards (min-height
+                 matches the map circle on lg). Every card is clearly a
+                 button: hover fill + arrow so it reads as clickable. ── */}
           <div className="flex flex-col justify-center lg:min-h-[560px]">
             <p className="text-base leading-[1.7] text-ink-2">
-              We service 300+ postcodes across greater Melbourne — and
+              We service suburbs right across greater Melbourne — and
               specialise in office relocation with minimal downtime.
+              Tap a suburb to find it on the map.
             </p>
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
               {SUBURB_POINTS.map((s) => {
                 const active = focus?.name === s.name;
                 return (
@@ -54,19 +57,32 @@ export default function ServiceAreas() {
                     aria-pressed={active}
                     onClick={() => setFocus(active ? null : s)}
                     className={cn(
-                      "inline-flex items-center gap-1.5 rounded-full border px-4 py-2.5 text-[0.9375rem] transition-colors duration-150",
+                      "group relative flex items-center gap-2.5 rounded-[var(--radius-btn)] border px-3.5 py-3 text-left transition-all duration-150",
                       active
                         ? "border-olive bg-olive-tint text-olive-bright"
-                        : "border-line text-ink-2 hover:border-olive/50 hover:bg-olive-tint hover:text-olive-bright"
+                        : "border-line bg-surface-2/40 text-ink-2 hover:border-olive/60 hover:bg-olive-tint hover:text-olive-bright"
                     )}
                   >
                     <span
                       className={cn(
-                        "h-1.5 w-1.5 rounded-full",
-                        active ? "bg-olive-bright" : "bg-olive/60"
+                        "h-1.5 w-1.5 shrink-0 rounded-full",
+                        active ? "bg-olive-bright" : "bg-olive/60 group-hover:bg-olive-bright"
                       )}
                     />
-                    {s.name}
+                    <span className="flex-1 truncate text-[0.9375rem] font-medium">
+                      {s.name}
+                    </span>
+                    <span
+                      aria-hidden
+                      className={cn(
+                        "text-sm transition-all duration-150",
+                        active
+                          ? "translate-x-0 text-olive-bright opacity-100"
+                          : "-translate-x-1 text-olive/60 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
+                      )}
+                    >
+                      ↳
+                    </span>
                   </button>
                 );
               })}
