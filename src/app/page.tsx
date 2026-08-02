@@ -28,8 +28,8 @@ export default function Home() {
         <GallerySection />
         <ServiceAreas />
         <ServicesSection />
-        <MovingTips />
         <QuoteWizard />
+        <MovingTips />
       </main>
       <Footer />
     </>

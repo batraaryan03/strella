@@ -106,7 +106,7 @@ export default function PricingSection() {
           <div className="relative grid items-stretch gap-6 lg:grid-cols-3 lg:gap-8">
             {PLANS.map((plan) => (
               <SpotlightCard
-                key={plan.code}
+                key={plan.name}
                 spotlightColor="rgba(151, 167, 90, 0.32)"
                 className="glass-card group relative flex flex-col rounded-lg p-8 md:p-10"
               >
@@ -134,18 +134,13 @@ export default function PricingSection() {
                 )}
 
                 <div className="relative z-20 flex flex-1 flex-col">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-xl font-bold tracking-[-0.01em] text-ink">
-                        {plan.name}
-                      </h3>
-                      <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-2">
-                        {plan.subtitle}
-                      </p>
-                    </div>
-                    <span className="tnum font-mono text-[0.6875rem] text-ink-3">
-                      {plan.code}
-                    </span>
+                  <div>
+                    <h3 className="text-xl font-bold tracking-[-0.01em] text-ink">
+                      {plan.name}
+                    </h3>
+                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-2">
+                      {plan.subtitle}
+                    </p>
                   </div>
 
                   <div className="mt-8 flex items-baseline gap-2">

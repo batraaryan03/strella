@@ -2,12 +2,14 @@
 
 import * as React from "react";
 import { Accordion } from "@/components/ui/accordion";
+import Silk from "@/components/ui/backgrounds/Silk";
 import { MOVING_TIPS, FAQS } from "@/lib/content";
 
 /**
- * Moving Tips + FAQ — a single-column FAQ (user-directed: remove the
- * left intro, "just put a FAQ section straight in a single one-column
- * layout"). Olive-tinted accordion, quiet hairline dividers.
+ * FAQ — sits just above the footer. Same green Silk background as the
+ * footer but at a low opacity, with the accordions held in a translucent
+ * glass panel (design-system glassmorphism). Single-column accordion
+ * (user-directed), olive accents, quiet hairline dividers.
  */
 export default function MovingTips() {
   const tips = MOVING_TIPS.map((t, i) => ({
@@ -18,7 +20,23 @@ export default function MovingTips() {
   const faqs = FAQS.map((f, i) => ({ id: `faq-${i}`, q: f.q, a: f.a }));
 
   return (
-    <section className="relative overflow-hidden py-20 md:py-28">
+    <section id="faq" className="relative scroll-mt-24 overflow-hidden py-20 md:py-28">
+      {/* ── Green Silk background — same as footer, LOW opacity ── */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-25">
+        <Silk
+          speed={4.5}
+          scale={1.1}
+          color="#556b2f"
+          noiseIntensity={3.5}
+          rotation={0}
+        />
+      </div>
+      {/* Readability scrim over the silk */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-canvas via-canvas/70 to-canvas"
+      />
+
       <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         <div className="mx-auto max-w-3xl">
           <div className="mb-12 text-center">
@@ -34,12 +52,14 @@ export default function MovingTips() {
             </p>
           </div>
 
-          {/* Single-column accordion */}
-          <Accordion items={faqs} defaultOpen={0} />
-          <h3 className="mb-2 mt-12 border-b border-line pb-4 text-[0.8125rem] font-medium text-olive">
-            From the crew
-          </h3>
-          <Accordion items={tips} defaultOpen={-1} />
+          {/* Translucent glass panel — single-column accordions */}
+          <div className="glass-card rounded-[var(--radius-lg)] px-6 py-4 md:px-10">
+            <Accordion items={faqs} defaultOpen={0} />
+            <h3 className="mb-2 mt-10 border-b border-line pb-4 text-[0.8125rem] font-medium text-olive">
+              From the crew
+            </h3>
+            <Accordion items={tips} defaultOpen={-1} />
+          </div>
         </div>
       </div>
     </section>

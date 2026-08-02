@@ -27,25 +27,26 @@ export default function GallerySection() {
             its own — drag it anytime to explore.
           </p>
         </div>
+      </div>
 
-        <div className="mt-10 h-[400px] md:h-[640px]">
-          <React.Suspense fallback={null}>
-            <DomeGallery
-              images={GALLERY_LOCAL}
-              fit={1}
-              minRadius={480}
-              maxRadius={1200}
-              segments={30}
-              dragDampening={3.6}
-              grayscale={false}
-              openedImageWidth="300px"
-              openedImageHeight="400px"
-              imageBorderRadius="16px"
-              openedImageBorderRadius="16px"
-              autoRotateSpeed={5}
-            />
-          </React.Suspense>
-        </div>
+      {/* ── Full-bleed dome — touches the entire screen width ── */}
+      <div className="relative mt-10 h-[420px] w-full md:h-[680px]">
+        <React.Suspense fallback={null}>
+          <DomeGallery
+            images={GALLERY_LOCAL}
+            fit={1}
+            minRadius={480}
+            maxRadius={2000}
+            segments={30}
+            dragDampening={3.6}
+            grayscale={false}
+            openedImageWidth="300px"
+            openedImageHeight="400px"
+            imageBorderRadius="16px"
+            openedImageBorderRadius="16px"
+            autoRotateSpeed={5}
+          />
+        </React.Suspense>
       </div>
     </section>
   );

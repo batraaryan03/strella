@@ -41,31 +41,33 @@ export default function ReviewsSection() {
         </div>
       </div>
 
-      {/* ── Single strip — infinite marquee ── */}
+      {/* ── Single strip — infinite marquee, glass review cards ── */}
       <div className="marquee-mask mt-10 overflow-hidden">
-        <div className="flex w-max gap-5 animate-reviews-scroll">
+        <div className="flex w-max gap-6 animate-reviews-scroll">
           {doubled.map((r, i) => (
             <figure
               key={`${r.name}-${i}`}
-              className="glass-card w-80 shrink-0 rounded-[var(--radius-card)] p-6 md:p-7"
+              className="glass-card w-[26rem] shrink-0 rounded-[var(--radius-lg)] bg-white/[0.06] p-8"
             >
-              <div className="mb-4 flex items-center justify-between">
-                <StarRating value={5} />
-                <span className="inline-flex items-center gap-1 text-[0.6875rem] text-ink-3">
-                  <BadgeCheck className="h-3.5 w-3.5 text-olive" />
+              <div className="mb-5 flex items-center justify-between">
+                <StarRating value={5} size="lg" />
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-olive-tint px-3 py-1 text-xs font-medium text-olive-bright">
+                  <BadgeCheck className="h-4 w-4" />
                   Verified
                 </span>
               </div>
-              <blockquote className="text-[0.9375rem] leading-[1.7] text-ink-2">
+              <blockquote className="text-[1.0625rem] leading-[1.75] text-ink">
                 &ldquo;{r.text}&rdquo;
               </blockquote>
-              <figcaption className="mt-5 flex items-center gap-3">
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-surface-2 font-mono text-xs text-olive">
+              <figcaption className="mt-6 flex items-center gap-3.5 border-t border-line pt-5">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-olive-tint font-mono text-sm font-semibold text-olive-bright">
                   {r.name.charAt(0)}
                 </span>
-                <span className="text-sm">
-                  <span className="block font-medium text-ink">{r.name}</span>
-                  <span className="block text-xs text-ink-3">
+                <span>
+                  <span className="block text-[0.9375rem] font-semibold text-ink">
+                    {r.name}
+                  </span>
+                  <span className="mt-0.5 block text-sm text-ink-3">
                     {r.location}, Melbourne
                   </span>
                 </span>

@@ -165,7 +165,6 @@ export const SERVICES = [
 export const PLANS = [
   {
     name: "4 Tonne Truck",
-    code: "STL-04",
     subtitle: "Ideal for 1–2 Bedroom Unit or Small Apartment",
     price: 120,
     features: [
@@ -177,7 +176,6 @@ export const PLANS = [
   },
   {
     name: "8 Tonne Truck",
-    code: "STL-08",
     subtitle: "Ideal for 3–4 Bedroom House",
     price: 140,
     features: [
@@ -190,7 +188,6 @@ export const PLANS = [
   },
   {
     name: "10 Tonne Truck",
-    code: "STL-10",
     subtitle: "Ideal for 5–6 Bedroom House or Large Office",
     price: 160,
     features: [
