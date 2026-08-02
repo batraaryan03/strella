@@ -121,7 +121,7 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
     <div
       className={cn(
         light
-          ? "rounded-full bg-white px-6 py-12 text-center md:px-10"
+          ? "rounded-[var(--radius-lg)] bg-white px-6 py-12 text-center md:px-10"
           : bare
             ? "flex h-full flex-col items-center justify-center px-4 text-center"
             : "panel rounded-[var(--radius-lg)] bg-olive-tint/30 px-8 py-16 text-center"
@@ -556,7 +556,11 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
       {cardInner}
     </SpotlightCard>
   ) : (
-    <div className={light ? "rounded-full bg-white p-6 md:p-10" : undefined}>
+    <div
+      className={
+        light ? "rounded-[var(--radius-lg)] bg-white p-6 md:p-10" : undefined
+      }
+    >
       {cardInner}
     </div>
   );
