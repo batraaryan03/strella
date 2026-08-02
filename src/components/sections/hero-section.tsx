@@ -4,7 +4,6 @@ import * as React from "react";
 import { ArrowRight, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StarRating } from "@/components/ui/star-rating";
-import { Highlighter } from "@/components/ui/highlighter";
 import ShinyText from "@/components/ui/backgrounds/ShinyText";
 import ColorBends from "@/components/ui/backgrounds/ColorBends";
 import QuoteWizard from "./quote-wizard";
@@ -66,11 +65,9 @@ export default function HeroSection() {
 
           <p className="mt-7 max-w-[46ch] text-lg leading-[1.7] text-ink-2 md:text-xl">
             Melbourne&apos;s precision movers.{" "}
-            <Highlighter isView strokeWidth={5} color="#97a75a">
-              <span className="font-semibold text-ink-dark">
-                Transparent hourly pricing
-              </span>
-            </Highlighter>
+            <span className="rounded-md bg-[#97a75a] px-1.5 py-0.5 font-semibold text-ink-dark">
+              Transparent hourly pricing
+            </span>
             , professional crews, and weekend availability.
           </p>
 

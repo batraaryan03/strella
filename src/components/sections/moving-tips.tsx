@@ -41,14 +41,14 @@ export default function MovingTips() {
         <div className="mx-auto max-w-3xl">
           <div className="mb-12 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive">
-              Advice &amp; answers
+              FAQ
             </p>
             <h2 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-[-0.03em] text-ink">
-              Questions, answered
+              Frequently Asked Questions
             </h2>
             <p className="mx-auto mt-5 max-w-[48ch] text-base leading-[1.7] text-ink-2 md:text-lg">
-              The questions Melbourne movers ask us most — plus practical
-              tips from the crew.
+              Everything Melbourne movers ask us most — answered honestly,
+              with no fine print.
             </p>
           </div>
 

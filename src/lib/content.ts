@@ -50,20 +50,7 @@ export const HERO_CAPTION = {
   truck: "STL-08 · Sat 08:00",
 } as const;
 
-/** Photographer credits for every Unsplash photo used (API terms). */
-export const PHOTO_CREDITS = [
-  { name: "Egor Ivlev", url: "https://unsplash.com/@ger46" },
-  { name: "Vitaly Gariev", url: "https://unsplash.com/@silverkblack" },
-  { name: "Handiwork NYC", url: "https://unsplash.com/@handiworknyc" },
-  { name: "Infinity Movers Cape Coral", url: "https://unsplash.com/@infinitymoverscapecoral" },
-  { name: "Jorge Alcala", url: "https://unsplash.com/@jorgeaalcala" },
-  { name: "Luke Heibert", url: "https://unsplash.com/@lukeheibert" },
-  { name: "Dina Badamshina", url: "https://unsplash.com/@dinaamazing" },
-  { name: "Christian Lue", url: "https://unsplash.com/@christianlue" },
-  { name: "Apartment Life", url: "https://unsplash.com/@apartmentlife" },
-  { name: "Bench Accounting", url: "https://unsplash.com/@benchaccounting" },
-  { name: "Sander Yigin", url: "https://unsplash.com/@sanderyigin" },
-] as const;
+
 
 /* ── Map data (Leaflet · OpenStreetMap, real coordinates) ──── */
 export const MELBOURNE_CENTER: [number, number] = [144.9631, -37.8136];
@@ -166,7 +153,7 @@ export const PLANS = [
   {
     name: "4 Tonne Truck",
     subtitle: "Ideal for 1–2 Bedroom Unit or Small Apartment",
-    price: 120,
+    price: { weekday: 130, weekend: 140 },
     features: [
       "2 professional movers",
       "Suitable for smaller moves",
@@ -177,7 +164,7 @@ export const PLANS = [
   {
     name: "8 Tonne Truck",
     subtitle: "Ideal for 3–4 Bedroom House",
-    price: 140,
+    price: { weekday: 140, weekend: 150 },
     features: [
       "2 professional movers",
       "Medium-size moves with more furniture",
@@ -189,7 +176,7 @@ export const PLANS = [
   {
     name: "10 Tonne Truck",
     subtitle: "Ideal for 5–6 Bedroom House or Large Office",
-    price: 160,
+    price: { weekday: 160, weekend: 170 },
     features: [
       "2 professional movers",
       "Large capacity for big moves",
@@ -327,27 +314,87 @@ export const MOVING_TIPS = [
   },
 ] as const;
 
-/* ── FAQ (pricing & logistics) ─────────────────────────────── */
+/* ── FAQ (copied verbatim from stellarremovals.com.au) ─────── */
 export const FAQS = [
   {
-    q: "How much does a move cost?",
-    a: "Our pricing is simple: per-hour truck rates starting at $120/hour with two professional movers and full equipment included. Final cost depends on truck size, distance, and access conditions — and we always confirm it upfront.",
+    q: "How much does a local move in Melbourne cost?",
+    a: "Our local moving rates start from $130/hour for a 4-tonne truck and 2 movers. The total cost depends on the size of your move, access at both properties, and travel time. We maintain full transparency with no hidden fees.",
   },
   {
-    q: "Do you charge extra for weekends?",
-    a: "No. Weekend and same-day availability is included in our standard rates. We believe moving shouldn't cost more just because it happens on a Saturday.",
+    q: "Do you offer packing and unpacking services?",
+    a: "Yes, we offer professional full or partial packing and unpacking services. We bring high-quality boxes, bubble wrap, and packing materials to ensure all your fragile items are securely packed and ready for transport.",
   },
   {
-    q: "Are you insured?",
-    a: "Yes. Every Stellar move is covered by public liability and transit insurance. Ask your move manager for a certificate of currency at any time.",
+    q: "Are my belongings insured during the move?",
+    a: "Yes, we hold comprehensive Public Liability Insurance and Transit Insurance to protect your belongings and property during the entire moving process for your complete peace of mind.",
   },
   {
-    q: "How far in advance should I book?",
-    a: "We recommend 1–2 weeks for standard moves, but we regularly accommodate same-day and next-day bookings across Melbourne, subject to crew availability.",
+    q: "Do you work on weekends and public holidays?",
+    a: "Absolutely! We specialize in weekend and public holiday moves at no extra or hidden surcharge, making it convenient for you to move without taking time off work.",
   },
   {
-    q: "What's your cancellation policy?",
-    a: "Plans change — we get it. You can reschedule or cancel your booking free of charge up to 24 hours before your confirmed time slot.",
+    q: "How far in advance should I book my move?",
+    a: "We recommend booking your move at least 1 to 2 weeks in advance, especially for weekend moves. However, we also accommodate last-minute and same-day moving requests subject to availability.",
+  },
+  {
+    q: "Do you disassemble and reassemble furniture?",
+    a: "Yes, basic furniture disassembly and reassembly (such as beds, tables, and desks) are included in our service at no extra charge. Our team brings all necessary tools.",
+  },
+  {
+    q: "What truck sizes do you have available?",
+    a: "We have 4-tonne, 8-tonne, and 10-tonne trucks available, suitable for anything from a small 1-bedroom apartment to a large 5-6 bedroom family home or commercial office.",
+  },
+  {
+    q: "Do you provide moving boxes?",
+    a: "Yes, we can supply high-quality moving boxes, packing paper, and tape prior to your move upon request, or we can bring them with us on moving day.",
+  },
+  {
+    q: "Do you charge a call-out fee or depot-to-depot fee?",
+    a: "Our travel fee is transparently calculated based on the distance between your pickup location, drop-off location, and our base. We explain all travel charges upfront before you confirm.",
+  },
+  {
+    q: "Can you move pianos or pool tables?",
+    a: "Yes, we can handle heavy specialty items like upright pianos and pool tables, provided we are notified of them in advance so we can bring the appropriate equipment and crew size.",
+  },
+  {
+    q: "What areas of Melbourne do you service?",
+    a: "We service all metropolitan Melbourne suburbs, the CBD, and surrounding regional areas across Victoria. No matter where you are located, our team is ready to help.",
+  },
+  {
+    q: "Is there a minimum booking time?",
+    a: "Yes, our standard minimum booking time is 2 hours of labor plus travel time, which applies to all local residential and commercial moves.",
+  },
+  {
+    q: "What payment methods do you accept?",
+    a: "We accept cash, direct bank transfer, and major credit/debit cards. Payment is typically settled upon completion of the move.",
+  },
+  {
+    q: "Can I help with the move to save time?",
+    a: "While you are welcome to assist with lighter items or directing placement to save time, we generally recommend letting our professional team handle the heavy lifting for safety and efficiency.",
+  },
+  {
+    q: "What happens if it rains on moving day?",
+    a: "Rain won't stop us! Our trucks and equipment are fully enclosed, and our experienced team takes extra precautions to protect your furniture and keep your floors clean during wet weather.",
+  },
+  {
+    q: "Do you offer storage solutions?",
+    a: "While we do not operate our own storage facilities, we can recommend trusted secure storage partners across Melbourne and help coordinate the transit of your items into storage.",
+  },
+  {
+    q: "Are there any hidden fees?",
+    a: "No. We pride ourselves on 100% transparent pricing with no hidden charges, surprise fuel levies, or unexpected stair fees unless previously agreed upon.",
+  },
+  {
+    q: "Can I change my booking date after confirming?",
+    a: "Yes, you can reschedule your booking subject to availability. We recommend giving us at least 48 hours notice so we can adjust our schedule accordingly.",
+  },
+  {
+    q: "Do you handle office and commercial moves?",
+    a: "Yes, we are experienced in commercial relocations, including office furniture, workstations, and equipment. We can work after hours to minimize disruption to your business.",
+  },
+  {
+    q: "What if something gets damaged?",
+    a: "In the rare event of accidental damage, we take full responsibility. Our team is fully insured, and we have a straightforward claims process to resolve any issues promptly and fairly.",
   },
 ] as const;
 

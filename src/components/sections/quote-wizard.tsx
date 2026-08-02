@@ -25,14 +25,6 @@ type Step = 0 | 1 | 2;
 
 const SIZES = ["Studio", "1–2 bed", "3–4 bed", "5+ bed"] as const;
 
-/** Indicative hourly range per move size (Muval-style honesty). */
-const ESTIMATE_RANGE: Record<(typeof SIZES)[number], [number, number]> = {
-  Studio: [180, 260],
-  "1–2 bed": [260, 380],
-  "3–4 bed": [340, 480],
-  "5+ bed": [440, 620],
-};
-
 const STEPS = [
   { num: "01", label: "Route", icon: MapPin },
   { num: "02", label: "Load", icon: Home },
@@ -350,35 +342,6 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
                 />
               </div>
 
-              {/* Ballpark-first — price band BEFORE the contact wall */}
-              <div
-                className={cn(                    "space-y-2 px-5 py-4",
-                    light
-                      ? "rounded-full bg-black/5"
-                      : "rounded-[var(--radius-btn)] bg-surface-2"
-                )}
-              >
-                <p className="flex items-baseline justify-between gap-3">
-                  <span
-                    className={cn("text-sm", light ? "text-ink-dark/70" : "text-ink-2")}
-                  >
-                    Indicative estimate
-                  </span>
-                  <span
-                    className={cn(
-                      "tnum font-mono text-lg font-bold",
-                      light ? "text-olive-deep" : "text-olive-bright"
-                    )}
-                  >
-                    ${ESTIMATE_RANGE[form.size][0]} – $
-                    {ESTIMATE_RANGE[form.size][1]}
-                  </span>
-                </p>
-                <p className={cn("text-sm", light ? "text-ink-dark/50" : "text-ink-3")}>
-                  Based on similar {form.size} moves. No contact details
-                  needed yet — your fixed quote is confirmed later.
-                </p>
-              </div>
             </div>
           )}
 
@@ -457,26 +420,6 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
                 <p className={cn("text-sm", light ? "text-ink-dark/50" : "text-ink-3")}>
                   {form.fromSuburb || "From"} → {form.toSuburb || "To"} ·{" "}
                   {form.size} · {form.moveDate || "date TBC"}
-                </p>
-                <p className="flex items-baseline justify-between gap-3">
-                  <span
-                    className={cn("text-sm", light ? "text-ink-dark/70" : "text-ink-2")}
-                  >
-                    Indicative estimate
-                  </span>
-                  <span
-                    className={cn(
-                      "tnum font-mono text-lg font-bold",
-                      light ? "text-olive-deep" : "text-olive-bright"
-                    )}
-                  >
-                    ${ESTIMATE_RANGE[form.size][0]} – $
-                    {ESTIMATE_RANGE[form.size][1]}
-                  </span>
-                </p>
-                <p className={cn("text-sm", light ? "text-ink-dark/50" : "text-ink-3")}>
-                  Based on similar {form.size} moves. Your fixed quote is
-                  confirmed before you commit.
                 </p>
               </div>
             </div>

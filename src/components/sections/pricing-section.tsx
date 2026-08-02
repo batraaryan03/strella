@@ -55,7 +55,7 @@ export default function PricingSection() {
           </h2>
         </div>
 
-        {/* Day-of-week toggle — same rate, always (trust statement) */}
+        {/* Day-of-week toggle — weekday vs weekend rates */}
         <div className="mt-10 flex flex-col items-center gap-3">
           <div
             role="group"
@@ -79,17 +79,6 @@ export default function PricingSection() {
               </button>
             ))}
           </div>
-          <p
-            className={cn(
-              "flex items-center gap-1.5 text-[0.9375rem] transition-colors duration-300",
-              day === "weekend" ? "text-olive-bright" : "text-ink-3"
-            )}
-          >
-            <span className="h-1 w-1 rounded-full bg-olive" aria-hidden />
-            {day === "weekend"
-              ? "Weekend moves at weekday rates — always."
-              : "Rates shown for all days of the week."}
-          </p>
         </div>
 
         {/* Cards region — static olive mesh INSIDE each card (pure CSS,
@@ -137,7 +126,7 @@ export default function PricingSection() {
 
                   <div className="mt-8 flex items-baseline gap-2">
                     <span className="tnum text-[clamp(3rem,6vw,4.5rem)] font-bold leading-none tracking-[-0.04em] text-olive-bright">
-                      ${plan.price}
+                      ${plan.price[day]}
                     </span>
                     <span className="text-base text-ink-2">/ hour</span>
                   </div>

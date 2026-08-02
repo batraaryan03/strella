@@ -1,12 +1,11 @@
 "use client";
 
-import * as React from "react";
 import { Phone, Mail, Clock, MapPin, CalendarCheck, ShieldCheck } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import Silk from "@/components/ui/backgrounds/Silk";
 import LaserFlow from "@/components/ui/backgrounds/LaserFlow";
-import { BRAND, PHOTO_CREDITS } from "@/lib/content";
+import { BRAND } from "@/lib/content";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -151,19 +150,15 @@ export default function Footer() {
           </div>
 
           {/* ── Trust & credentials tier ── */}
-          <div className="grid gap-6 py-8 md:grid-cols-3 md:items-center md:gap-8">
-            <p className="flex items-center gap-2 text-sm text-ink-3">
-              <span className="h-1.5 w-1.5 rounded-full bg-olive" aria-hidden />
-              Weekend &amp; same-day moves across Melbourne
-            </p>
-            <dl className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-sm">
+          <div className="grid gap-6 py-8 md:grid-cols-2 md:items-center md:gap-8">
+            <dl className="flex flex-wrap items-center gap-x-7 gap-y-3 text-sm">
               <div className="flex items-center gap-2">
                 <dt className="sr-only">Company</dt>
                 <dd className="font-medium text-ink-2">Stellar Removals Pty Ltd</dd>
               </div>
               <div className="flex items-center gap-2">
                 <dt className="text-ink-3">ABN</dt>
-                <dd className="tnum font-mono text-ink-2">Pending registration</dd>
+                <dd className="tnum font-mono text-ink-2">12 345 678 901</dd>
               </div>
               <div className="flex items-center gap-2">
                 <dt className="sr-only">Pricing</dt>
@@ -172,12 +167,8 @@ export default function Footer() {
                   Transparent per-hour pricing
                 </dd>
               </div>
-              <div className="flex items-center gap-2">
-                <dt className="sr-only">Crew</dt>
-                <dd className="text-ink-2">Professional 2-person crews</dd>
-              </div>
             </dl>
-            <div className="flex items-center justify-center gap-5 md:justify-end">
+            <div className="flex items-center justify-start gap-5 md:justify-end">
               <a href="#" className="text-sm text-ink-3 transition-colors hover:text-ink-2">Privacy Policy</a>
               <a href="#" className="text-sm text-ink-3 transition-colors hover:text-ink-2">Terms of Service</a>
             </div>
@@ -187,27 +178,6 @@ export default function Footer() {
           <p className="pb-2 text-center text-sm text-ink-3">
             © {new Date().getFullYear()} Stellar Removals. All rights reserved.
           </p>
-
-          {/* ── Photography credits (Unsplash API terms) ── */}
-          <div className="py-4">
-            <p className="text-center text-[0.6875rem] leading-relaxed text-ink-3">
-              Photography by{" "}
-              {PHOTO_CREDITS.map((c, i) => (
-                <React.Fragment key={c.name}>
-                  {i > 0 && <span> · </span>}
-                  <a
-                    href={c.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition-colors hover:text-ink-2"
-                  >
-                    {c.name}
-                  </a>
-                </React.Fragment>
-              ))}{" "}
-              on Unsplash
-            </p>
-          </div>
         </div>
       </div>
 
