@@ -24,10 +24,10 @@ export const BRAND = {
 
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "#services", label: "Services" },
   { href: "#pricing", label: "Pricing" },
-  { href: "#process", label: "Process" },
   { href: "#gallery", label: "Gallery" },
+  { href: "#areas", label: "Areas" },
+  { href: "#services", label: "Services" },
   { href: "#reviews", label: "Reviews" },
   { href: "/contact", label: "Contact", isPage: true },
 ] as const;
@@ -354,18 +354,40 @@ export const FAQS = [
   },
 ] as const;
 
-/* ── Gallery (real Unsplash photography) ───────────────────── */
-export const GALLERY_IMAGES = [
-  u("photo-1698917414969-feade59e3343"), // unloading at the kerb
-  u("photo-1714647211902-bb711d643a17"), // packing boxes in living room
-  u("photo-1600518464441-9154a4dea21b"), // crew beside the truck
-  u("photo-1707407087163-7ab35bca9ffc"), // truck loaded with boxes
-  u("photo-1591267556741-66d584d88e42"), // carrying a box
-  u("photo-1700165644892-3dd6b67b25bc"), // brown packing boxes
-  u("photo-1730154838368-c37b1fdebcf6"), // room filled with boxes
-  u("photo-1757742690834-aa581b9f53b2"), // empty room, floor cleared
-  u("photo-1772724317350-520faccb15e6"), // carrying boxes outside
-  u("photo-1714647211963-fa82bd5b3a7a"), // laying rug on the floor
-  u("photo-1449247666642-264389f5f5b1"), // person holding a box
-  u("photo-1592838064575-70ed626d3a0e"), // truck on the road
-];
+/* ── Shared background config ──────────────────────────────── */
+/**
+ * Olive Grainient props — used behind the pricing cards and behind the
+ * quote-wizard section (user-directed: same kind of Grainient, more
+ * noise + opacity, glassmorphism over it).
+ */
+export const GRAINIENT_OLIVE = {
+  color1: "#98a686",
+  color2: "#636B2F",
+  color3: "#808000",
+  timeSpeed: 0.35,
+  colorBalance: 0.0,
+  warpStrength: 1.2,
+  warpFrequency: 5.5,
+  warpSpeed: 2.5,
+  warpAmplitude: 60,
+  blendAngle: 0.0,
+  blendSoftness: 0.12,
+  rotationAmount: 1000,
+  noiseScale: 3.0,
+  grainAmount: 0.45,
+  grainScale: 3.5,
+  grainAnimated: true,
+  contrast: 1.6,
+  gamma: 1.0,
+  saturation: 1.0,
+  centerX: 0.0,
+  centerY: 0.0,
+  zoom: 0.9,
+} as const;
+
+/* ── Gallery (real local photos from /public/gallery) ───────── */
+/** All 30 real move photos in public/gallery (01.jpg–30.jpg). */
+export const GALLERY_LOCAL = Array.from({ length: 30 }, (_, i) => ({
+  src: `/gallery/${String(i + 1).padStart(2, "0")}.jpg`,
+  alt: `Melbourne move — photo ${i + 1}`,
+}));

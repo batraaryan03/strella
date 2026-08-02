@@ -10,10 +10,10 @@ import { BRAND, PHOTO_CREDITS } from "@/lib/content";
 
 const quickLinks = [
   { label: "Home", href: "/" },
-  { label: "Services", href: "#services" },
   { label: "Pricing", href: "#pricing" },
-  { label: "Process", href: "#process" },
   { label: "Gallery", href: "#gallery" },
+  { label: "Areas", href: "#areas" },
+  { label: "Services", href: "#services" },
   { label: "Reviews", href: "#reviews" },
   { label: "Contact", href: "/contact" },
   { label: "Book a Move", href: "/book-move" },
@@ -45,9 +45,10 @@ const socials = [
  */
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-line bg-canvas">
-      {/* ── Silk — snake-skin background (dark green olive) ── */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.55]">
+    <footer className="relative overflow-hidden bg-canvas">
+      {/* ── Silk — snake-skin background (dark green olive), FULL
+             strength per user: no opacity dimming, no dark overlay. ── */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
         <Silk
           speed={4.5}
           scale={1.1}
@@ -56,20 +57,8 @@ export default function Footer() {
           rotation={0}
         />
       </div>
-      {/* Keep text readable over the moving silk */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-canvas/85 via-canvas/60 to-canvas/90"
-      />
 
       <div className="relative">
-        {/* ── Giant brand typography — SIMPLE, no kinetic hover ── */}
-        <div className="select-none px-2 pt-16 md:pt-20" aria-hidden>
-          <p className="whitespace-nowrap text-center text-[clamp(4rem,17vw,15rem)] font-bold leading-[0.85] tracking-[-0.04em] text-ink/[0.045]">
-            STELLAR
-          </p>
-        </div>
-
         <div className="mx-auto max-w-7xl px-5 pb-10 md:px-8">
           {/* ── Main columns — bigger, cleaner typography ── */}
           <div className="grid gap-12 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-8">
@@ -162,7 +151,7 @@ export default function Footer() {
           </div>
 
           {/* ── Trust & credentials tier ── */}
-          <div className="grid gap-6 border-t border-line py-8 md:grid-cols-3 md:items-center md:gap-8">
+          <div className="grid gap-6 py-8 md:grid-cols-3 md:items-center md:gap-8">
             <p className="flex items-center gap-2 text-sm text-ink-3">
               <span className="h-1.5 w-1.5 rounded-full bg-olive" aria-hidden />
               Crews active across Melbourne now
@@ -200,7 +189,7 @@ export default function Footer() {
           </p>
 
           {/* ── Photography credits (Unsplash API terms) ── */}
-          <div className="border-t border-line/60 py-4">
+          <div className="py-4">
             <p className="text-center text-[0.6875rem] leading-relaxed text-ink-3">
               Photography by{" "}
               {PHOTO_CREDITS.map((c, i) => (
@@ -220,6 +209,16 @@ export default function Footer() {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* ── STELLAR — bold wordmark at the VERY bottom (above LaserFlow).
+             relative + z-10 so it paints ABOVE the absolute silk layer.
+             User-directed: NOT a solid white fill — translucent TEXT
+             STROKES (outline) like before, but more visible. ── */}
+      <div className="relative z-10 select-none px-2 pb-2" aria-hidden>
+        <p className="stellar-stroke whitespace-nowrap text-center text-[clamp(4rem,17vw,15rem)] font-black leading-[0.85] tracking-[-0.04em]">
+          STELLAR
+        </p>
       </div>
 
       {/* ── LaserFlow — at the very bottom, just below STELLAR ── */}

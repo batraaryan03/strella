@@ -3,6 +3,7 @@ import { Instrument_Sans, Instrument_Serif, Geist_Mono } from "next/font/google"
 import Header from "@/components/sections/header";
 import GlassCursor from "@/components/ui/glass-cursor";
 import { NoiseTexture } from "@/components/ui/noise-texture";
+import GradualBlur from "@/components/ui/backgrounds/GradualBlur";
 import "./globals.css";
 
 /* Typography (user-directed upgrade): Instrument Sans for UI/body,
@@ -81,6 +82,20 @@ export default function RootLayout({
         <Header />
 
         {children}
+
+        {/* GradualBlur - kept for the ENTIRE site, performance-native:
+            low div count, no animation, pointer-transparent, fixed
+            bottom veil so the gradual fade is always present. */}
+        <GradualBlur
+          position="bottom"
+          target="page"
+          height="10rem"
+          strength={1}
+          divCount={3}
+          opacity={0.5}
+          animated={false}
+          zIndex={1}
+        />
 
         {/* FluidGlass lens as the pointer (desktop fine-pointer only) */}
         {/* <GlassCursor /> */}

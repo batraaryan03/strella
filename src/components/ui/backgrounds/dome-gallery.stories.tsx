@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import DomeGallery from "./DomeGallery";
-import { GALLERY_IMAGES } from "@/lib/content";
+import { GALLERY_LOCAL } from "@/lib/content";
 
 const meta: Meta<typeof DomeGallery> = {
   title: "Backgrounds/DomeGallery",
@@ -13,14 +13,14 @@ type Story = StoryObj<typeof DomeGallery>;
 
 /**
  * React Bits DomeGallery — drag-rotatable sphere of real Melbourne
- * photos. Exact stock props from the docs usage example, with the
- * project's real Unsplash photography instead of the upstream defaults.
+ * photos. Exact stock props from the docs usage example, with all 30
+ * real photos from /public/gallery instead of the upstream defaults.
  */
 export const Default: Story = {
   render: () => (
     <div className="relative h-[720px] w-full overflow-hidden">
       <DomeGallery
-        images={GALLERY_IMAGES.map((src, i) => ({ src, alt: `Melbourne move — photo ${i + 1}` }))}
+        images={GALLERY_LOCAL}
         fit={1}
         minRadius={850}
         segments={30}

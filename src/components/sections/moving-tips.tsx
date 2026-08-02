@@ -18,8 +18,8 @@ export default function MovingTips() {
   const faqs = FAQS.map((f, i) => ({ id: `faq-${i}`, q: f.q, a: f.a }));
 
   return (
-    <section className="relative py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+    <section className="relative overflow-hidden py-20 md:py-28">
+      <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         <div className="mx-auto max-w-3xl">
           <div className="mb-12 text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive">

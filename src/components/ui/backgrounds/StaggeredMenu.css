@@ -6,6 +6,15 @@
   pointer-events: none;
 }
 
+/* Right-aligned toggle — used by the site header so the "Menu"
+   button sits at the top-right of the bar, clear of the logo. */
+.staggered-menu-wrapper.sm-nav-right .staggered-menu-header {
+  justify-content: flex-end;
+  height: 4.25rem;
+  align-items: center;
+  padding: 0 1.25rem;
+}
+
 .staggered-menu-wrapper.fixed-wrapper {
   position: fixed;
   top: 0;

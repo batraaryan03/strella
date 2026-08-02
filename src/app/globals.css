@@ -176,6 +176,23 @@ body::after {
     0 18px 44px -18px rgba(0, 0, 0, 0.65);
 }
 
+/* ── Glass card — glassmorphism translucent panel (pricing) ──
+   User-directed: translucent frosted panels over the Grainient so
+   the animated gradient glows through. Hairline top light + soft
+   drop shadow, no visible border. Defined in @layer components so
+   Tailwind utilities (bg-white/[0.1], hover:bg-white/[0.09]) can
+   override the tint on top of the base frost. */
+@layer components {
+  .glass-card {
+    background: rgba(244, 245, 240, 0.05);
+    backdrop-filter: blur(16px) saturate(1.35);
+    -webkit-backdrop-filter: blur(16px) saturate(1.35);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 245, 240, 0.08),
+      0 24px 60px -28px rgba(0, 0, 0, 0.75);
+  }
+}
+
 /* ── Leaflet map (Leaflet + OpenStreetMap, no API key) ── */
 
 /* Dark-grade the standard OSM tiles so the map matches the charcoal
@@ -189,6 +206,13 @@ body::after {
 .leaflet-container {
   background: var(--color-surface);
   font-family: var(--font-sans);
+  /* Pinch-zoom must zoom the MAP, not the whole page (user-directed).
+     `touch-action: none` hands touch gestures to Leaflet so a two-finger
+     pinch scales the map instead of the browser viewport. `!important`
+     wins over any Leaflet stylesheet default; overscroll-behavior stops
+     the gesture from chaining back up to the page. */
+  touch-action: none !important;
+  overscroll-behavior: contain;
 }
 
 .leaflet-control-attribution {
@@ -339,6 +363,36 @@ body::after {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ── Reviews marquee — single strip, infinite left scroll (weekend-movers style) ── */
+@keyframes wm-scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-reviews-scroll {
+  /* SLOW scroll per user — 42s → 96s */
+  animation: wm-scroll-left 96s linear infinite;
+  will-change: transform;
+}
+
+/* ── STELLAR footer wordmark — translucent text strokes, no solid fill ──
+   User-directed: not white; outline-only letterforms via -webkit-text-stroke
+   (supported in all modern browsers), more visible than the old faint fill. */
+.stellar-stroke {
+  color: transparent;
+  -webkit-text-stroke: clamp(1px, 0.45vw, 3px) rgba(242, 243, 237, 0.55);
+  paint-order: stroke fill;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+
+/* Circular map (service-areas) — hide the corner zoom control */
+.map-circle .leaflet-control-zoom {
+  display: none;
+}
+
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {

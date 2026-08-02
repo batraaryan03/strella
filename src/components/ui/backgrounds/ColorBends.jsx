@@ -302,16 +302,21 @@ export default function ColorBends({
     const container = containerRef.current;
     if (!material || !container) return;
 
+    // Window-level pointer tracking normalized to the container rect —
+    // works even when the canvas sits behind content or inside a
+    // pointer-events-none wrapper (e.g. the hero), so the parallax /
+    // mouseInfluence uniforms always respond to the cursor.
     const handlePointerMove = e => {
       const rect = container.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / (rect.width || 1)) * 2 - 1;
-      const y = -(((e.clientY - rect.top) / (rect.height || 1)) * 2 - 1);
+      if (rect.width === 0 || rect.height === 0) return;
+      const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
       pointerTargetRef.current.set(x, y);
     };
 
-    container.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
     return () => {
-      container.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointermove', handlePointerMove);
     };
   }, []);
 

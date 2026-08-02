@@ -11,3 +11,8 @@ export default meta;
 type Story = StoryObj<typeof QuoteWizard>;
 
 export const Default: Story = {};
+
+/** The hero's high-contrast white card with black text. */
+export const Light: Story = {
+  args: { bare: true, light: true },
+};

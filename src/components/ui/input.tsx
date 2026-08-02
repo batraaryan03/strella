@@ -13,8 +13,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         type={type}
         ref={ref}
         className={cn(
-          "flex h-11 w-full rounded-[var(--radius-btn)] bg-surface-2 px-3.5",
-          "text-[0.875rem] text-ink placeholder:text-ink-3",
+          "flex h-13 w-full rounded-[var(--radius-btn)] bg-surface-2 px-4",
+          "text-base text-ink placeholder:text-ink-3",
           "shadow-[inset_0_1px_0_rgba(244,245,240,0.05),0_1px_2px_rgba(0,0,0,0.3)]",
           "transition-[background-color,box-shadow] duration-150",
           "hover:bg-raised",

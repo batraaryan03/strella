@@ -3,8 +3,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /**
- * Button — user-directed redesign. Pure geometry: no border (not even on
- * hover), no radius, no shadows, no curves, no corners. Professional.
+ * Button — user-directed redesign. ONE design system: Apple-style
+ * curved (pill) buttons. Fully rounded, generous padding, crisp
+ * typography.
  *
  * Default (primary): olive #636B2F fill with white text/icon. On hover it
  * flips — text turns olive, the fill becomes a *shaded* black (not flat
@@ -12,7 +13,7 @@ import { cn } from "@/lib/utils";
  */
 const buttonVariants = cva(
   [
-    "inline-flex items-center justify-center gap-2 rounded-none",
+    "inline-flex items-center justify-center gap-2 rounded-full",
     "text-[0.875rem] font-semibold tracking-[-0.01em] whitespace-nowrap select-none",
     "transition-[background-color,color] duration-200 ease-out",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-olive-bright",
@@ -46,9 +47,9 @@ const buttonVariants = cva(
         ],
       },
       size: {
-        sm: "h-10 px-4 text-[0.8125rem]",
-        md: "h-12 px-6",
-        lg: "h-[3.5rem] px-8 text-[0.9375rem]",
+        sm: "h-11 px-5 text-[0.875rem]",
+        md: "h-13 px-7 text-[0.9375rem]",
+        lg: "h-14 px-9 text-base",
       },
     },
     defaultVariants: {

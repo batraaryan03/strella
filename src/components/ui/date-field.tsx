@@ -55,8 +55,8 @@ export function DateField({
           id={id}
           aria-required={required || undefined}
           className={cn(
-            "flex h-11 w-full items-center justify-between gap-2 rounded-[var(--radius-btn)] bg-surface-2 px-3.5 text-left",
-            "text-[0.875rem] text-ink",
+            "flex h-13 w-full items-center justify-between gap-2 rounded-[var(--radius-btn)] bg-surface-2 px-4 text-left",
+            "text-base text-ink",
             "shadow-[inset_0_1px_0_rgba(244,245,240,0.05),0_1px_2px_rgba(0,0,0,0.3)]",
             "transition-[background-color,box-shadow] duration-150",
             "hover:bg-raised",

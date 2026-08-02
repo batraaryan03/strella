@@ -17,7 +17,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { DateField } from "@/components/ui/date-field";
-import { SUBURBS } from "@/lib/content";
+import Grainient from "@/components/ui/backgrounds/Grainient";
+import { GRAINIENT_OLIVE, SUBURBS } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
 type Step = 0 | 1 | 2;
@@ -41,19 +42,24 @@ const STEPS = [
 interface QuoteWizardProps {
   /**
    * Bare mode — for the hero. Renders only the wizard card with no
-   * section chrome, no panel background/border, tighter paddings so
-   * it blends pagelessly into the hero.
+   * section chrome, so it blends into the hero grid.
    */
   bare?: boolean;
+  /**
+   * Light mode — for the hero. Renders the wizard on a PURE WHITE card
+   * with black text (user-directed: "pure white aur black text, to let
+   * the user have focus and attention to it"). Overrides the card
+   * surface + ink tones while keeping olive accents.
+   */
+  light?: boolean;
 }
 
 /**
  * Quote wizard — the primary conversion widget, multi-step with
  * contact captured LAST (CRO). Step 1 route, step 2 load, step 3
- * details. Borderless, calm spacing, phone last. Right-only layout:
- * no left reassurance column (user-directed).
+ * details. `light` renders the hero's high-contrast white card.
  */
-export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
+export default function QuoteWizard({ bare = false, light = false }: QuoteWizardProps) {
   const [step, setStep] = React.useState<Step>(0);
   const [status, setStatus] = React.useState<Status>("idle");
   const [form, setForm] = React.useState({
@@ -114,22 +120,38 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
   const success = (
     <div
       className={cn(
-        bare
-          ? "flex h-full flex-col items-center justify-center px-4 text-center"
-          : "panel rounded-[var(--radius-lg)] bg-olive-tint/30 px-8 py-16 text-center"
+        light
+          ? "rounded-full bg-white px-6 py-12 text-center md:px-10"
+          : bare
+            ? "flex h-full flex-col items-center justify-center px-4 text-center"
+            : "panel rounded-[var(--radius-lg)] bg-olive-tint/30 px-8 py-16 text-center"
       )}
     >
-      <CheckCircle2 className="mx-auto h-12 w-12 text-olive" />
-      <h3 className="mt-5 text-2xl font-medium tracking-[-0.02em] text-ink">
+      <CheckCircle2
+        className={cn("mx-auto h-14 w-14", light ? "text-olive-deep" : "text-olive")}
+      />
+      <h3
+        className={cn(
+          "mt-6 text-2xl font-medium tracking-[-0.02em]",
+          light ? "text-ink-dark" : "text-ink"
+        )}
+      >
         Your quote request is in
       </h3>
-      <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ink-2">
+      <p
+        className={cn(
+          "mx-auto mt-4 max-w-md text-base leading-relaxed",
+          light ? "text-ink-dark/70" : "text-ink-2"
+        )}
+      >
         We&apos;ll call{" "}
-        <span className="font-medium text-ink">{form.phone}</span> within 60
-        seconds with a fixed, no-obligation quote for your move from{" "}
-        {form.fromSuburb} to {form.toSuburb}.
+        <span className={cn("font-medium", light ? "text-ink-dark" : "text-ink")}>
+          {form.phone}
+        </span>{" "}
+        within 60 seconds with a fixed, no-obligation quote for your move
+        from {form.fromSuburb} to {form.toSuburb}.
       </p>
-      <p className="mt-6 text-[0.8125rem] text-ink-3">
+      <p className={cn("mt-7 text-sm", light ? "text-ink-dark/50" : "text-ink-3")}>
         No deposit · Cancel free up to 24h before
       </p>
     </div>
@@ -148,20 +170,40 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
   const card = (
     <div
       className={cn(
-        !bare && "panel rounded-[var(--radius-lg)] p-6 md:p-10"
+        // Hero form — user-directed: Apple pill curve (same as Button),
+        // pure white, NO shadow, bold type throughout.
+        light && "rounded-full bg-white p-6 md:p-10",
+        !light && !bare && "glass-card rounded-[var(--radius-lg)] p-6 md:p-10"
       )}
     >
       {/* Progress bar (shadcn) */}
-      <div className="mb-9">
-        <div className="mb-3 flex items-center justify-between text-[0.8125rem]">
-          <span className="text-ink-3">Step {step + 1} of 3</span>
-          <span className="text-olive-bright">{STEPS[step].label}</span>
+      <div className="mb-10">
+        <div className="mb-3 flex items-center justify-between text-sm">
+          <span
+            className={cn(
+              "font-semibold",
+              light ? "text-ink-dark/60" : "text-ink-3"
+            )}
+          >
+            Step {step + 1} of 3
+          </span>
+          <span
+            className={cn(
+              "font-bold",
+              light ? "text-olive-deep" : "text-olive-bright"
+            )}
+          >
+            {STEPS[step].label}
+          </span>
         </div>
-        <Progress value={((step + 1) / 3) * 100} />
+        <Progress
+          value={((step + 1) / 3) * 100}
+          className={light ? "bg-black/10" : undefined}
+        />
       </div>
 
       {/* Progress rail */}
-      <ol className="mb-9 flex items-center gap-2" aria-label="Quote steps">
+      <ol className="mb-10 flex items-center gap-2" aria-label="Quote steps">
         {STEPS.map((s, i) => {
           const Icon = s.icon;
           const state = i < step ? "done" : i === step ? "active" : "todo";
@@ -169,22 +211,30 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
             <li key={s.num} className="flex flex-1 items-center gap-2">
               <span
                 className={cn(
-                  "grid h-9 w-9 shrink-0 place-items-center rounded-full transition-colors duration-200",
-                  state === "done" && "bg-olive-tint text-olive",
+                  "grid h-11 w-11 shrink-0 place-items-center rounded-full transition-colors duration-200",
+                  state === "done" &&
+                    (light ? "bg-olive-tint text-olive-deep" : "bg-olive-tint text-olive"),
                   state === "active" && "bg-olive text-ink-dark",
-                  state === "todo" && "bg-surface-2 text-ink-3"
+                  state === "todo" &&
+                    (light ? "bg-black/5 text-ink-dark/40" : "bg-surface-2 text-ink-3")
                 )}
               >
                 {state === "done" ? (
-                  <CheckCircle2 className="h-4 w-4" />
+                  <CheckCircle2 className="h-5 w-5" />
                 ) : (
-                  <Icon className="h-4 w-4" strokeWidth={1.5} />
+                  <Icon className="h-5 w-5" strokeWidth={1.5} />
                 )}
               </span>
               <span
                 className={cn(
-                  "hidden text-[0.8125rem] font-medium sm:block",
-                  state === "todo" ? "text-ink-3" : "text-ink-2"
+                  "hidden text-sm font-medium sm:block",
+                  state === "todo"
+                    ? light
+                      ? "text-ink-dark/40"
+                      : "text-ink-3"
+                    : light
+                      ? "text-ink-dark/70"
+                      : "text-ink-2"
                 )}
               >
                 {s.label}
@@ -200,9 +250,14 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
       <form onSubmit={handleSubmit}>
         <div key={step} className="step-in">
           {step === 0 && (
-            <div className="space-y-6">
+            <div className="space-y-7">
               <div>
-                <Label htmlFor={id("from")}>Moving from (suburb)</Label>
+                <Label
+                  htmlFor={id("from")}
+                  className={light ? "font-semibold text-ink-dark" : undefined}
+                >
+                  Moving from (suburb)
+                </Label>
                 <Input
                   id={id("from")}
                   list={bare ? "suburbs-bare" : "suburbs"}
@@ -211,10 +266,20 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
                   onChange={set("fromSuburb")}
                   placeholder="e.g. Hawthorn"
                   autoComplete="off"
+                  className={
+                    light
+                      ? "rounded-full border border-black/10 bg-white text-ink-dark placeholder:text-ink-dark/40 hover:bg-black/5 focus:bg-white !shadow-none"
+                      : undefined
+                  }
                 />
               </div>
               <div>
-                <Label htmlFor={id("to")}>Moving to (suburb)</Label>
+                <Label
+                  htmlFor={id("to")}
+                  className={light ? "font-semibold text-ink-dark" : undefined}
+                >
+                  Moving to (suburb)
+                </Label>
                 <Input
                   id={id("to")}
                   list={bare ? "suburbs-bare" : "suburbs"}
@@ -223,15 +288,25 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
                   onChange={set("toSuburb")}
                   placeholder="e.g. South Yarra"
                   autoComplete="off"
+                  className={
+                    light
+                      ? "rounded-full border border-black/10 bg-white text-ink-dark placeholder:text-ink-dark/40 hover:bg-black/5 focus:bg-white !shadow-none"
+                      : undefined
+                  }
                 />
               </div>
             </div>
           )}
 
           {step === 1 && (
-            <div className="space-y-6">
+            <div className="space-y-7">
               <fieldset>
-                <legend className="mb-3 block text-[0.8125rem] font-medium text-ink-2">
+                <legend
+                  className={cn(
+                    "mb-3 block text-sm font-semibold",
+                    light ? "text-ink-dark" : "text-ink-2"
+                  )}
+                >
                   How big is the move?
                 </legend>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -241,10 +316,14 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
                       type="button"
                       onClick={() => setForm((f) => ({ ...f, size: s }))}
                       className={cn(
-                        "rounded-[var(--radius-btn)] px-3 py-3 text-sm font-medium transition-colors duration-150",
+                        "h-13 rounded-full px-3 text-base font-semibold transition-colors duration-150",
                         form.size === s
-                          ? "bg-olive-tint text-olive-bright"
-                          : "bg-surface-2 text-ink-2 hover:bg-raised hover:text-ink"
+                          ? light
+                            ? "bg-olive text-ink-dark"
+                            : "bg-olive-tint text-olive-bright"
+                          : light
+                            ? "bg-black/5 text-ink-dark/70 hover:bg-black/10 hover:text-ink-dark"
+                            : "bg-surface-2 text-ink-2 hover:bg-raised hover:text-ink"
                       )}
                     >
                       {s}
@@ -253,26 +332,49 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
                 </div>
               </fieldset>
               <div>
-                <Label htmlFor={id("date")}>Preferred move date</Label>
+                <Label
+                  htmlFor={id("date")}
+                  className={light ? "font-semibold text-ink-dark" : undefined}
+                >
+                  Preferred move date
+                </Label>
                 <DateField
                   id={id("date")}
                   value={form.moveDate}
                   onChange={(v) => setForm((f) => ({ ...f, moveDate: v }))}
+                  className={
+                    light
+                      ? "rounded-full border border-black/10 bg-white text-ink-dark hover:bg-black/5 !shadow-none"
+                      : undefined
+                  }
                 />
               </div>
 
               {/* Ballpark-first — price band BEFORE the contact wall */}
-              <div className="space-y-2 rounded-[var(--radius-btn)] bg-surface-2 px-4 py-3">
+              <div
+                className={cn(                    "space-y-2 px-5 py-4",
+                    light
+                      ? "rounded-full bg-black/5"
+                      : "rounded-[var(--radius-btn)] bg-surface-2"
+                )}
+              >
                 <p className="flex items-baseline justify-between gap-3">
-                  <span className="text-[0.8125rem] text-ink-2">
+                  <span
+                    className={cn("text-sm", light ? "text-ink-dark/70" : "text-ink-2")}
+                  >
                     Indicative estimate
                   </span>
-                  <span className="tnum font-mono text-[0.9375rem] text-olive-bright">
+                  <span
+                    className={cn(
+                      "tnum font-mono text-lg font-bold",
+                      light ? "text-olive-deep" : "text-olive-bright"
+                    )}
+                  >
                     ${ESTIMATE_RANGE[form.size][0]} – $
                     {ESTIMATE_RANGE[form.size][1]}
                   </span>
                 </p>
-                <p className="text-xs text-ink-3">
+                <p className={cn("text-sm", light ? "text-ink-dark/50" : "text-ink-3")}>
                   Based on similar {form.size} moves. No contact details
                   needed yet — your fixed quote is confirmed later.
                 </p>
@@ -281,20 +383,35 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
           )}
 
           {step === 2 && (
-            <div className="space-y-6">
-              <div className="grid gap-6 sm:grid-cols-2">
+            <div className="space-y-7">
+              <div className="grid gap-7 sm:grid-cols-2">
                 <div>
-                  <Label htmlFor={id("name")}>Your name *</Label>
+                  <Label
+                    htmlFor={id("name")}
+                    className={light ? "font-semibold text-ink-dark" : undefined}
+                  >
+                    Your name *
+                  </Label>
                   <Input
                     id={id("name")}
                     required
                     value={form.name}
                     onChange={set("name")}
                     placeholder="Jordan Walsh"
+                    className={
+                      light
+                        ? "rounded-full border border-black/10 bg-white text-ink-dark placeholder:text-ink-dark/40 hover:bg-black/5 focus:bg-white !shadow-none"
+                        : undefined
+                    }
                   />
                 </div>
                 <div>
-                  <Label htmlFor={id("phone")}>Phone *</Label>
+                  <Label
+                    htmlFor={id("phone")}
+                    className={light ? "font-semibold text-ink-dark" : undefined}
+                  >
+                    Phone *
+                  </Label>
                   <Input
                     id={id("phone")}
                     type="tel"
@@ -302,34 +419,62 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
                     value={form.phone}
                     onChange={set("phone")}
                     placeholder="+61 400 000 000"
+                    className={
+                      light
+                        ? "rounded-full border border-black/10 bg-white text-ink-dark placeholder:text-ink-dark/40 hover:bg-black/5 focus:bg-white !shadow-none"
+                        : undefined
+                    }
                   />
                 </div>
               </div>
               <div>
-                <Label htmlFor={id("email")}>Email (optional)</Label>
+                <Label
+                  htmlFor={id("email")}
+                  className={light ? "font-semibold text-ink-dark" : undefined}
+                >
+                  Email (optional)
+                </Label>
                 <Input
                   id={id("email")}
                   type="email"
                   value={form.email}
                   onChange={set("email")}
                   placeholder="you@example.com"
+                  className={
+                    light
+                      ? "rounded-full border border-black/10 bg-white text-ink-dark placeholder:text-ink-dark/40 hover:bg-black/5 focus:bg-white !shadow-none"
+                      : undefined
+                  }
                 />
               </div>
-              <div className="space-y-2 rounded-[var(--radius-btn)] bg-surface-2 px-4 py-3">
-                <p className="text-[0.8125rem] text-ink-3">
+              <div
+                className={cn(                    "space-y-2 px-5 py-4",
+                    light
+                      ? "rounded-full bg-black/5"
+                      : "rounded-[var(--radius-btn)] bg-surface-2"
+                )}
+              >
+                <p className={cn("text-sm", light ? "text-ink-dark/50" : "text-ink-3")}>
                   {form.fromSuburb || "From"} → {form.toSuburb || "To"} ·{" "}
                   {form.size} · {form.moveDate || "date TBC"}
                 </p>
                 <p className="flex items-baseline justify-between gap-3">
-                  <span className="text-[0.8125rem] text-ink-2">
+                  <span
+                    className={cn("text-sm", light ? "text-ink-dark/70" : "text-ink-2")}
+                  >
                     Indicative estimate
                   </span>
-                  <span className="tnum font-mono text-[0.9375rem] text-olive-bright">
+                  <span
+                    className={cn(
+                      "tnum font-mono text-lg font-bold",
+                      light ? "text-olive-deep" : "text-olive-bright"
+                    )}
+                  >
                     ${ESTIMATE_RANGE[form.size][0]} – $
                     {ESTIMATE_RANGE[form.size][1]}
                   </span>
                 </p>
-                <p className="text-xs text-ink-3">
+                <p className={cn("text-sm", light ? "text-ink-dark/50" : "text-ink-3")}>
                   Based on similar {form.size} moves. Your fixed quote is
                   confirmed before you commit.
                 </p>
@@ -341,13 +486,19 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
         {/* Nav */}
         <div
           className={cn(
-            "mt-9 flex items-center justify-between gap-3",
-            !bare && "border-t border-line pt-7"
+            "mt-10 flex items-center justify-between gap-3",
+            !bare && !light && "border-t border-line pt-8"
           )}
         >
           {step > 0 ? (
-            <Button type="button" variant="ghost" onClick={back}>
-              <ArrowLeft className="h-4 w-4" />
+            <Button
+              type="button"
+              variant="ghost"
+              size="lg"
+              onClick={back}
+              className={light ? "text-ink-dark/60 hover:text-olive-deep" : undefined}
+            >
+              <ArrowLeft className="h-5 w-5" />
               Back
             </Button>
           ) : (
@@ -357,21 +508,23 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
           {step < 2 ? (
             <Button
               type="button"
+              size="lg"
               onClick={next}
               disabled={!stepValid[step]}
               className="group"
             >
               Continue
-              <ArrowRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5" />
+              <ArrowRight className="h-5 w-5 transition-transform duration-150 group-hover:translate-x-0.5" />
             </Button>
           ) : (
             <Button
               type="submit"
+              size="lg"
               disabled={!stepValid[step] || status === "loading"}
             >
               {status === "loading" ? (
                 <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-5 w-5 animate-spin" />
                   Requesting…
                 </>
               ) : (
@@ -382,8 +535,8 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
         </div>
 
         {status === "error" && (
-          <p className="mt-5 flex items-center justify-center gap-1.5 text-xs text-red-400">
-            <AlertCircle className="h-3.5 w-3.5" />
+          <p className="mt-6 flex items-center justify-center gap-1.5 text-sm text-red-400">
+            <AlertCircle className="h-4 w-4" />
             Something went wrong — please try again or call us directly.
           </p>
         )}
@@ -405,19 +558,28 @@ export default function QuoteWizard({ bare = false }: QuoteWizardProps) {
   }
 
   return (
-    <section
-      id="quote"
-      className="relative scroll-mt-24 border-y border-line bg-surface/40 py-20 md:py-28"
-    >
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+    <section id="quote" className="relative scroll-mt-24 overflow-hidden py-20 md:py-28">
+      {/* ── Grainient — same kind as the pricing cards (user-directed) ── */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-80">
+        <Grainient {...GRAINIENT_OLIVE} />
+      </div>
+      {/* Readability scrim — keeps the ink heading legible over the gradient */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-canvas/75 via-transparent to-canvas/80"
+      />
+      <div className="relative mx-auto max-w-7xl px-5 md:px-8">
         {/* ── Right-only: heading + wizard card ── */}
         <div className="mx-auto max-w-3xl">
           <div className="mb-10 text-center">
-            <h2 className="text-balance text-[clamp(2rem,4.5vw,3rem)] font-bold tracking-[-0.03em] text-ink">
+            <p className="text-base font-semibold uppercase tracking-[0.18em] text-olive">
+              Contact
+            </p>
+            <h2 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-bold tracking-[-0.03em] text-ink">
               Get a fixed quote in{" "}
               <span className="text-olive-bright">60 seconds</span>
             </h2>
-            <p className="mx-auto mt-4 max-w-[48ch] text-base leading-[1.7] text-ink-2">
+            <p className="mx-auto mt-5 max-w-[48ch] text-lg leading-[1.7] text-ink-2">
               Tell us the route, the load, and when — we&apos;ll confirm
               your price before you commit to anything. No deposit, no
               call-out fees, $20M transit insurance on every move.

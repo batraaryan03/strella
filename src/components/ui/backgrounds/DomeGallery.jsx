@@ -124,7 +124,8 @@ export default function DomeGallery({
   openedImageHeight = '350px',
   imageBorderRadius = '30px',
   openedImageBorderRadius = '30px',
-  grayscale = true
+  grayscale = true,
+  autoRotateSpeed = 0
 }) {
   const rootRef = useRef(null);
   const mainRef = useRef(null);
@@ -590,6 +591,51 @@ export default function DomeGallery({
       document.body.classList.remove('dg-scroll-lock');
     };
   }, []);
+
+  // ── Auto-revolve — the dome spins on its own when idle & visible ──
+  useEffect(() => {
+    if (!autoRotateSpeed || autoRotateSpeed <= 0) return;
+
+    const reduceMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    let raf = 0;
+    let last = performance.now();
+    let visible = true;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+      },
+      { threshold: 0 }
+    );
+    if (rootRef.current) io.observe(rootRef.current);
+
+    const tick = now => {
+      const dt = Math.min((now - last) / 1000, 0.1);
+      last = now;
+      if (
+        visible &&
+        !draggingRef.current &&
+        !openingRef.current &&
+        !focusedElRef.current
+      ) {
+        const y = wrapAngleSigned(rotationRef.current.y + autoRotateSpeed * dt);
+        rotationRef.current = { ...rotationRef.current, y };
+        applyTransform(rotationRef.current.x, y);
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      io.disconnect();
+    };
+  }, [autoRotateSpeed]);
 
   return (
     <div

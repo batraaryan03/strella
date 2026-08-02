@@ -1,61 +1,37 @@
 import HeroSection from "@/components/sections/hero-section";
-import TrustRibbon from "@/components/sections/trust-ribbon";
-import QuoteWizard from "@/components/sections/quote-wizard";
-import ServicesSection from "@/components/sections/services-section";
-import ProcessSection from "@/components/sections/process-section";
 import ReviewsSection from "@/components/sections/reviews-section";
-import ServiceAreas from "@/components/sections/service-areas";
 import PricingSection from "@/components/sections/pricing-section";
 import GallerySection from "@/components/sections/gallery-section";
+import ServiceAreas from "@/components/sections/service-areas";
+import ServicesSection from "@/components/sections/services-section";
 import MovingTips from "@/components/sections/moving-tips";
-import FinalCta from "@/components/sections/final-cta";
+import QuoteWizard from "@/components/sections/quote-wizard";
 import Footer from "@/components/sections/footer";
-import GradualBlur from "@/components/ui/backgrounds/GradualBlur";
 
 /**
  * Home — section order per the user-directed rebuild:
- * Hero (Hyperspeed highway) → Trust ribbon → Quote wizard →
- * Services → Process (MagicBento) → Reviews → Service areas (big map)
- * → Pricing → Gallery (DomeGallery) → FAQ → Final CTA → Footer.
+ * Hero → Reviews marquee → Pricing (Hyperspeed roller-coaster bg)
+ * → Gallery (auto-revolving) → Service areas (circular map) →
+ * Moving services (3-col) → FAQ → Contact form → Footer.
  *
- * WhyChooseUs is removed (user: "completely remove it"). A fixed
- * GradualBlur veil sits at the bottom of the viewport across the
- * whole homepage — always present as you scroll.
+ * TrustRibbon, ProcessSection ("how it works") and FinalCta are
+ * removed from the homepage per the latest sequence. GradualBlur
+ * fixed veil dropped for mobile performance (90% mobile users).
  */
 export default function Home() {
   return (
     <>
       <main className="flex-1">
         <HeroSection />
-        <TrustRibbon />
-        <QuoteWizard />
-        <ServicesSection />
-        <ProcessSection />
         <ReviewsSection />
-        <ServiceAreas />
         <PricingSection />
         <GallerySection />
+        <ServiceAreas />
+        <ServicesSection />
         <MovingTips />
-        <FinalCta />
+        <QuoteWizard />
       </main>
       <Footer />
-
-      {/* GradualBlur — persistent bottom veil over the entire homepage */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-x-0 bottom-0 z-[30] h-56"
-      >
-        <GradualBlur
-          target="parent"
-          position="bottom"
-          height="10rem"
-          strength={2}
-          divCount={5}
-          curve="bezier"
-          exponential={true}
-          opacity={1}
-        />
-      </div>
     </>
   );
 }

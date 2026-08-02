@@ -113,6 +113,30 @@ function FlyToController({
 }
 
 /**
+ * iOS Safari guard — pinch must zoom the MAP, not the whole page.
+ * `touch-action: none` (in globals.css) covers most browsers; Safari
+ * also fires `gesturestart`/`gesturechange` before deciding to zoom
+ * the viewport, so we block those on the map container directly.
+ */
+function PinchZoomGuard() {
+  const map = useMap();
+  React.useEffect(() => {
+    const el = map.getContainer();
+    const prevent = (e: Event) => e.preventDefault();
+    const opts: AddEventListenerOptions = { passive: false };
+    el.addEventListener("gesturestart", prevent, opts);
+    el.addEventListener("gesturechange", prevent, opts);
+    el.addEventListener("gestureend", prevent, opts);
+    return () => {
+      el.removeEventListener("gesturestart", prevent);
+      el.removeEventListener("gesturechange", prevent);
+      el.removeEventListener("gestureend", prevent);
+    };
+  }, [map]);
+  return null;
+}
+
+/**
  * Leaflet map body — loaded client-only (see melbourne-map.tsx).
  * Standard OSM tiles, dark-graded via the `.dark-map-tiles` filter.
  * `focus` (from the suburb chips) fly-to animates the camera to a suburb.
@@ -133,9 +157,12 @@ export default function MelbourneMapInner({ focus }: { focus?: SuburbPoint | nul
       center={MELBOURNE_CENTER}
       zoom={9}
       scrollWheelZoom={false}
+      touchZoom
+      doubleClickZoom
       className="dark-map-tiles h-full w-full"
       attributionControl={true}
     >
+      <PinchZoomGuard />
       <MapController bounds={bounds} />
       <FlyToController focus={focus} bounds={bounds} />
 

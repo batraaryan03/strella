@@ -6,70 +6,60 @@ import { StarRating } from "@/components/ui/star-rating";
 import { REVIEWS } from "@/lib/content";
 
 /**
- * Reviews — more reviews (user-directed: "we want to see more reviews,
- * it should look much more trustworthy"). A summary row establishes the
- * aggregate, then the full set of verified reviews in an editorial grid.
+ * Reviews — a single-strip auto-scrolling marquee (weekend-movers
+ * style), no background image, olive theme, less height. Infinite
+ * left scroll via `animate-reviews-scroll`; cards are borderless
+ * tonal panels with olive stars. Compact aggregate on the left.
  */
 export default function ReviewsSection() {
-  return (
-    <section id="reviews" className="relative scroll-mt-24 py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <div className="max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive">
-            Reviews
-          </p>
-          <h2 className="mt-4 text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-[-0.03em] text-ink">
-            Trusted by Melbourne locals
-          </h2>
-          <p className="mt-5 text-base leading-[1.7] text-ink-2 md:text-lg">
-            Real reviews from verified Google clients across greater
-            Melbourne — 300+ postcodes, one standard of care.
-          </p>
-        </div>
+  const doubled = [...REVIEWS, ...REVIEWS];
 
-        {/* Trustworthy summary row */}
-        <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-6 border-y border-line py-7">
-          <div className="flex items-center gap-3">
+  return (
+    <section id="reviews" className="relative scroll-mt-24 py-14 md:py-20">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        {/* Compact header — aggregate + heading on one line */}
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div className="max-w-xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive">
+              Reviews
+            </p>
+            <h2 className="mt-3 text-balance text-[clamp(2.25rem,4.5vw,3.25rem)] font-bold leading-[1.02] tracking-[-0.03em] text-ink">
+              Trusted by Melbourne locals
+            </h2>
+          </div>
+          <div className="flex items-center gap-4 pb-1">
             <span className="tnum text-5xl font-bold tracking-[-0.04em] text-ink">
               4.9
             </span>
             <div>
               <StarRating value={4.9} size="md" />
-              <p className="mt-1 text-sm text-ink-3">Average rating</p>
+              <p className="mt-1 text-sm text-ink-3">
+                2,300+ Google reviews
+              </p>
             </div>
           </div>
-          <div>
-            <p className="tnum text-2xl font-bold text-ink">2,300+</p>
-            <p className="text-sm text-ink-3">Google reviews</p>
-          </div>
-          <div>
-            <p className="flex items-center gap-1.5 text-2xl font-bold text-ink">
-              <BadgeCheck className="h-5 w-5 text-olive" />
-              100%
-            </p>
-            <p className="text-sm text-ink-3">Verified reviews</p>
-          </div>
         </div>
+      </div>
 
-        <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-          {REVIEWS.map((r) => (
+      {/* ── Single strip — infinite marquee ── */}
+      <div className="marquee-mask mt-10 overflow-hidden">
+        <div className="flex w-max gap-5 animate-reviews-scroll">
+          {doubled.map((r, i) => (
             <figure
-              key={r.name}
-              className="panel panel-hover flex flex-col rounded-[var(--radius-card)] p-7 md:p-8"
+              key={`${r.name}-${i}`}
+              className="glass-card w-80 shrink-0 rounded-[var(--radius-card)] p-6 md:p-7"
             >
-              <div className="mb-5 flex items-center justify-between">
+              <div className="mb-4 flex items-center justify-between">
                 <StarRating value={5} />
                 <span className="inline-flex items-center gap-1 text-[0.6875rem] text-ink-3">
                   <BadgeCheck className="h-3.5 w-3.5 text-olive" />
                   Verified
                 </span>
               </div>
-
-              <blockquote className="flex-1 text-[0.9375rem] leading-[1.7] text-ink-2">
+              <blockquote className="text-[0.9375rem] leading-[1.7] text-ink-2">
                 &ldquo;{r.text}&rdquo;
               </blockquote>
-
-              <figcaption className="mt-6 flex items-center gap-3 border-t border-line pt-5">
+              <figcaption className="mt-5 flex items-center gap-3">
                 <span className="grid h-9 w-9 place-items-center rounded-full bg-surface-2 font-mono text-xs text-olive">
                   {r.name.charAt(0)}
                 </span>
@@ -83,8 +73,10 @@ export default function ReviewsSection() {
             </figure>
           ))}
         </div>
+      </div>
 
-        <div className="mt-12 flex justify-center">
+      <div className="mx-auto mt-10 max-w-7xl px-5 md:px-8">
+        <div className="flex justify-center">
           <a
             href="https://www.google.com/search?q=stellar+removals+melbourne+reviews"
             target="_blank"

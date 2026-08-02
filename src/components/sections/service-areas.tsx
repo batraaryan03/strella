@@ -16,7 +16,7 @@ export default function ServiceAreas() {
   const [focus, setFocus] = React.useState<SuburbPoint | null>(null);
 
   return (
-    <section className="relative scroll-mt-24 py-20 md:py-28">
+    <section id="areas" className="relative scroll-mt-24 py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="max-w-3xl">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-olive">
@@ -32,15 +32,14 @@ export default function ServiceAreas() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[1.55fr_1fr] lg:gap-12">
-          {/* ── Real map — tall (fly-to driven by the chips) ── */}
-          <MelbourneMap
-            className="h-[460px] md:h-[640px]"
-            focus={focus}
-          />
+        <div className="mt-14 grid items-stretch gap-10 lg:grid-cols-2 lg:gap-12">
+          {/* ── Circular map — deterministic square so it's always a true circle ── */}
+          <div className="relative mx-auto aspect-square w-full max-w-[520px] overflow-hidden rounded-full lg:h-[560px] lg:w-[560px] lg:max-w-none">
+            <MelbourneMap circle className="absolute inset-0" focus={focus} />
+          </div>
 
-          {/* ── Suburb chips ── */}
-          <div className="flex flex-col">
+          {/* ── Suburb chips — min-height matches the map circle on lg ── */}
+          <div className="flex flex-col justify-center lg:min-h-[560px]">
             <p className="text-base leading-[1.7] text-ink-2">
               We service 300+ postcodes across greater Melbourne — and
               specialise in office relocation with minimal downtime.

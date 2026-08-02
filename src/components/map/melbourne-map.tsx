@@ -32,10 +32,13 @@ const MelbourneMapInner = dynamic(
 export default function MelbourneMap({
   className,
   focus,
+  circle = false,
 }: {
   className?: string;
   /** Suburb to fly to (from the Service Areas chips); null clears the focus. */
   focus?: SuburbPoint | null;
+  /** Render the map as a circle (rounded-full, centered readouts). */
+  circle?: boolean;
 }) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [loaded, setLoaded] = React.useState(false);
@@ -58,7 +61,8 @@ export default function MelbourneMap({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[var(--radius-lg)] border border-line bg-surface",
+        "relative overflow-hidden bg-surface",
+        circle ? "rounded-full" : "rounded-[var(--radius-lg)] border border-line",
         className ?? "h-[380px] md:h-[460px]"
       )}
     >
@@ -76,7 +80,12 @@ export default function MelbourneMap({
       )}
 
       {/* Header readout — reflects the focused suburb when one is selected */}
-      <div className="pointer-events-none absolute left-4 top-4 z-[500] flex items-center gap-2 rounded-md border border-white/10 bg-canvas/70 px-3 py-1.5 backdrop-blur-md">
+      <div
+        className={cn(
+          "pointer-events-none absolute z-[500] flex items-center gap-2 rounded-md border border-white/10 bg-canvas/70 px-3 py-1.5 backdrop-blur-md",
+          circle ? "left-1/2 top-4 -translate-x-1/2" : "left-4 top-4"
+        )}
+      >
         <span
           className={cn("h-1.5 w-1.5 rounded-full", focus ? "bg-olive-bright" : "bg-olive")}
         />
@@ -86,7 +95,12 @@ export default function MelbourneMap({
       </div>
 
       {/* Depot readout */}
-      <div className="pointer-events-none absolute bottom-4 left-4 z-[500] flex items-center gap-2 rounded-md border border-white/10 bg-canvas/70 px-3 py-1.5 backdrop-blur-md">
+      <div
+        className={cn(
+          "pointer-events-none absolute z-[500] flex items-center gap-2 rounded-md border border-white/10 bg-canvas/70 px-3 py-1.5 backdrop-blur-md",
+          circle ? "bottom-4 left-1/2 -translate-x-1/2" : "bottom-4 left-4"
+        )}
+      >
         <span className="depot-dot" aria-hidden />
         <span className="font-mono text-[0.625rem] uppercase tracking-[0.18em] text-ink-2">
           Depot · Docklands — STL-08 on route

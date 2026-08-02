@@ -35,7 +35,7 @@ The site intentionally avoids "space-themed" decoration. The constellation-inspi
 - **Radix UI** primitives (Dialog, Tooltip, Progress, Slot) + **sonner** toasts
 - **lucide-react** icons · **cva + clsx + tailwind-merge** for variants
 - **Real component kit** (Magic UI / Aceternity / React Bits): PixelImage pixel-reveal, BentoGrid, NumberTicker, Highlighter (rough-notation), NoiseTexture, KineticText, AnimatedCircularProgressBar, Spotlight, RevealText
-- **React Bits kit** (client-only): **Hyperspeed** (olive-tuned "Neon Waves" — the homepage backdrop on `/`), **LaserFlow** (olive laser wash), **ColorBends** (color-field bends; stock + olive), **Silk** (flowing silk, brand olive), **Grainient** (olive animated gradient, `ogl`), **Counter** (rolling digits, `motion`), **CountUp** (spring counter, `motion`), **DomeGallery** (drag-rotatable photo sphere, `@use-gesture/react`), **FluidGlass** (3D glass lens/bar/cube, drei + maath + GLB models), **GradualBlur** (layered edge blur overlay), **MagicBento** (GSAP bento card grid with spotlight/border-glow/tilt — olive `#636B2F` glow, `cards` prop for Stellar content), **ShinyText** (animated shine sweep via `motion`), **SplitText** (GSAP letter/word reveal via `@gsap/react` + `gsap/SplitText` — distinct from the Typography SplitText), **StaggeredMenu** (GSAP staggered fullscreen menu — olive underlays, project logo), **Stepper** (spring step wizard via `motion` — olive active/complete states) and **SpotlightCard** (cursor-following card spotlight, olive-tinted) — WebGL backgrounds on `three` + `postprocessing` (+ `@react-three/fiber`/`drei`/`maath`/`ogl` where needed)
+- **React Bits kit** (client-only): **Hyperspeed** (olive-tuned highway — the **pricing-section** roller-coaster backdrop on md+), **LaserFlow** (olive laser wash), **ColorBends** (color-field bends — the **hero** background with mouse parallax; stock + olive), **Silk** (flowing silk, brand olive), **Grainient** (olive animated gradient, `ogl`), **Counter** (rolling digits, `motion`), **CountUp** (spring counter, `motion`), **DomeGallery** (photo sphere that **auto-revolves** — `autoRotateSpeed` — and stays draggable, `@use-gesture/react`), **FluidGlass** (3D glass lens/bar/cube, drei + maath + GLB models), **GradualBlur** (layered edge blur overlay), **MagicBento** (GSAP bento card grid with spotlight/border-glow/tilt — olive `#636B2F` glow, `cards` prop for Stellar content), **ShinyText** (animated shine sweep via `motion`), **SplitText** (GSAP letter/word reveal via `@gsap/react` + `gsap/SplitText` — distinct from the Typography SplitText), **StaggeredMenu** (GSAP staggered fullscreen menu — olive underlays, right-aligned toggle, no logo), **Stepper** (spring step wizard via `motion` — olive active/complete states) and **SpotlightCard** (cursor-following card spotlight, olive-tinted) — WebGL backgrounds on `three` + `postprocessing` (+ `@react-three/fiber`/`drei`/`maath`/`ogl` where needed)
 
 ---
 
@@ -77,14 +77,14 @@ Until a sending domain is verified on Resend, the default `onboarding@resend.dev
 src/
 ├── app/
 │   ├── layout.tsx          # Root layout: fonts, Header + SmoothScroll wrapper (fixed elems outside), Toaster, FloatingQuote
-│   ├── page.tsx            # Homepage — all sections in CRO order
+│    ├── page.tsx            # Homepage — hero → reviews → pricing → gallery → areas → services → faq → contact → footer
 │   ├── globals.css         # Design tokens + utilities (.panel, .card-glare, noise, blur-in)
 │   ├── book-move/          # Booking page (DateField, bottom-sheet SuburbPicker)
 │   ├── contact/            # Contact page
 │   └── api/contact/        # POST route → email to sales
 ├── components/
 │   ├── ui/                 # Primitives (calendar, date-field, count-up, sheet, dialog, …)
-│   ├── sections/           # Page sections (hero, trust-ribbon, services, pricing, …)
+│   ├── sections/           # Page sections (hero, reviews, pricing, gallery, services, …)
 │   ├── map/                # Leaflet + OpenStreetMap Melbourne map (olive polygon, route, depot beacon)
 │   └── ui/backgrounds/      # React Bits kit — Hyperspeed (homepage backdrop), LaserFlow, ColorBends, Silk, Grainient, Counter, CountUp, DomeGallery, FluidGlass, GradualBlur, MagicBento, ShinyText, SplitText, StaggeredMenu, Stepper, SpotlightCard (stories for all)
 ├── hooks/                  # use-media-query
@@ -100,20 +100,16 @@ docs/                       # Research trail (design system, waves 1–5, user r
 
 | Section | What it does |
 |---|---|
-| Header / nav | Sticky minimal header, mobile menu |
-| Hero | Editorial split — display typography + real photo + floating quote card + move-record caption |
-| Trust ribbon | **NumberTicker** animated stats ($20M, 100%, 5,000+, 4.9★) on hairline dividers |
-| Quote wizard | 3 steps (Route → Load → Details) with **ballpark estimate on step 1**; contact last — sits high on the page as the primary conversion widget |
-| Services | Borderless bento cards with real photography + restrained GlareHover |
-| Process | **ScrollStack** — panels pile up on scroll, pure-CSS waypoint rail (RouteBeam removed) |
-| Why choose | Vertical pillars with mono metrics |
-| Reviews | Verified, suburb-attributed Google reviews |
-| Service areas | **Real Leaflet map** — olive service polygon, animated route, depot beacon, suburb chips |
-| Pricing | Truck tiers + **day-of-week toggle** (weekend same-rate trust statement) |
-| Gallery | **Editorial masonry** + full-viewport lightbox (keyboard + touch) |
+| Header / nav | Sticky minimal header; mobile menu toggle sits **right-aligned** in the bar (no logo overlap) |
+| Hero | **Full-viewport** brand statement — olive **ColorBends** background (mouse parallax), ShinyText title, and the quote wizard on a **pure-white card with black text** |
+| Reviews | **Single-strip infinite marquee** (weekend-movers style), olive panels, no background — less height |
+| Pricing | Truck tiers + **day-of-week toggle**; the **Hyperspeed roller-coaster** backdrop (md+) moved here from the hero |
+| Gallery | **Auto-revolving DomeGallery** photo sphere (draggable) — sits just before moving services |
+| Service areas | **Circular Leaflet map** — olive service polygon, animated route, depot beacon, suburb chips; circle height matches the right column |
+| Services | **3-column image-forward layout** with an olive CTA tile — no per-card buttons |
 | Moving tips / FAQ | Large-typography accordion with **blur-in** answer reveals |
-| Final CTA | Cinematic booking call-to-action panel |
-| Footer | Giant wordmark, compliance tier (ABN, $20M liability), floating quote trigger |
+| Contact form | Quote wizard — 3 steps (Route → Load → Details) with **ballpark estimate before the contact wall**; contact last |
+| Footer | Giant wordmark, compliance tier (ABN, $20M liability), laser flow |
 
 **Pages:** `/` · `/book-move` · `/contact`
 
