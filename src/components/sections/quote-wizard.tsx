@@ -17,8 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { DateField } from "@/components/ui/date-field";
-import Grainient from "@/components/ui/backgrounds/Grainient";
-import { GRAINIENT_OLIVE, SUBURBS } from "@/lib/content";
+import { SUBURBS } from "@/lib/content";
 
 type Status = "idle" | "loading" | "success" | "error";
 type Step = 0 | 1 | 2;
@@ -173,10 +172,18 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
         // Hero form — user-directed: Apple pill curve (same as Button),
         // pure white, NO shadow, bold type throughout.
         light && "rounded-full bg-white p-6 md:p-10",
-        !light && !bare && "glass-card rounded-[var(--radius-lg)] p-6 md:p-10"
+        !light && !bare &&
+          "glass-card relative overflow-hidden rounded-[var(--radius-lg)] p-6 md:p-10"
       )}
     >
-      {/* Progress bar (shadcn) */}
+      {!light && !bare && (
+        <div
+          aria-hidden
+          className="olive-mesh pointer-events-none absolute inset-0 opacity-40"
+        />
+      )}
+      <div className={!light && !bare ? "relative" : undefined}>
+        {/* Progress bar (shadcn) */}
       <div className="mb-10">
         <div className="mb-3 flex items-center justify-between text-sm">
           <span
@@ -541,6 +548,7 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
           </p>
         )}
       </form>
+      </div>
     </div>
   );
 
@@ -559,16 +567,7 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
 
   return (
     <section id="quote" className="relative scroll-mt-24 overflow-hidden py-20 md:py-28">
-      {/* ── Grainient — same kind as the pricing cards (user-directed) ── */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-80">
-        <Grainient {...GRAINIENT_OLIVE} />
-      </div>
-      {/* Readability scrim — keeps the ink heading legible over the gradient */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-canvas/75 via-transparent to-canvas/80"
-      />
-      <div className="relative mx-auto max-w-7xl px-5 md:px-8">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
         {/* ── Right-only: heading + wizard card ── */}
         <div className="mx-auto max-w-3xl">
           <div className="mb-10 text-center">

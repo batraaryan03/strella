@@ -4,7 +4,7 @@
 // Kept upstream-faithful; targeted disables document vendored patterns
 // that trip our stricter lint (impure uniforms sync in the effect, etc.).
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { forwardRef, useRef, useMemo, useLayoutEffect, useEffect } from 'react';
+import { forwardRef, useRef, useMemo, useLayoutEffect, useEffect, useState } from 'react';
 import { Color } from 'three';
 
 const hexToNormalizedRGB = hex => {
@@ -83,7 +83,9 @@ const SilkPlane = forwardRef(function SilkPlane({ uniforms }, ref) {
   }, [ref, viewport]);
 
   useFrame((_, delta) => {
-    ref.current.material.uniforms.uTime.value += 0.1 * delta;
+    // Clamp delta so a long pause (frameloop "never" → "always" after
+    // offscreen / tab hidden) doesn't jump the silk animation forward.
+    ref.current.material.uniforms.uTime.value += 0.1 * Math.min(delta, 0.05);
   });
 
   return (
@@ -97,6 +99,39 @@ SilkPlane.displayName = 'SilkPlane';
 
 const Silk = ({ speed = 5, scale = 1, color = '#7B7481', noiseIntensity = 1.5, rotation = 0 }) => {
   const meshRef = useRef();
+  const wrapRef = useRef(null);
+  // Perf: only render while the silk is actually in (or near) the
+  // viewport AND the tab is visible — frameloop flips to "never"
+  // otherwise, so the footer canvas costs ~0 GPU while offscreen.
+  const [active, setActive] = useState(true);
+  const inViewRef = useRef(true);
+  // SSR-safe: `document` is undefined during server render of this
+  // client component, so default to visible; effects reconcile on mount.
+  const pageVisibleRef = useRef(true);
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+
+    const sync = () => setActive(inViewRef.current && pageVisibleRef.current);
+
+    const io = new IntersectionObserver(([entry]) => {
+      inViewRef.current = entry.isIntersecting;
+      sync();
+    }, { threshold: 0 });
+    io.observe(el);
+
+    const onVisibility = () => {
+      pageVisibleRef.current = !document.hidden;
+      sync();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    return () => {
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, []);
 
   const uniforms = useMemo(
     () => ({
@@ -125,9 +160,11 @@ const Silk = ({ speed = 5, scale = 1, color = '#7B7481', noiseIntensity = 1.5, r
   }, [speed, scale, noiseIntensity, color, rotation, uniforms]);
 
   return (
-    <Canvas dpr={[1, 2]} frameloop="always">
-      <SilkPlane ref={meshRef} uniforms={uniforms} />
-    </Canvas>
+    <div ref={wrapRef} className="size-full">
+      <Canvas dpr={[1, 1.5]} frameloop={active ? 'always' : 'never'}>
+        <SilkPlane ref={meshRef} uniforms={uniforms} />
+      </Canvas>
+    </div>
   );
 };
 

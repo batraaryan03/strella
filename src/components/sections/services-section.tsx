@@ -59,6 +59,7 @@ export default function ServicesSection() {
                   src={s.img}
                   alt={s.title}
                   loading="lazy"
+                  decoding="async"
                   className="aspect-video w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                 />
               </div>

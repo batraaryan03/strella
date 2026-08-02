@@ -6,8 +6,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Hyperspeed from "@/components/ui/backgrounds/Hyperspeed";
 import { hyperspeedPresets } from "@/components/ui/backgrounds/HyperSpeedPresets";
-import Grainient from "@/components/ui/backgrounds/Grainient";
-import { GRAINIENT_OLIVE, PLANS } from "@/lib/content";
+import { PLANS } from "@/lib/content";
 
 const DAYS = [
   { id: "weekday", label: "Mon – Fri" },
@@ -19,9 +18,8 @@ type DayId = (typeof DAYS)[number]["id"];
  * Pricing — sits right after the hero. User-directed:
  * - Hyperspeed roller coaster stays as the SECTION background (md+ only
  *   for mobile perf; phones get a static olive wash).
- * - Grainient is the PRICING CARDS' background only, with more opacity,
- *   and the cards are glassmorphism translucent so the gradient glows
- *   through them.
+ * - A static CSS olive mesh is each PRICING CARD's background (the
+ *   WebGL Grainient was too heavy), with glassmorphism cards on top.
  * All three prices share the same olive-bright shade. No Badge, no
  * SectionHeader.
  */
@@ -101,75 +99,83 @@ export default function PricingSection() {
           </p>
         </div>
 
-        {/* Cards region — Grainient behind the cards, glass cards on top */}
+        {/* Cards region — static olive mesh INSIDE each card (pure CSS,
+            no WebGL) */}
         <div className="relative mt-12">
-          {/* Grainient — the CARDS' background (not the section), more
-              opacity so it clearly glows through the glass cards */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -inset-4 opacity-80"
-          >
-            <Grainient {...GRAINIENT_OLIVE} />
-          </div>
-
           <div className="relative grid items-stretch gap-6 lg:grid-cols-3 lg:gap-8">
             {PLANS.map((plan) => (
               <div
                 key={plan.code}
-                className={cn(
-                  "glass-card relative flex flex-col rounded-[var(--radius-lg)] p-8 transition-colors duration-250 hover:bg-white/[0.09] md:p-10",
-                  plan.popular && "bg-white/[0.1]"
-                )}
+                className="glass-card group relative flex flex-col rounded-lg p-8 md:p-10"
               >
+                {/* Olive mesh — this card's own background (static CSS) */}
+                <div
+                  aria-hidden
+                  className="olive-mesh pointer-events-none absolute inset-0 overflow-hidden rounded-lg opacity-40"
+                />
+
+                {/* Frost tint over the gradient + hover lift (glass) */}
+                <div
+                  aria-hidden
+                  className={cn(
+                    "pointer-events-none absolute inset-0 z-10 rounded-lg transition-colors duration-250",
+                    plan.popular
+                      ? "bg-white/10 group-hover:bg-white/9"
+                      : "group-hover:bg-white/9"
+                  )}
+                />
+
                 {plan.popular && (
-                  <p className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-olive px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-ink-dark">
+                  <p className="absolute -top-3 left-1/2 z-20 -translate-x-1/2 rounded-full bg-olive px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-ink-dark">
                     Most popular
                   </p>
                 )}
 
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="text-xl font-bold tracking-[-0.01em] text-ink">
-                      {plan.name}
-                    </h3>
-                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-2">
-                      {plan.subtitle}
-                    </p>
+                <div className="relative z-20 flex flex-1 flex-col">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="text-xl font-bold tracking-[-0.01em] text-ink">
+                        {plan.name}
+                      </h3>
+                      <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-2">
+                        {plan.subtitle}
+                      </p>
+                    </div>
+                    <span className="tnum font-mono text-[0.6875rem] text-ink-3">
+                      {plan.code}
+                    </span>
                   </div>
-                  <span className="tnum font-mono text-[0.6875rem] text-ink-3">
-                    {plan.code}
-                  </span>
+
+                  <div className="mt-8 flex items-baseline gap-2">
+                    <span className="tnum text-[clamp(3rem,6vw,4.5rem)] font-bold leading-none tracking-[-0.04em] text-olive-bright">
+                      ${plan.price}
+                    </span>
+                    <span className="text-base text-ink-2">/ hour</span>
+                  </div>
+
+                  <ul className="mt-8 flex-1 space-y-3.5 border-t border-white/10 pt-7">
+                    {plan.features.map((f) => (
+                      <li key={f} className="flex items-start gap-3">
+                        <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-olive/25">
+                          <Check className="h-3 w-3 text-olive-bright" strokeWidth={2.5} />
+                        </span>
+                        <span className="text-base leading-relaxed text-ink">
+                          {f}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a href="/book-move" className="mt-9 block">
+                    <Button
+                      className="w-full"
+                      size="lg"
+                      variant={plan.popular ? "primary" : "secondary"}
+                    >
+                      Book {plan.name.replace(" Truck", "")}
+                    </Button>
+                  </a>
                 </div>
-
-                <div className="mt-8 flex items-baseline gap-2">
-                  <span className="tnum text-[clamp(3rem,6vw,4.5rem)] font-bold leading-none tracking-[-0.04em] text-olive-bright">
-                    ${plan.price}
-                  </span>
-                  <span className="text-base text-ink-2">/ hour</span>
-                </div>
-
-                <ul className="mt-8 flex-1 space-y-3.5 border-t border-white/10 pt-7">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-3">
-                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-olive/25">
-                        <Check className="h-3 w-3 text-olive-bright" strokeWidth={2.5} />
-                      </span>
-                      <span className="text-base leading-relaxed text-ink">
-                        {f}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a href="/book-move" className="mt-9 block">
-                  <Button
-                    className="w-full"
-                    size="lg"
-                    variant={plan.popular ? "primary" : "secondary"}
-                  >
-                    Book {plan.name.replace(" Truck", "")}
-                  </Button>
-                </a>
               </div>
             ))}
           </div>

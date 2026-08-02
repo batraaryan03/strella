@@ -182,7 +182,7 @@ export default function ColorBends({
     });
     rendererRef.current = renderer;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.setClearColor(0x000000, transparent ? 0 : 1);
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
@@ -208,6 +208,12 @@ export default function ColorBends({
       window.addEventListener('resize', handleResize);
     }
 
+    // Perf: pause the render loop when offscreen or the tab is hidden.
+    // The hero fills the viewport but previously kept rendering at 60fps
+    // after you scrolled away — pure wasted GPU work.
+    let isVisible = true;
+    let isPageVisible = !document.hidden;
+
     const loop = () => {
       const dt = clock.getDelta();
       const elapsed = clock.elapsedTime;
@@ -227,12 +233,45 @@ export default function ColorBends({
       renderer.render(scene, camera);
       rafRef.current = requestAnimationFrame(loop);
     };
-    rafRef.current = requestAnimationFrame(loop);
+
+    const tryStart = () => {
+      if (isVisible && isPageVisible && rafRef.current === null) {
+        // Discard the accumulated clock time from the pause so the
+        // shader doesn't visibly jump forward on resume.
+        clock.getDelta();
+        rafRef.current = requestAnimationFrame(loop);
+      }
+    };
+    const tryStop = () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        isVisible ? tryStart() : tryStop();
+      },
+      { threshold: 0 }
+    );
+    io.observe(container);
+
+    const onVisibility = () => {
+      isPageVisible = !document.hidden;
+      isPageVisible ? tryStart() : tryStop();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    tryStart();
 
     return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      tryStop();
       if (resizeObserverRef.current) resizeObserverRef.current.disconnect();
       else window.removeEventListener('resize', handleResize);
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       geometry.dispose();
       material.dispose();
       renderer.dispose();
@@ -302,6 +341,11 @@ export default function ColorBends({
     const container = containerRef.current;
     if (!material || !container) return;
 
+    // Perf: skip the window pointer listener entirely when neither
+    // parallax nor mouseInfluence is used (the hero uses both at 0),
+    // so we don't pay for a passive window listener doing nothing.
+    if (mouseInfluence <= 0 && parallax <= 0) return;
+
     // Window-level pointer tracking normalized to the container rect —
     // works even when the canvas sits behind content or inside a
     // pointer-events-none wrapper (e.g. the hero), so the parallax /
@@ -318,7 +362,7 @@ export default function ColorBends({
     return () => {
       window.removeEventListener('pointermove', handlePointerMove);
     };
-  }, []);
+  }, [mouseInfluence, parallax]);
 
   return <div ref={containerRef} className={`color-bends-container ${className}`} style={style} />;
 }

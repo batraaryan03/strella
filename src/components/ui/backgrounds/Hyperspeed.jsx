@@ -363,7 +363,7 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
           alpha: true
         });
         this.renderer.setSize(initW, initH, false);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         this.composer = new EffectComposer(this.renderer);
         container.append(this.renderer.domElement);
 
@@ -642,6 +642,7 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
 
       tick() {
         if (this.disposed) return;
+        if (this.paused) return;
 
         if (!this.hasValidSize) {
           const w = this.container.offsetWidth;
@@ -1171,7 +1172,32 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
     appRef.current = myApp;
     myApp.loadAssets().then(myApp.init);
 
+    // Perf: the highway previously rendered at 60fps unconditionally —
+    // even after you scrolled past pricing or hid the tab. Pause the
+    // tick loop while the canvas is offscreen / tab is hidden, and
+    // restart it exactly once on the paused→running transition (a
+    // naive restart would double-schedule the rAF chain).
+    let wasPaused = false;
+    const syncPaused = paused => {
+      const app = appRef.current;
+      if (!app || app.disposed) return;
+      if (paused === wasPaused) return;
+      wasPaused = paused;
+      app.paused = paused;
+      if (!paused) app.tick(); // restart the loop
+    };
+
+    const io = new IntersectionObserver(([entry]) => {
+      syncPaused(!entry.isIntersecting);
+    }, { threshold: 0 });
+    io.observe(container);
+
+    const onVisibility = () => syncPaused(document.hidden);
+    document.addEventListener('visibilitychange', onVisibility);
+
     return () => {
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       if (appRef.current) {
         appRef.current.dispose();
         appRef.current = null;

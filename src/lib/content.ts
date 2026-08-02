@@ -354,37 +354,6 @@ export const FAQS = [
   },
 ] as const;
 
-/* ── Shared background config ──────────────────────────────── */
-/**
- * Olive Grainient props — used behind the pricing cards and behind the
- * quote-wizard section (user-directed: same kind of Grainient, more
- * noise + opacity, glassmorphism over it).
- */
-export const GRAINIENT_OLIVE = {
-  color1: "#98a686",
-  color2: "#636B2F",
-  color3: "#808000",
-  timeSpeed: 0.35,
-  colorBalance: 0.0,
-  warpStrength: 1.2,
-  warpFrequency: 5.5,
-  warpSpeed: 2.5,
-  warpAmplitude: 60,
-  blendAngle: 0.0,
-  blendSoftness: 0.12,
-  rotationAmount: 1000,
-  noiseScale: 3.0,
-  grainAmount: 0.45,
-  grainScale: 3.5,
-  grainAnimated: true,
-  contrast: 1.6,
-  gamma: 1.0,
-  saturation: 1.0,
-  centerX: 0.0,
-  centerY: 0.0,
-  zoom: 0.9,
-} as const;
-
 /* ── Gallery (real local photos from /public/gallery) ───────── */
 /** All 30 real move photos in public/gallery (01.jpg–30.jpg). */
 export const GALLERY_LOCAL = Array.from({ length: 30 }, (_, i) => ({

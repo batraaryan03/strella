@@ -211,12 +211,11 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* ── STELLAR — bold wordmark at the VERY bottom (above LaserFlow).
-             relative + z-10 so it paints ABOVE the absolute silk layer.
-             User-directed: NOT a solid white fill — translucent TEXT
-             STROKES (outline) like before, but more visible. ── */}
+      {/* ── STELLAR — simple bold wordmark at the VERY bottom (above
+             LaserFlow). User-directed: plain fill at 25% opacity — the
+             outline-stroke treatment felt weird. ── */}
       <div className="relative z-10 select-none px-2 pb-2" aria-hidden>
-        <p className="stellar-stroke whitespace-nowrap text-center text-[clamp(4rem,17vw,15rem)] font-black leading-[0.85] tracking-[-0.04em]">
+        <p className="whitespace-nowrap text-center text-[clamp(4rem,17vw,15rem)] font-black leading-[0.85] tracking-[-0.04em] text-ink/25">
           STELLAR
         </p>
       </div>
