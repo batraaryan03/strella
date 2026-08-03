@@ -32,7 +32,12 @@ export default function HeroSection() {
           loading="eager"
           fetchPriority="high"
           decoding="async"
-          className="size-full object-cover"
+          /* Mobile-only: the landscape photo fills the box height exactly,
+             so object-position can't move it vertically. Instead we make it
+             130% tall (aspect kept, centered) and slide it up 20% of its own
+             height = ~26% of the frame — the truck sits higher behind the
+             copy. Desktop keeps the centered cover. Section height unchanged. */
+          className="opacity-80 size-full object-cover max-md:absolute max-md:left-1/2 max-md:top-0 max-md:h-[130%] max-md:w-auto max-md:max-w-none max-md:translate-x-[-42%] max-md:translate-y-[-25%]"
         />
       </div>
 
