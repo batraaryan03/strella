@@ -12,7 +12,7 @@ import { GALLERY_LOCAL } from "@/lib/content";
  */
 export default function GallerySection() {
   return (
-    <section id="gallery" className="relative scroll-mt-24 overflow-hidden py-20 md:py-28">
+    <section id="gallery" className="relative scroll-mt-24 overflow-hidden pt-20 pb-14 md:pt-28 md:pb-16">
       <div className="relative mx-auto max-w-7xl px-5 md:px-8 flex justify-center align-center">
         <div className="max-w-3xl flex-col">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] align-center justify-center flex text-olive">
@@ -29,15 +29,18 @@ export default function GallerySection() {
       </div>
 
       {/* ── Full-bleed dome — touches the entire screen width ── */}
-      <div className="relative mt-10 h-110 w-full md:h-250">
+      {/* Tile size tracks the radius = min(width × fit, height × 1.5). On
+          desktop the height guard binds, so md:h-… directly controls image
+          size — raise it to make images bigger. Mobile is minRadius-bound
+          (700) so tiles stay a decent size without a huge empty container. */}
+      <div className="relative mt-10 h-100 w-full md:h-250">
         <React.Suspense fallback={null}>
           <DomeGallery
             images={GALLERY_LOCAL}
-            fit={1}
-            minRadius={480}
-            maxRadius={2000}
-            /* Perf + tighter tiles: 24 segments (was 30) = wider tiles,
-               so the gaps between images shrink AND ~20% fewer DOM nodes. */
+            fit={1.2}
+            minRadius={700}
+            maxRadius={4000}
+            /* 60 columns with sizeX/Y=2 abut exactly — no black seams. */
             segments={60}
             dragDampening={0}
             grayscale={false}

@@ -200,7 +200,12 @@ export default function DomeGallery({
           basis = aspect >= 1.3 ? w : minDim;
       }
       let radius = basis * fit;
-      const heightGuard = h * 1.35;
+      /* Height guard: 1.35 → 1.48 so the dome fills ~91% of the container
+         height (kills most of the dead black band below the tiles) while
+         tiles still scale with the container height on desktop. 1.5 is the
+         hard limit (top row edge = 0.334·r would sit exactly at the
+         container top); 1.48 keeps a ~6px margin on a 1000px container. */
+      const heightGuard = h * 1.48;
       radius = Math.min(radius, heightGuard);
       radius = clamp(radius, minRadius, maxRadius);
       lockedRadiusRef.current = Math.round(radius);
