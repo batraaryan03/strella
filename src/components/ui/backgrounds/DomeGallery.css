@@ -100,8 +100,8 @@ main.sphere-main {
   display: block;
   /* User-directed: near-zero gap between images — the old 10px inset
      left black seams between tiles. 3px keeps a whisper of air. */
-  inset: 0px;
-  /* border-radius: 24px; */
+  inset: 3px;
+  border-radius: 4px;
   background: transparent;
   overflow: hidden;
   backface-visibility: hidden;

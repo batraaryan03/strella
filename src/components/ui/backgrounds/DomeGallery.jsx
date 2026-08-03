@@ -649,7 +649,7 @@ export default function DomeGallery({
         ['--overlay-blur-color']: overlayBlurColor,
         ['--tile-radius']: imageBorderRadius,
         ['--enlarge-radius']: openedImageBorderRadius,
-        ['--image-filter']: grayscale ? 'grayscale(1)' : 'none'
+        ['--image-filter']: grayscale ? 'grayscale(1)' : 'none',
       }}
     >
       <main ref={mainRef} className="sphere-main">
@@ -695,10 +695,10 @@ export default function DomeGallery({
           </div>
         </div>
 
-        <div className="overlay" />
-        <div className="overlay overlay--blur" />
-        <div className="edge-fade edge-fade--top" />
-        <div className="edge-fade edge-fade--bottom" />
+        {/* <div className="overlay" /> */}
+        {/* <div className="overlay overlay--blur" /> */}
+        {/* <div className="edge-fade edge-fade--top" /> */}
+        {/* <div className="edge-fade edge-fade--bottom" /> */}
 
         <div className="viewer" ref={viewerRef}>
           <div ref={scrimRef} className="scrim" />

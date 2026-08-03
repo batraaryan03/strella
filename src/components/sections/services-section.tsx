@@ -48,12 +48,12 @@ export default function ServicesSection() {
           </p>
         </div>
 
-        {/* Editorial index — hairline rows, no cards */}
+        {/* Editorial index — borderless rows, no cards */}
         <ul className="mt-14 md:mt-20">
           {services.map((s) => (
             <li
               key={s.title}
-              className="group grid gap-3 border-t border-line py-9 transition-colors duration-200 hover:bg-olive-tint/50 first:border-t-0 md:grid-cols-[0.85fr_1.15fr] md:items-baseline md:gap-16 md:py-12 lg:py-14"
+              className="group grid gap-4 py-8 transition-colors duration-200 hover:bg-olive-tint/50 md:grid-cols-[0.85fr_1.15fr] md:items-baseline md:gap-16 md:py-12 lg:py-14"
             >
               <h3 className="text-[clamp(1.75rem,3.4vw,2.75rem)] font-bold leading-[1.05] tracking-[-0.02em] text-ink transition-all duration-200 ease-out group-hover:translate-x-1.5 group-hover:text-olive-bright">
                 {s.title}
@@ -65,8 +65,8 @@ export default function ServicesSection() {
           ))}
         </ul>
 
-        {/* Closing line — text CTA, no card */}
-        <div className="mt-6 border-t border-line py-8 md:py-10">
+        {/* Closing line — text CTA, no card, no border */}
+        <div className="mt-4 py-8 md:py-10">
           <p className="text-base leading-[1.7] text-ink-2 md:text-lg">
             Not sure which service you need?{" "}
             <a

@@ -29,7 +29,7 @@ export default function GallerySection() {
       </div>
 
       {/* ── Full-bleed dome — touches the entire screen width ── */}
-      <div className="relative mt-10 h-110 w-full md:h-220">
+      <div className="relative mt-10 h-110 w-full md:h-250">
         <React.Suspense fallback={null}>
           <DomeGallery
             images={GALLERY_LOCAL}
@@ -38,14 +38,14 @@ export default function GallerySection() {
             maxRadius={2000}
             /* Perf + tighter tiles: 24 segments (was 30) = wider tiles,
                so the gaps between images shrink AND ~20% fewer DOM nodes. */
-            segments={24}
+            segments={60}
             dragDampening={0}
             grayscale={false}
-            openedImageWidth="400px"
-            openedImageHeight="500px"
+            openedImageWidth="300px"
+            openedImageHeight="400px"
             imageBorderRadius="12px"
             openedImageBorderRadius="24px"
-            autoRotateSpeed={1.25}
+            autoRotateSpeed={1.2}
           />
         </React.Suspense>
       </div>
