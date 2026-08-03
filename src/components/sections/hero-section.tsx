@@ -5,17 +5,17 @@ import { ArrowRight, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StarRating } from "@/components/ui/star-rating";
 import ShinyText from "@/components/ui/backgrounds/ShinyText";
-import ColorBends from "@/components/ui/backgrounds/ColorBends";
 import QuoteWizard from "./quote-wizard";
 import { BRAND } from "@/lib/content";
 
 /**
- * Hero — full-viewport (100svh) brand statement. The olive ColorBends
- * color-field animation is the background (light, one shader quad —
- * mobile-friendly vs the old Hyperspeed highway), with a soft scrim
- * keeping the copy legible. Left: ShinyText title + professional
- * buttons. Right: the quote wizard on a PURE WHITE card with black
- * text so it commands attention (user-directed).
+ * Hero — full-viewport (100svh) brand statement. The background is the
+ * full-bleed "home truck at night" photo (user-directed replacement for
+ * the ColorBends animation — cheaper: one optimized image, no shader
+ * quad, no rAF loop), with a soft left-weighted scrim keeping the copy
+ * legible via the photo's own exposure. Left: ShinyText title +
+ * professional buttons. Right: the quote wizard on a PURE WHITE card
+ * with black text so it commands attention (user-directed).
  */
 export default function HeroSection() {
   return (
@@ -23,36 +23,24 @@ export default function HeroSection() {
       id="home"
       className="relative isolate flex min-h-svh items-center overflow-hidden pt-[4.25rem]"
     >
-      {/* ── ColorBends — olive color-field background (fast shader) ── */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <ColorBends
-          rotation={90}
-          speed={0.7}
-          colors={["#636B2F", "#98a68f", "#7cff67"]}
-          transparent
-          autoRotate={0}
-          scale={2}
-          frequency={1}
-          warpStrength={1}
-          mouseInfluence={0}
-          parallax={0}
-          noise={0.15}
-          iterations={1}
-          intensity={0.8}
-          bandWidth={6}
-          className="size-full"
+      {/* ── Home truck at night — full-bleed photo background (plain <img>, no overlay) ── */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-80">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/home_truck_night.png"
+          alt=""
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          className="size-full object-cover"
         />
       </div>
-      {/* Scrim — keeps text legible over the color field */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-canvas/85 via-canvas/55 to-canvas/25"
-      />
 
-      <div className="relative mx-auto grid w-full max-w-7xl items-center gap-12 px-5 py-14 md:py-20 md:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+      {/* Desktop: left-anchored (no centered max-w) so the copy sits closer to the left edge */}
+      <div className="relative grid w-full items-center gap-12 px-5 py-14 md:py-20 md:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-[6.5vw]">
         {/* ── Left: title, description, buttons ── */}
         <div className="flex flex-col items-start">
-          <h1 className="text-balance text-[clamp(3.25rem,7vw,6rem)] font-bold leading-[0.98] tracking-[-0.035em] text-ink">
+          <h1 className="text-balance text-[clamp(3.75rem,8.5vw,7.75rem)] font-bold leading-[0.98] tracking-[-0.035em] text-ink">
             <ShinyText
               text="Stellar Removals"
               speed={2.5}
@@ -63,7 +51,12 @@ export default function HeroSection() {
             />
           </h1>
 
-          <p className="mt-7 max-w-[46ch] text-lg leading-[1.7] text-ink-2 md:text-xl">
+          {/* Brand slogan — sans, matching the site type system (no serif) */}
+          <p className="mt-5 text-2xl font-semibold tracking-tight text-olive md:text-3xl">
+            Specialist in complete house removing
+          </p>
+
+          <p className="mt-5 max-w-[46ch] text-lg leading-[1.7] text-ink-2 md:text-xl">
             Melbourne&apos;s precision movers.{" "}
             <span className="rounded-md bg-[#97a75a] px-1.5 py-0.5 font-semibold text-ink-dark">
               Transparent hourly pricing
@@ -104,7 +97,7 @@ export default function HeroSection() {
         </div>
 
         {/* ── Right: quote form on a pure-white card, black text ── */}
-        <div className="lg:pl-4">
+        <div className="lg:pl-4 xl:ml-auto xl:w-full xl:max-w-2xl">
           <QuoteWizard bare light />
         </div>
       </div>

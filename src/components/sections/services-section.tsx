@@ -1,37 +1,32 @@
 "use client";
 
 /**
- * Services — clean 3-column card layout (weekend-movers style),
- * blended with the Stellar design system. User-directed: real photos
- * fully visible, big text, NO icons, no index numerals, no hover
- * border — just a quiet image zoom. Generous spacing on mobile &
- * desktop. No 3D truck model.
+ * Services — editorial index list (user-directed: no cards, no images,
+ * no icons, no numerals). Each service is a full-width row split by a
+ * hairline, with a giant bold title on the left and the description on
+ * the right. Hover: a soft olive wash across the row + the title
+ * brightens and nudges right. Borderless tonal zoning — the design law.
  */
 const services = [
   {
     title: "Local House Moves",
     desc: "Complete residential moving services across Melbourne. We handle everything from small apartments to large family homes with care and professionalism.",
-    img: "/services/01-local-house-moves.png",
   },
   {
     title: "Apartment Moves",
     desc: "Specialised in apartment and unit relocations. We navigate stairs, elevators, and tight spaces with ease to ensure a smooth move.",
-    img: "/services/02-apartment-moves.png",
   },
   {
     title: "Office Relocations",
     desc: "Professional office moving services that minimise downtime. We handle furniture, equipment, and documents with efficiency and care.",
-    img: "/services/03-office-relocations.png",
   },
   {
     title: "Packing & Unpacking",
     desc: "Full packing services available with quality materials. We pack, move, and unpack your belongings, saving you time and stress.",
-    img: "/services/04-packing-unpacking.png",
   },
   {
     title: "Furniture Assembly",
     desc: "Expert furniture disassembly and reassembly included. We handle complex furniture pieces to ensure safe transport and proper setup.",
-    img: "/services/05-furniture-assembly.png",
   },
 ];
 
@@ -53,27 +48,35 @@ export default function ServicesSection() {
           </p>
         </div>
 
-        {/* Cards — 3 col on desktop, stacked on mobile, generous spacing */}
-        <div className="mt-14 grid gap-x-8 gap-y-14 md:mt-20 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-16">
+        {/* Editorial index — hairline rows, no cards */}
+        <ul className="mt-14 md:mt-20">
           {services.map((s) => (
-            <article key={s.title} className="group flex flex-col">
-              <div className="relative overflow-hidden rounded-[var(--radius-card)]">
-                <img
-                  src={s.img}
-                  alt={s.title}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-video w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-                />
-              </div>
-              <h3 className="mt-6 text-2xl font-bold leading-tight tracking-[-0.01em] text-ink transition-colors duration-200 group-hover:text-olive-bright md:text-3xl">
+            <li
+              key={s.title}
+              className="group grid gap-3 border-t border-line py-9 transition-colors duration-200 hover:bg-olive-tint/50 first:border-t-0 md:grid-cols-[0.85fr_1.15fr] md:items-baseline md:gap-16 md:py-12 lg:py-14"
+            >
+              <h3 className="text-[clamp(1.75rem,3.4vw,2.75rem)] font-bold leading-[1.05] tracking-[-0.02em] text-ink transition-all duration-200 ease-out group-hover:translate-x-1.5 group-hover:text-olive-bright">
                 {s.title}
               </h3>
-              <p className="mt-4 text-base leading-[1.7] text-ink-2 md:text-lg">
+              <p className="max-w-[54ch] text-base leading-[1.7] text-ink-2 transition-colors duration-200 group-hover:text-ink md:text-lg">
                 {s.desc}
               </p>
-            </article>
+            </li>
           ))}
+        </ul>
+
+        {/* Closing line — text CTA, no card */}
+        <div className="mt-6 border-t border-line py-8 md:py-10">
+          <p className="text-base leading-[1.7] text-ink-2 md:text-lg">
+            Not sure which service you need?{" "}
+            <a
+              href="#quote"
+              className="font-semibold text-olive-bright underline-offset-4 transition-colors duration-150 hover:text-olive hover:underline"
+            >
+              Get a free quote
+            </a>{" "}
+            and we&apos;ll work it out together.
+          </p>
         </div>
       </div>
     </section>

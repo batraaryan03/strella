@@ -73,7 +73,7 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
 
   const stepValid: Record<Step, boolean> = {
     0: form.fromSuburb.trim().length > 1 && form.toSuburb.trim().length > 1,
-    1: form.size.length > 0,
+    1: form.size.length > 0 && form.moveDate.length > 0,
     2: form.name.trim().length > 1 && form.phone.trim().length >= 8,
   };
 
@@ -140,7 +140,7 @@ export default function QuoteWizard({ bare = false, light = false }: QuoteWizard
         <span className={cn("font-medium", light ? "text-ink-dark" : "text-ink")}>
           {form.phone}
         </span>{" "}
-        within 60 seconds with a fixed, no-obligation quote for your move
+        soon with a fixed, no-obligation quote for your move
         from {form.fromSuburb} to {form.toSuburb}.
       </p>
       <p className={cn("mt-7 text-sm", light ? "text-ink-dark/50" : "text-ink-3")}>
